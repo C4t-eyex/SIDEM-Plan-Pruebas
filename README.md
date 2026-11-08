@@ -10,6 +10,7 @@ Trabajo final del curso **Pruebas de Software (2026-2)**. Aplica la norma **ISO/
 | Documento | Para qué |
 |---|---|
 | [`docs/plan-de-pruebas.md`](docs/plan-de-pruebas.md) | **Documento principal.** Plan completo en las 8 secciones pedidas. |
+| [`docs/resumen-para-el-docente.md`](docs/resumen-para-el-docente.md) | **Para la reunión con el docente.** Qué se muestra, cómo vamos y qué falta. |
 | [`docs/preguntas-para-el-profe.md`](docs/preguntas-para-el-profe.md) | Dudas para validar con el docente. |
 | [`docs/avances.md`](docs/avances.md) | Bitácora de avances y hallazgos. |
 | [`docs/defectos.md`](docs/defectos.md) | Defectos encontrados en la ejecución. |
