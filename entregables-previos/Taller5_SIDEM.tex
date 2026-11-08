@@ -1,0 +1,258 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+\usepackage[margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+
+% Colores tomados de la plantilla
+\definecolor{acento}{HTML}{2874A6}
+\definecolor{oscuro}{HTML}{184C78}
+\definecolor{marco}{HTML}{6688A5}
+\definecolor{fondo}{HTML}{F5F7FA}
+\definecolor{naranja}{HTML}{D68910}
+
+\hypersetup{colorlinks=false,hidelinks,
+  pdftitle={Taller: Especificacion y Procedimientos de Pruebas - SIDEM},pdfauthor={Equipo SIDEM}}
+
+% Encabezado y pie
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\color{acento}\bfseries\small Taller: Especificación de Pruebas}
+\fancyhead[R]{\color{acento}\bfseries\small ISO/IEC/IEEE 29119-3: Cláusulas 7.2--7.6}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% Títulos de sección
+\titleformat{\section}{\color{oscuro}\Large\bfseries}{\thesection.}{0.6em}{}[{\color{oscuro}\titlerule[0.6pt]}]
+\titleformat{\subsection}{\color{acento}\large\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{12pt}{4pt}
+\titlespacing*{\subsection}{0pt}{8pt}{3pt}
+
+% Listas
+\setlist[itemize,1]{label={\scriptsize$\blacksquare$},leftmargin=1.2em,itemsep=2pt,topsep=2pt}
+\setlist[itemize,2]{label=\textbullet,leftmargin=1.4em,itemsep=1pt,topsep=1pt}
+\setlist[enumerate]{leftmargin=1.5em,itemsep=2pt,topsep=2pt}
+
+\renewcommand{\arraystretch}{1.45}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% Cajas
+\newtcolorbox{cajaacento}[2][]{enhanced,breakable,colback=#1,colframe=acento,colbacktitle=acento,
+  coltitle=white,fonttitle=\bfseries,title={#2},boxrule=0.6pt,arc=2pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,toptitle=1pt,bottomtitle=1pt}
+\newtcolorbox{ficha}[1]{enhanced,breakable,colback=fondo,colframe=marco,colbacktitle=oscuro,
+  coltitle=white,fonttitle=\bfseries\small,title={#1},boxrule=0.6pt,arc=2pt,
+  left=6pt,right=6pt,top=4pt,bottom=8pt,toptitle=0pt,bottomtitle=0pt}
+\newtcolorbox{trazab}{enhanced,colback=fondo,colframe=marco,boxrule=0.6pt,arc=2pt,
+  halign=center,fontupper=\bfseries,left=10pt,right=10pt}
+\newtcolorbox{continuidad}{enhanced,colback=fondo,colframe=naranja,colbacktitle=naranja,
+  coltitle=white,fonttitle=\bfseries\small,title={Continuidad del taller},boxrule=0.6pt,arc=2pt,
+  left=6pt,right=6pt,toptitle=0pt,bottomtitle=0pt}
+
+% Campos del formulario diligenciado
+\newcommand{\campo}[1]{\textbf{#1}}
+\newcommand{\pista}[1]{{\footnotesize\itshape #1}\par}
+\newcommand{\linea}{\par\vspace{3pt}{\color{black}\hrule height 0.5pt}\vspace{10pt}}
+\newcommand{\llenado}[1]{\underline{\smash{#1}}}
+\newcommand{\tth}{\rowcolor{oscuro}}
+\newcommand{\th}[1]{\color{white}\bfseries\rule{0pt}{0.85cm}#1}
+
+\begin{document}
+
+\begin{center}
+{\color{oscuro}\LARGE\bfseries TALLER: ESPECIFICACIÓN Y PROCEDIMIENTOS DE PRUEBAS}\par\vspace{6pt}
+{\color{acento}\large\bfseries De la estrategia a los casos, procedimientos y recursos}\par\vspace{4pt}
+ISO/IEC/IEEE 29119-3 (Cláusulas 7.2 a 7.6) \quad$|$\quad 2 horas presenciales + trabajo autónomo
+\end{center}
+
+\begin{cajaacento}[white]{ESTUDIANTES}
+\campo{Estudiante1:}\,\underline{\makebox[0.86\linewidth][l]{\ Marcos Duque Jaramillo}}\\
+\campo{Estudiante2:}\,\underline{\makebox[0.86\linewidth][l]{\ Sebastián Díaz Jiménez}}\\
+\campo{Estudiante3:}\,\underline{\makebox[0.86\linewidth][l]{\ Nicolás Castaño Durango}}\\
+\campo{Estudiante4:}\,\underline{\makebox[0.86\linewidth][l]{\ Julián Ramírez Molina}}
+\end{cajaacento}
+
+\section{Objetivos y metodología}
+\campo{Objetivos.} Al finalizar el taller el estudiante estará en capacidad de:
+\begin{enumerate}
+\item Derivar condiciones y casos de prueba aplicando las técnicas de diseño del Taller 4 (ISO 29119-4).
+\item Estructurar procedimientos de prueba (Cláusula 7.4) con preparación, secuencia y cierre.
+\item Especificar requisitos de datos (7.5) y de entorno (7.6) asociados a la ejecución.
+\end{enumerate}
+\campo{Metodología.} El taller se organiza en tres momentos:
+\begin{itemize}
+\item \campo{Modelo de referencia (Sección 3):} caso resuelto del riesgo R-01 del Taller 4.
+\item \campo{Fase 1, práctica guiada (Sección 4):} construcción del caso piloto para el riesgo P1 propio, con acompañamiento del docente (90 min).
+\item \campo{Fase 2, práctica autónoma (Sección 5):} escalamiento de la especificación a los riesgos P1, P2 y P3 restantes.
+\end{itemize}
+
+\section{Fundamento teórico: trazabilidad en la Cláusula 7}
+\begin{trazab}
+Conjunto de características (7.2.4) $\rightarrow$ Condición de prueba (7.2.5) $\rightarrow$ Caso de prueba (7.3.5) $\rightarrow$ Procedimiento de prueba (7.4.5) $\rightarrow$ Datos y entorno (7.5 / 7.6)
+\end{trazab}
+\noindent\campo{Conjunto de características:} funcionalidad o módulo objeto de prueba.\quad
+\campo{Condición de prueba:} regla de negocio verificable dentro de la funcionalidad.\quad
+\campo{Caso de prueba:} precondiciones, entradas o pasos y resultado esperado.\quad
+\campo{Procedimiento de prueba:} secuencia ordenada de casos con preparación y cierre.\quad
+\campo{Datos y entorno:} insumos (rangos, volúmenes, reinicios) e infraestructura técnica.
+
+\section{Caso de estudio resuelto (modelo de referencia)}
+El siguiente caso articula los cuatro artefactos de la Cláusula 7 para el riesgo R-01 identificado en el Taller 4. Constituye la referencia estructural para el ejercicio de la Sección 4.
+
+\begin{cajaacento}[fondo]{R-01: Cálculo en compras multimoneda. Técnica aplicada: análisis de valores límite (ISO 29119-4)}
+\campo{Exposición:} Crítica (30).\qquad\campo{Prioridad:} P1.
+\end{cajaacento}
+
+\subsection{Especificación del caso de prueba (7.2 y 7.3)}
+\begin{itemize}
+\item \campo{Conjunto de características (7.2.4):} \texttt{CC-01: Procesamiento de pagos multimoneda}.
+\item \campo{Condición de prueba (7.2.5):} \texttt{CP-01: Verificación de límites transaccionales (\$1.00 USD mínimo, \$5,000.00 USD máximo)}.
+\item \campo{Caso de prueba (7.3.5):}
+  \begin{itemize}
+  \item \campo{ID:} \texttt{TC-PAG-01}\quad$|$\quad\campo{Prioridad:} P1.
+  \item \campo{Precondiciones (7.3.5.6):} usuario autenticado con carrito de \$0.99 USD.
+  \item \campo{Entradas y pasos (7.3.5.7):} clic en el botón ``Confirmar y pagar''.
+  \item \campo{Resultado esperado (7.3.5.8):} mensaje \emph{``Monto mínimo de compra: \$1.00 USD''}. Transacción rechazada.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Especificación del procedimiento de prueba (7.4)}
+\begin{itemize}
+\item \campo{ID:} \texttt{PROC-PAG-01}\quad$|$\quad\campo{Prioridad:} P1.
+\item \campo{Preparación:} iniciar el simulador de pasarela en modo aislado multimoneda y limpiar caché.
+\item \campo{Secuencia:} \texttt{TC-PAG-01} $\rightarrow$ \texttt{TC-PAG-02 (\$1.00)} $\rightarrow$ \texttt{TC-PAG-03 (\$5,000)}.
+\item \campo{Cierre:} restaurar la base de datos al estado inicial y cerrar la sesión activa.
+\end{itemize}
+
+\subsection{Requisitos de datos y entorno (7.5 y 7.6)}
+\begin{itemize}
+\item \campo{Datos (\texttt{DAT-01}):} un usuario activo con tarjeta habilitada para compras internacionales en USD.
+\item \campo{Entorno (\texttt{AMB-01}):} servidor de preproducción versión 2.1.0 con el simulador de pasarela activo.
+\end{itemize}
+
+\section{Fase 1: práctica guiada en clase (caso piloto P1)}
+Complete la especificación del riesgo \textbf{P1} seleccionado en el Taller 4, siguiendo la estructura del modelo de la Sección 3.
+
+\subsection{Diseño del caso piloto (7.2 y 7.3)}
+\begin{ficha}{Ficha del caso piloto TC-01}
+\campo{Conjunto de características (7.2.4)}\par
+\pista{funcionalidad o módulo afectado por el riesgo}
+\texttt{CC-01}: Gestión de usuarios y roles (F02), control de acceso por rol y departamento.
+\linea
+
+\campo{Condición de prueba (7.2.5)}\par
+\pista{regla de negocio verificable}
+\texttt{CP-01}: un usuario solo puede modificar el seguimiento de los cursos de su propio departamento. Cualquier intento sobre un curso de otro departamento debe ser bloqueado.
+\linea
+
+\campo{ID:} \texttt{TC-01}\quad$|$\quad\campo{Riesgo asociado:} \llenado{\ R01, acceso no permitido (F02)\ }\quad$|$\quad\campo{Prioridad:} P1\par
+\campo{Precondiciones (7.3.5.6)}\par
+\pista{estado del sistema y datos previos requeridos}
+Existe un usuario con rol Líder de departamento asignado a Sistemas Digitales y con sesión iniciada. Existe un curso del departamento de Producción con una revisión abierta.
+\linea
+
+\campo{Entradas y pasos (7.3.5.7)}\par
+\pista{acciones del ejecutor, en orden}
+1. Ingresar al módulo de seguimiento. 2. Abrir el curso del departamento de Producción. 3. Modificar un criterio y una observación. 4. Hacer clic en \emph{Guardar}.
+\linea
+
+\campo{Resultado esperado (7.3.5.8)}\par
+\pista{resultado observable y medible}
+El sistema impide la modificación y muestra un mensaje de acceso denegado. Al consultar el curso con un administrador, los criterios y la observación conservan sus valores originales.
+\linea
+\end{ficha}
+
+\subsection{Procedimiento y requisitos (7.4, 7.5 y 7.6)}
+\begin{ficha}{Procedimiento PROC-01}
+\campo{ID:} \texttt{PROC-01}\quad$|$\quad\campo{Objetivo:} validar los riesgos de exposición alta: el control de acceso por rol y departamento (R01) y el cálculo del semáforo de cumplimiento (R04).
+\linea
+
+\campo{Preparación}\par
+\pista{acondicionamiento del entorno previo a la ejecución}
+Iniciar SIDEM en el entorno \texttt{AMB-01}, cargar el conjunto de datos \texttt{DAT-01}, cerrar sesiones previas y limpiar la caché del navegador.
+\linea
+
+\campo{Secuencia de casos:} \texttt{1. TC-01}\quad \texttt{2.} \llenado{\ \texttt{TC-02}\ \ \ }\quad \texttt{3.} \llenado{\ \texttt{TC-03}\ \ \ }\par
+\campo{Cierre}\par
+\pista{limpieza y restauración del estado inicial}
+Restaurar la base de datos de pruebas a su estado inicial y cerrar la sesión de todos los usuarios de prueba.
+\linea
+
+\arrayrulecolor{black}
+\begin{tabularx}{\linewidth}{|P{2.6cm}|Y|}
+\hline
+\tth \th{Cláusula} & \th{Especificación para PROC-01}\\\hline
+\rowcolor{white}\campo{Datos (7.5)} & \campo{ID:} \texttt{DAT-01}\quad\campo{Valores y volúmenes:} 4 usuarios de prueba (administrador, revisor, líder de departamento de Sistemas Digitales y un usuario sin departamento). 6 cursos: 3 de Sistemas Digitales y 3 de Producción, con 10 criterios en la revisión 1 y 4, 5, 7 y 8 criterios cumplidos.\\\hline
+\rowcolor{white} & \campo{Reinicio requerido:} sí. La base de datos se restaura desde un respaldo inicial antes de cada ciclo.\\\hline
+\rowcolor{white}\campo{Entorno (7.6)} & \campo{ID:} \texttt{AMB-01}\quad\campo{Hardware y red:} servidor de pruebas separado de producción, accesible desde la red institucional, y un equipo de ejecución con navegador.\\\hline
+\rowcolor{white} & \campo{Software, versiones y simuladores:} SIDEM en la versión del repositorio fijada para el ciclo de pruebas (Python 3, FastAPI y PostgreSQL) y Google Chrome actualizado. Sin conexión a Moodle, que está fuera del alcance.\\\hline
+\end{tabularx}
+\end{ficha}
+
+\section{Fase 2: práctica autónoma (escalamiento)}
+Aplicando la misma técnica asignada en el Taller 4, complete la especificación de casos para los riesgos P1, P2 y P3 restantes.
+
+\subsection{Matriz de casos de prueba (7.3.5)}
+{\small
+\begin{tabularx}{\linewidth}{|>{\ttfamily}l|c|Y|Y|Y|Y|}
+\hline
+\tth \th{\normalfont ID} & \th{Riesgo} & \th{Condición (7.2.5)} & \th{Precondiciones} & \th{Entradas y datos} & \th{Resultado esperado}\\\hline
+TC-01 & P1 & \emph{(caso piloto)} Un usuario no modifica cursos de otro departamento (R01). & Líder de Sistemas Digitales con sesión iniciada; curso de Producción con revisión abierta. & Editar un criterio del curso de Producción y guardar. & Acceso denegado; los datos del curso no cambian.\\\hline
+TC-02 & P1 & Cada rol accede solo a lo que su permiso y departamento le permiten (R01). & Usuario de solo consulta y usuario sin departamento, ambos con sesión iniciada. & Abrir el listado de seguimiento e intentar guardar cambios. & El de solo consulta ve sin poder guardar; el usuario sin departamento no ve ningún curso.\\\hline
+TC-03 & P1 & El color del semáforo cambia en los límites de 50\,\% y 80\,\% (R04). & Cuatro cursos de la misma revisión con 10 criterios evaluados. & Cursos con 4, 5, 7 y 8 criterios cumplidos (40, 50, 70 y 80\,\%). & Rojo, amarillo, amarillo y verde, respectivamente.\\\hline
+TC-04 & P2 & La información registrada se conserva al guardar y recargar (R05). & Revisor con sesión iniciada y un curso asignado. & Marcar criterios, escribir una observación, guardar y recargar. & Los criterios y la observación se muestran igual que antes de recargar.\\\hline
+TC-05 & P2 & El informe exportado coincide con lo mostrado en el sistema (R07). & Revisión con cursos evaluados en dos departamentos. & Exportar el informe filtrado por Sistemas Digitales. & El archivo tiene los mismos cursos, criterios y colores que la pantalla.\\\hline
+TC-06 & P3 & Una sesión cerrada no se puede reutilizar (R09). & Usuario con sesión iniciada. & Cerrar sesión y usar el botón \emph{Atrás} del navegador. & Redirige al inicio de sesión sin mostrar información.\\\hline
+\end{tabularx}
+}
+
+\subsection{Procedimientos adicionales (7.4)}
+Los casos anteriores se agrupan en procedimientos ejecutables con la misma estructura del modelo \texttt{PROC-PAG-01}.
+
+\begin{ficha}{Procedimientos PROC-02 y PROC-03}
+\campo{PROC-02}\quad$|$\quad\campo{Prioridad:} P2\par
+\pista{objetivo del procedimiento}
+Verificar que la información del seguimiento se conserva y que el informe exportado es confiable.
+\linea
+
+\campo{Preparación:} iniciar SIDEM en \texttt{AMB-01}, cargar \texttt{DAT-01} e iniciar sesión con el usuario revisor.
+\linea
+
+\campo{Casos incluidos, en secuencia:} \texttt{TC-04} $\rightarrow$ \texttt{TC-05}
+\linea
+
+\campo{Cierre:} eliminar los archivos exportados, restaurar la base de datos al estado inicial y cerrar la sesión.
+\linea
+
+\vspace{6pt}
+\campo{PROC-03}\quad$|$\quad\campo{Prioridad:} P3\par
+\pista{objetivo del procedimiento}
+Comprobar que el cierre de sesión impide el acceso posterior a la información.
+\linea
+
+\campo{Preparación:} iniciar SIDEM en \texttt{AMB-01} y limpiar la caché del navegador.
+\linea
+
+\campo{Casos incluidos, en secuencia:} \texttt{TC-06}
+\linea
+
+\campo{Cierre:} cerrar el navegador y verificar que no quedan sesiones activas del usuario de prueba.
+\linea
+\end{ficha}
+
+\begin{continuidad}
+Los casos y procedimientos especificados en este documento son el insumo para el Taller 6, correspondiente a las Cláusulas 7.7 a 7.9 y 8.x de ISO/IEC/IEEE 29119-3 (ejecución, gestión de defectos e informe de cierre).
+\end{continuidad}
+
+\end{document}

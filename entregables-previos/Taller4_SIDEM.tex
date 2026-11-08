@@ -1,0 +1,191 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+\usepackage[margin=2cm,headheight=14pt]{geometry}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{indentfirst}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+
+% Colores tomados de la plantilla
+\definecolor{azul}{HTML}{0000B2}
+\definecolor{verde}{HTML}{E5FFE5}
+\definecolor{grisfondo}{HTML}{F2F2F2}
+\definecolor{lila}{HTML}{E5E5FF}
+\definecolor{marco}{HTML}{D5D5D5}
+
+\hypersetup{hidelinks,pdftitle={Taller Guiado: Planificacion y Estrategia de Pruebas - SIDEM},pdfauthor={Equipo SIDEM}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Ingeniería de Software / Pruebas de Software}
+\fancyhead[R]{\small Taller ISO/IEC/IEEE 29119-3}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+
+\titleformat{\section}{\color{azul}\large\bfseries}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{16pt}{8pt}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+\setlist[itemize,1]{label={\raisebox{0.15ex}{\tiny$\blacksquare$}},leftmargin=2.2em,itemsep=1pt,topsep=2pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\newtcolorbox{respuesta}{enhanced,breakable,colback=white,colframe=marco,boxrule=0.5pt,arc=2pt,
+  left=8pt,right=8pt,top=6pt,bottom=6pt}
+\newcommand{\campoazul}[1]{{\color{azul}\bfseries #1}}
+\newcommand{\punteado}[1]{\makebox[0pt][l]{\raisebox{2pt}{\ #1}}\dotfill}
+\newcommand{\llenado}[1]{\underline{\makebox[2cm][c]{#1}}}
+
+\begin{document}
+\frenchspacing
+
+\begin{center}
+{\Large\bfseries Taller Guiado: Planificación y Estrategia de Pruebas}\par\vspace{5pt}
+{\itshape Transición de la Matriz de Riesgos al Plan de Pruebas}\par\vspace{2pt}
+{\small ISO/IEC/IEEE 29119-3, Cláusula 6.2 -- Duración: 2 horas}
+\end{center}
+\vspace{6pt}
+
+\noindent\textbf{Nombres:} \punteado{Marcos Duque Jaramillo, Sebastián Díaz Jiménez, Nicolás Castaño Durango, Julián Ramírez Molina}\par\vspace{10pt}
+\noindent\textbf{Fecha:} \makebox[5.5cm]{\punteado{13/10/2026}}\hfill\textbf{Grupo:} \makebox[5.5cm]{\punteado{SIDEM}}\par\vspace{6pt}
+\noindent\rule{\linewidth}{0.5pt}\vspace{8pt}
+
+\begin{tcolorbox}[colback=verde,colframe=verde,boxrule=0pt,arc=0pt,left=4pt,right=4pt,top=3pt,bottom=3pt,fontupper=\small\bfseries]
+Objetivos de aprendizaje. Al finalizar este taller el estudiante será capaz de:
+\begin{itemize}[leftmargin=1.2em,topsep=0pt,itemsep=0pt]
+\item Traducir los riesgos priorizados de la matriz a decisiones técnicas de prueba.
+\item Seleccionar técnicas de diseño (ISO 29119-4) proporcionales a la exposición al riesgo.
+\item Definir criterios de finalización medibles y verificables.
+\item Estimar el esfuerzo del ciclo de pruebas para las semanas restantes del proyecto.
+\end{itemize}
+\end{tcolorbox}
+
+\section{Fundamento Teórico: Trazabilidad entre Riesgo y Estrategia}
+En ISO/IEC/IEEE 29119, el nivel de exposición al riesgo determina el enfoque técnico y el rigor de las pruebas. La asignación de técnicas y criterios de cobertura debe ser proporcional a dicha exposición:
+\[ E = Probabilidad \times Impacto \]
+
+{\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\linewidth}{@{}P{2.2cm}P{4.6cm}P{3.3cm}Y@{}}
+\toprule
+\textbf{Exposición} & \textbf{Prioridad de Ejecución} & \textbf{Técnica Sugerida (ISO 29119-4)} & \textbf{Criterio de Cobertura Base}\\
+\midrule
+\textbf{Alta / Crítica} & P1 (Ejecución temprana) & Valores Límite, Tablas de Decisión, Transición de Estados & 100\,\% requerimientos, 100\,\% ramas. Independencia de QA\\[3pt]
+\textbf{Media} & P2 (Ejecución intermedia) & Partición de Equivalencia, Pruebas de Casos de Uso & 80\,\% requerimientos, 80\,\% sentencias. Pruebas cruzadas\\[3pt]
+\textbf{Baja} & P3 (Ejecución tardía) & Pruebas Exploratorias, Error Guessing, Listas de chequeo & Cobertura funcional básica (60\,\%). Autopruebas permitidas\\
+\bottomrule
+\end{tabularx}
+}
+
+\section{Caso de Estudio Resuelto (Ejemplo de Referencia)}
+\begin{tcolorbox}[colback=grisfondo,colframe=grisfondo,boxrule=0pt,arc=0pt,left=4pt,right=4pt,top=3pt,bottom=3pt,fontupper=\small\bfseries]
+Contexto: Sistema de comercio electrónico. Se presentan dos riesgos ya traducidos al plan de pruebas, como modelo para el ejercicio de la Sección 3.
+\end{tcolorbox}
+
+\noindent\textbf{Riesgos identificados en la matriz:}
+\begin{itemize}
+\item \textbf{R-01 (Producto):} Discrepancias en el cálculo total en compras multimoneda. \textbf{Exposición: Crítica (30)}.
+\item \textbf{R-02 (Producto):} Fallo al actualizar la fotografía de perfil del usuario. \textbf{Exposición: Baja (4)}.
+\end{itemize}
+\noindent\textbf{Traducción al Plan de Pruebas (Estrategia):}
+\begin{itemize}
+\item \textbf{Técnicas (R-01):} Análisis de Valores Límite (topes transaccionales) y Tablas de Decisión (tipos de usuario, cupones, moneda).
+\item \textbf{Técnicas (R-02):} Partición de Equivalencia (formatos permitidos vs. no permitidos).
+\item \textbf{Cobertura (R-01):} 100\,\% de combinaciones de reglas de negocio. Cero defectos críticos abiertos.
+\item \textbf{Cobertura (R-02):} 100\,\% de casos diseñados ejecutados. Máximo 2 defectos cosméticos abiertos.
+\item \textbf{Entorno (R-01):} Sandbox de pasarela de pagos con datos sintéticos multimoneda.
+\end{itemize}
+\vspace{4pt}\noindent\rule{\linewidth}{0.5pt}
+
+\section{Desarrollo Práctico: Definición de la Estrategia de Pruebas}
+A partir de la \textbf{Matriz de Riesgos previamente desarrollada para su proyecto}, complete las siguientes secciones conforme a la cláusula 6.2.7 de ISO/IEC/IEEE 29119-3.
+
+\subsection{Selección y Priorización de Riesgos}
+Seleccione \textbf{dos riesgos de alta exposición} y \textbf{un riesgo de baja exposición} de su matriz. Defina la prioridad y el nivel de prueba requerido.
+
+\vspace{6pt}
+{\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\linewidth}{|P{1.5cm}|Y|P{1.9cm}|P{1.6cm}|P{3cm}|}
+\hline
+\rowcolor{lila}\textbf{ID Riesgo} & \textbf{Módulo / Funcionalidad Afectada} & \textbf{Exposición} & \textbf{Prioridad} & \textbf{Nivel de Prueba}\\\hline
+R01 & F02 Gestión de usuarios y roles (acceso no permitido) & Alta (6) & P1 & Sistema\\\hline
+R04 & F04 Semáforo de cumplimiento (color incorrecto) & Alta (6) & P1 & Unitario y sistema\\\hline
+R09 & F01 Inicio de sesión (sesión activa tras cerrar sesión) & Baja (2) & P3 & Sistema\\\hline
+\end{tabularx}}
+
+\subsection{Técnicas de Diseño de Pruebas (Cláusula 6.2.7.3)}
+Asigne la técnica de diseño correspondiente según el nivel de riesgo y justifique técnicamente su selección.
+
+\vspace{8pt}\noindent\campoazul{A) Para la funcionalidad de Mayor Riesgo (ID: \llenado{R01})}\par\vspace{6pt}
+\noindent\textbf{Técnica seleccionada:} \punteado{Tablas de decisión}\par\vspace{8pt}
+\noindent\textbf{Justificación técnica} (límites o combinaciones críticas a evaluar):
+\begin{respuesta}
+El acceso a la información depende de varias condiciones combinadas: el rol del usuario (administrador, revisor o líder de departamento), la acción que intenta (consultar o modificar) y el departamento del curso (propio, ajeno o sin departamento asignado). La tabla de decisión permite cubrir todas las combinaciones y verificar en cada una si el sistema permite o bloquea la acción.
+
+Combinaciones críticas a evaluar:
+\begin{itemize}[leftmargin=1.4em]
+\item Un líder de departamento que intenta modificar un curso de otro departamento: debe ser bloqueado.
+\item Un rol de solo consulta que intenta guardar cambios: puede ver, pero no modificar.
+\item Un usuario sin departamento asignado: no debe ver ningún curso.
+\end{itemize}
+Como complemento, para R04 se aplica análisis de valores límite en los cortes del semáforo (50\,\% y 80\,\%).
+\end{respuesta}
+
+\vspace{8pt}\noindent\campoazul{B) Para la funcionalidad de Menor Riesgo (ID: \llenado{R09})}\par\vspace{6pt}
+\noindent\textbf{Técnica seleccionada:} \punteado{Lista de chequeo}\par\vspace{8pt}
+\noindent\textbf{Justificación técnica} (eficiencia de recursos frente al riesgo):
+\begin{respuesta}
+Su exposición es baja (probabilidad baja e impacto medio), por lo que no justifica diseñar casos detallados. Una lista corta verifica lo esencial con poco esfuerzo: cerrar sesión y usar el botón \emph{Atrás} del navegador, cambiar la contraseña y reutilizar la sesión anterior, y dejar expirar la sesión. Así el tiempo del equipo se concentra en los riesgos de exposición alta.
+\end{respuesta}
+
+\subsection{Criterios de Finalización y Cobertura (Cláusula 6.2.7.4)}
+Establezca métricas cuantitativas para determinar la culminación de la fase de pruebas.
+
+\vspace{6pt}\noindent\campoazul{A) Criterios para módulos críticos} (cobertura y defectos tolerados):
+\begin{respuesta}
+Aplica a F02 Gestión de usuarios y roles, F03 Registro del seguimiento y F04 Semáforo de cumplimiento.
+\begin{itemize}[leftmargin=1.4em]
+\item 100\,\% de los requerimientos cubiertos por al menos un caso de prueba.
+\item 100\,\% de las combinaciones de la tabla de decisión y de los valores límite del semáforo ejecutados.
+\item Cero defectos críticos o altos abiertos.
+\item Cada caso es revisado por un integrante distinto al que lo diseñó (independencia).
+\end{itemize}
+\end{respuesta}
+
+\vspace{6pt}\noindent\campoazul{B) Criterios para módulos secundarios}:
+\begin{respuesta}
+Aplica a F01 Inicio de sesión, F05 Panel de métricas y F06 Exportación de informes.
+\begin{itemize}[leftmargin=1.4em]
+\item Al menos el 80\,\% de los requerimientos cubiertos.
+\item 100\,\% de los casos diseñados ejecutados.
+\item Cero defectos críticos abiertos y máximo 2 defectos menores o cosméticos abiertos.
+\end{itemize}
+\end{respuesta}
+
+\subsection{Estimación de Esfuerzo (Cláusula 6.2.8)}
+Estime el tiempo en horas requerido para las actividades del ciclo de pruebas en las semanas restantes del proyecto.
+
+\vspace{6pt}
+{\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\linewidth}{|P{4.2cm}|>{\centering\arraybackslash}p{1.4cm}|Y|}
+\hline
+\rowcolor{lila}\textbf{Actividad (WBS de Pruebas)} & \textbf{Horas} & \textbf{Descripción del trabajo a realizar}\\\hline
+{\small 1. Diseño de Casos de Prueba (Cl. 7.3)} & 8 & {\small Construir la tabla de decisión de roles, los casos de valores límite del semáforo y los casos de registro del seguimiento y exportación.}\\\hline
+{\small 2. Preparación de Entorno y Datos} & 4 & {\small Crear usuarios de cada rol y departamento, y cursos de prueba con distintos porcentajes de cumplimiento.}\\\hline
+{\small 3. Ejecución (Ciclo 1) y Reporte de Defectos} & 10 & {\small Ejecutar los casos en orden de prioridad (P1, P2, P3) y registrar cada defecto con su evidencia.}\\\hline
+{\small 4. Pruebas de Regresión y Retest} & 5 & {\small Volver a probar los defectos corregidos y repetir los casos P1 para confirmar que nada se dañó.}\\\hline
+{\small 5. Informe de Cierre de Pruebas (Cl. 6.4)} & 3 & {\small Resumir los resultados, la cobertura alcanzada, los defectos abiertos y las conclusiones.}\\\hline
+\multicolumn{1}{|r|}{\textbf{Total Estimado:}} & \textbf{30} & {\small Aproximadamente 7,5 horas por integrante.}\\\hline
+\end{tabularx}}
+
+\end{document}
