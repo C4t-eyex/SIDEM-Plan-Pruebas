@@ -1,0 +1,41 @@
+# Demo de SIDEM con datos ficticios (DAT-01). Uso: ver demo/README.md
+name: sidem-demo
+
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: sidem-demo-db
+    environment:
+      POSTGRES_DB: seguimiento_docentes
+      POSTGRES_USER: sidem
+      POSTGRES_PASSWORD: sidem_demo_local
+    volumes:
+      # El esquema oficial de SIDEM se carga solo la primera vez que se crea la base (ver init-db.sh)
+      - ./sidem/API_seguimiento_docentes/sql/db.sql:/sidem-sql/db.sql:ro
+      - ./init-db.sh:/docker-entrypoint-initdb.d/01-schema.sh:ro
+      - sidem-demo-datos:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sidem -d seguimiento_docentes"]
+      interval: 3s
+      retries: 20
+
+  app:
+    build: .
+    container_name: sidem-demo-app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ENVIRONMENT: development          # cookies sin HTTPS, solo para uso local
+      SECRET_KEY: demo-local-clave-no-usar-en-produccion-32+
+      DATABASE_URL: postgresql://sidem:sidem_demo_local@db:5432/seguimiento_docentes
+      DB_HOST_MOODLE: sin-moodle         # Moodle fuera del alcance: no hay conexión
+      ALLOWED_ORIGINS: http://localhost:${DEMO_PUERTO:-8090},http://127.0.0.1:${DEMO_PUERTO:-8090}
+      DEMO_PASSWORD: ${DEMO_PASSWORD:-Demo-SIDEM-2026}
+      DEMO_PUERTO: ${DEMO_PUERTO:-8090}
+      TZ: America/Bogota
+    ports:
+      - "127.0.0.1:${DEMO_PUERTO:-8090}:5000"
+
+volumes:
+  sidem-demo-datos:

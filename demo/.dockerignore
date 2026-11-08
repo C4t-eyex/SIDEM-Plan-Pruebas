@@ -1,0 +1,7 @@
+sidem/.git
+sidem/**/api-seguimiento
+sidem/**/__pycache__
+sidem/**/.env*
+sidem/**/logs.txt
+sidem/**/backups
+sidem/.worktrees

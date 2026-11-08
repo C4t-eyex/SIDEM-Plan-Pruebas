@@ -1,14 +1,14 @@
 # Plan de Pruebas de Software — SIDEM
 
 > Basado en la norma ISO/IEC/IEEE 29119-3 (Documentación de pruebas), adaptada a un ciclo de 3 semanas.
-> **Estado:** BORRADOR v0.1 — pendiente de revisión con el docente.
+> **Estado:** BORRADOR v0.2 — pendiente de revisión con el docente.
 
 ---
 
 ## 1. Información específica del documento
 
 ### 1.1 Identificador único del documento
-`SIDEM-PP-2026-01` (Plan de Pruebas, versión 0.1)
+`SIDEM-PP-2026-01` (Plan de Pruebas, versión 0.2)
 
 ### 1.2 Organización emisora y autores
 - **Organización:** Equipo SIDEM — curso Pruebas de Software, 2026-2.
@@ -22,6 +22,7 @@ Docente del curso de Pruebas de Software. *(Nombre por confirmar.)*
 | Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
 | 0.1 | 08/11/2026 | Equipo SIDEM | Primer borrador: consolida Actividades 1 y 2, matriz de riesgos y Talleres 4 y 5. |
+| 0.2 | 08/11/2026 | Equipo SIDEM | Ajuste de TC-01, TC-03 y DAT-01 según el funcionamiento real de SIDEM, revisado al montar la demo. |
 
 El control de versiones del documento se lleva en este repositorio (historial de commits de Git).
 
@@ -76,7 +77,7 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 | Defecto | Diferencia entre el resultado obtenido y el esperado. |
 | Exposición al riesgo | Probabilidad × impacto. |
 | Revisión | Cada uno de los 4 cortes del semestre en los que se evalúan los cursos. |
-| Semáforo | Color del curso según el % de criterios cumplidos: verde ≥ 80 %, amarillo 50–79 %, rojo < 50 %. |
+| Semáforo | Color del curso según el % de cumplimiento: verde ≥ 80 %, amarillo 50–79 %, rojo < 50 %. El % es ponderado: cada criterio tiene un peso (en la revisión 1 suman 30). |
 | Tailoring | Adaptación justificada de la norma a las condiciones del proyecto. |
 
 ---
@@ -231,9 +232,9 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 
 | Caso | Descripción | Condición | Riesgo | Técnica | Prioridad | Ejecución |
 |---|---|---|---|---|---|---|
-| TC-01 | Un líder de otro departamento no puede modificar un curso de Producción. | CP-01 | R01 | Tabla de decisión | P1 | Manual + automática |
-| TC-02 | Un usuario de solo consulta ve sin guardar; uno sin departamento no ve cursos. | CP-02 | R01, R02 | Tabla de decisión | P1 | Manual + automática |
-| TC-03 | Cursos con 4, 5, 7 y 8 de 10 criterios cumplidos dan rojo, amarillo, amarillo y verde. | CP-04 | R04 | Valores límite | P1 | Manual + automática |
+| TC-01 | El líder de Sistemas Digitales intenta ver las métricas de Producción y modificar un seguimiento; el sistema lo impide en ambos casos. | CP-01 | R01 | Tabla de decisión | P1 | Manual + automática |
+| TC-02 | Un usuario de solo consulta ve sin guardar; un líder sin departamento no ve cursos. | CP-02 | R01, R02 | Tabla de decisión | P1 | Manual + automática |
+| TC-03 | Seis cursos de la revisión 1 con 80, 77, 50, 47, 100 y 0 % dan verde, amarillo, amarillo, rojo, verde y rojo. | CP-04 | R04 | Valores límite | P1 | Manual + automática |
 | TC-07 | Registrar criterios en el curso A, revisión 2, y verificar que no aparecen en otro curso ni revisión. | CP-03 | R03 | Clases de equivalencia | P1 | Manual + automática |
 | TC-04 | Los criterios y la observación se conservan al guardar y recargar. | CP-05 | R05 | Clases de equivalencia | P2 | Manual |
 | TC-08 | Los totales del panel coinciden con un conteo manual de la muestra. | CP-06 | R06 | Clases de equivalencia | P2 | Manual |
@@ -242,6 +243,10 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 | TC-06 | Tras cerrar sesión, "Atrás" del navegador redirige al login. | CP-09 | R09 | Lista de chequeo | P3 | Manual |
 
 > TC-01 a TC-06 vienen del Taller 5. TC-07 a TC-09 se agregan para cubrir R03, R06 y R08, que en el Taller 5 no tenían caso.
+>
+> Al montar la demo se revisó cómo funciona SIDEM y hubo que ajustar dos casos del Taller 5:
+> - **TC-01:** en SIDEM, el rol que se limita por departamento es el líder de departamento, y ese rol no tiene permiso para editar el seguimiento. Los revisores ven todos los departamentos. Por eso el caso ahora prueba al líder de departamento.
+> - **TC-03:** el semáforo no cuenta criterios, sino que suma sus pesos. Los datos se rehicieron para caer justo en los límites con los pesos reales (80 % y 50 %, y 77 % y 47 % justo por debajo).
 
 **Procedimientos:**
 - **PROC-01 (P1):** TC-01 → TC-02 → TC-03 → TC-07.
@@ -258,11 +263,11 @@ Cada procedimiento empieza con la base de datos restaurada (DAT-01) y termina ce
 - Navegador Google Chrome actualizado.
 - Python 3 + pytest para las pruebas automáticas.
 
-**Datos DAT-01 (ficticios, versionados en `demo/`):**
-- Usuarios: administrador, revisor, líder de departamento de "Sistemas Digitales", usuario de solo consulta y usuario sin departamento.
-- Cursos: 3 de "Sistemas Digitales" y 3 de "Producción", con docentes ficticios.
-- Revisión 1 con 10 criterios por curso y 4, 5, 7 y 8 criterios cumplidos.
-- Reinicio: la base se restaura al estado inicial antes de cada procedimiento.
+**Datos DAT-01 (ficticios, en `demo/seed_demo.py`):**
+- 8 usuarios: superadmin, administrador, dos revisores, líder académico, líder de Sistemas Digitales, líder sin departamento y un usuario de solo consulta.
+- 6 cursos: 3 de Sistemas Digitales y 3 de Producción, con docentes ficticios.
+- Revisión 1 con sus 6 criterios. Los cumplidos dan 80, 77, 50, 47, 100 y 0 %.
+- Reinicio: `docker compose down -v` y `docker compose up` dejan la base en su estado inicial.
 
 ### 5.5 Criterios de suspensión y finalización
 

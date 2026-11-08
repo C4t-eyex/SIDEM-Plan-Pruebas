@@ -37,8 +37,8 @@ evidencias/           Capturas y resultados de la ejecución (fase 3)
 
 | Fase | Contenido | Estado |
 |---|---|---|
-| 1 | Organizar documentos y plan para revisión con el docente | En curso |
-| 2 | Demo de SIDEM con Docker y datos ficticios | Pendiente |
+| 1 | Organizar documentos y plan para revisión con el docente | Lista para revisión |
+| 2 | Demo de SIDEM con Docker y datos ficticios ([`demo/README.md`](demo/README.md)) | Lista |
 | 3 | Ejecución real (manual + automática), defectos y evidencias | Pendiente |
 | 4 | Informe de cierre y exposición | Pendiente |
 
