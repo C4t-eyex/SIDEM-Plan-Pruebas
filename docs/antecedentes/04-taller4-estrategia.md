@@ -1,6 +1,6 @@
 > **Antecedente:** Taller 4, Estrategia de pruebas (13/10/2026). Fuente LaTeX en `entregables-previos/Taller4_SIDEM.tex`.
 
-# Taller 4 — Estrategia de pruebas
+# Taller 4 - Estrategia de pruebas
 
 ## 3.1 Selección y priorización de riesgos
 
@@ -12,9 +12,9 @@
 
 ## 3.2 Técnicas de diseño
 
-- **R01 — Tablas de decisión.** El acceso depende de varias condiciones combinadas: el rol, la acción (consultar o modificar) y el departamento del curso (propio, ajeno o sin departamento). La tabla cubre todas las combinaciones, incluido el usuario sin departamento, que no debe ver ningún curso.
-- **R04 — Valores límite** (complemento): puntos donde cambia el color (50 % y 80 %).
-- **R09 — Lista de chequeo.** Exposición baja: cerrar sesión y volver atrás, cambiar la contraseña y reutilizar la sesión, dejar expirar la sesión.
+- **R01 - Tablas de decisión.** El acceso depende de varias condiciones combinadas: el rol, la acción (consultar o modificar) y el departamento del curso (propio, ajeno o sin departamento). La tabla cubre todas las combinaciones, incluido el usuario sin departamento, que no debe ver ningún curso.
+- **R04 - Valores límite** (complemento): puntos donde cambia el color (50 % y 80 %).
+- **R09 - Lista de chequeo.** Exposición baja: cerrar sesión y volver atrás, cambiar la contraseña y reutilizar la sesión, dejar expirar la sesión.
 
 ## 3.3 Criterios de finalización y cobertura
 

@@ -1,6 +1,6 @@
 > **Antecedente:** Taller 5, Especificación y procedimientos de prueba (cláusulas 7.2 a 7.6). Fuente LaTeX en `entregables-previos/Taller5_SIDEM.tex`.
 
-# Taller 5 — Casos, procedimientos, datos y entorno
+# Taller 5 - Casos, procedimientos, datos y entorno
 
 ## Caso piloto TC-01 (P1)
 

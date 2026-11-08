@@ -24,7 +24,7 @@ from scripts.inicializar_criterios import inicializar_criterios
 PASSWORD = os.getenv("DEMO_PASSWORD", "Demo-SIDEM-2026")
 PERIODO = periodo_actual()
 
-# ── Usuarios de prueba (uno por cada situación que piden los casos) ───────────
+# -- Usuarios de prueba (uno por cada situación que piden los casos) -----------
 # (correo, nombre, rol, departamento)
 USUARIOS = [
     ("superadmin@sidem.test",   "Superadmin Demo",               "superadmin",         None),
@@ -41,7 +41,7 @@ USUARIOS = [
 PERMISOS_CONSULTA = {"dashboard": "vista", "seguimiento": "vista", "metricas": "vista",
                      "metricas_docentes": "vista"}
 
-# ── Cursos y resultados de la revisión 1 ─────────────────────────────────────
+# -- Cursos y resultados de la revisión 1 -------------------------------------
 # Criterios de la revisión 1 y su peso (services/criterios_config.py):
 #   1→5, 2→5, 3→7, 4→5, 6→6, 7→2  (total 30)
 # El % del semáforo es ponderado: peso cumplido / peso evaluado.
@@ -113,6 +113,32 @@ def crear_cursos(db, usuarios: dict) -> None:
         db.commit()
 
 
+# -- Revisión 2 de dos cursos de Sistemas Digitales (caso TC-07) --------------
+# Empiezan con todos los criterios sin cumplir. TC-07 marca criterios en uno
+# y verifica que el otro curso y la revisión 1 no cambian.
+CRITERIOS_R2 = [19, 20, 21, 22, 23, 24]
+CURSOS_R2 = [900101, 900102]
+
+
+def crear_revision_2(db, usuarios: dict) -> None:
+    enc = usuarios["revisor.sd@sidem.test"]
+    for id_curso in CURSOS_R2:
+        curso = db.query(Curso).filter(Curso.id_curso == id_curso, Curso.periodo == PERIODO).first()
+        if not curso or db.query(Revision).filter(Revision.curso_id == curso.id,
+                                                  Revision.revision_numero == 2).first():
+            continue
+        revision = Revision(curso_id=curso.id, revision_numero=2, fecha_revision=date.today(),
+                            encargado_id=enc.id, docente_nombre=curso.docente_nombre,
+                            docente_apellido=curso.docente_apellido,
+                            docente_correo=curso.docente_correo, revisado=False)
+        db.add(revision)
+        db.commit()
+        db.refresh(revision)
+        for criterio_id in CRITERIOS_R2:
+            db.add(ResultadoRevision(revision_id=revision.id, criterio_id=criterio_id, cumplido=False))
+        db.commit()
+
+
 def main() -> None:
     db = SessionLocal()
     try:
@@ -122,6 +148,7 @@ def main() -> None:
         usuarios = crear_usuarios(db)
         sembrar_configuraciones_iniciales(db, usuarios["superadmin@sidem.test"].id)
         crear_cursos(db, usuarios)
+        crear_revision_2(db, usuarios)
         print(f"[demo] Datos listos: {len(USUARIOS)} usuarios, {len(CURSOS)} cursos, periodo {PERIODO}.")
     finally:
         db.close()

@@ -1,6 +1,6 @@
 > **Antecedente:** Actividad 2, Identificación del objeto de prueba y condiciones (versión final entregada, con coevaluación del equipo de RESTful Booker).
 
-# Actividad 2 — Objeto de prueba y condiciones
+# Actividad 2 - Objeto de prueba y condiciones
 
 ## 2. Identificación del objeto de prueba
 

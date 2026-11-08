@@ -1,17 +1,17 @@
-# Plan de Pruebas de Software — SIDEM
+# Plan de Pruebas de Software - SIDEM
 
 > Basado en la norma ISO/IEC/IEEE 29119-3 (Documentación de pruebas), adaptada a un ciclo de 3 semanas.
-> **Estado:** BORRADOR v0.2 — pendiente de revisión con el docente.
+> **Estado:** BORRADOR v0.3 - pendiente de revisión con el docente.
 
 ---
 
 ## 1. Información específica del documento
 
 ### 1.1 Identificador único del documento
-`SIDEM-PP-2026-01` (Plan de Pruebas, versión 0.2)
+`SIDEM-PP-2026-01` (Plan de Pruebas, versión 0.3)
 
 ### 1.2 Organización emisora y autores
-- **Organización:** Equipo SIDEM — curso Pruebas de Software, 2026-2.
+- **Organización:** Equipo SIDEM - curso Pruebas de Software, 2026-2.
 - **Autores:** Marcos Duque Jaramillo, Sebastián Díaz Jiménez, Nicolás Castaño Durango, Julián Ramírez Molina.
 
 ### 1.3 Autoridad de aprobación
@@ -23,6 +23,7 @@ Docente del curso de Pruebas de Software. *(Nombre por confirmar.)*
 |---|---|---|---|
 | 0.1 | 08/11/2026 | Equipo SIDEM | Primer borrador: consolida Actividades 1 y 2, matriz de riesgos y Talleres 4 y 5. |
 | 0.2 | 08/11/2026 | Equipo SIDEM | Ajuste de TC-01, TC-03 y DAT-01 según el funcionamiento real de SIDEM, revisado al montar la demo. |
+| 0.3 | 08/11/2026 | Equipo SIDEM | DAT-01 con revisión 2 y zona horaria de la base; complemento automático de TC-06. |
 
 El control de versiones del documento se lleva en este repositorio (historial de commits de Git).
 
@@ -39,8 +40,8 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 
 | ID | Documento |
 |---|---|
-| REF-01 | ISO/IEC/IEEE 29119-3:2021 — Software testing: Test documentation. |
-| REF-02 | ISO/IEC/IEEE 29119-4 — Software testing: Test techniques. |
+| REF-01 | ISO/IEC/IEEE 29119-3:2021 - Software testing: Test documentation. |
+| REF-02 | ISO/IEC/IEEE 29119-4 - Software testing: Test techniques. |
 | REF-03 | Actividad 1: Alcance y metodología (`antecedentes/01-actividad1-alcance.md`). |
 | REF-04 | Actividad 2: Objeto de prueba y condiciones (`antecedentes/02-actividad2-objeto-condiciones.md`). |
 | REF-05 | Matriz de riesgos SIDEM (`antecedentes/03-matriz-de-riesgos.md`). |
@@ -77,7 +78,7 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 | Defecto | Diferencia entre el resultado obtenido y el esperado. |
 | Exposición al riesgo | Probabilidad × impacto. |
 | Revisión | Cada uno de los 4 cortes del semestre en los que se evalúan los cursos. |
-| Semáforo | Color del curso según el % de cumplimiento: verde ≥ 80 %, amarillo 50–79 %, rojo < 50 %. El % es ponderado: cada criterio tiene un peso (en la revisión 1 suman 30). |
+| Semáforo | Color del curso según el % de cumplimiento: verde ≥ 80 %, amarillo 50-79 %, rojo < 50 %. El % es ponderado: cada criterio tiene un peso (en la revisión 1 suman 30). |
 | Tailoring | Adaptación justificada de la norma a las condiciones del proyecto. |
 
 ---
@@ -88,7 +89,7 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 
 | Elemento | Detalle |
 |---|---|
-| Sistema | SIDEM — API FastAPI + interfaz web (plantillas HTML). |
+| Sistema | SIDEM - API FastAPI + interfaz web (plantillas HTML). |
 | Versión bajo prueba | Commit `77f71b2` de la rama `main` del repositorio de SIDEM. Se congela durante el ciclo (mitiga RP3). |
 | Instancia de prueba | Copia de demostración con **datos ficticios**, levantada con Docker (ver 5.4). No se usa la base de producción. |
 
@@ -161,7 +162,7 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 
 ### 4.2 Matriz de análisis de riesgos
 
-**Niveles de exposición:** Crítico = 9 · Alto = 6 · Medio = 3–4 · Bajo = 1–2.
+**Niveles de exposición:** Crítico = 9 · Alto = 6 · Medio = 3-4 · Bajo = 1-2.
 
 | Probabilidad \ Impacto | 1 Bajo | 2 Medio | 3 Alto |
 |---|---|---|---|
@@ -193,10 +194,10 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 | R07 | Medio | Mitigar con pruebas. | P2 |
 | R08 | Medio | Mitigar con pruebas. | P2 |
 | R09 | Bajo | Verificación ligera con lista de chequeo (decisión del Taller 4). | P3 |
-| R10 | Bajo | **Aceptado sin pruebas**: no hay entorno de carga y la exposición es baja. | — |
-| RP1 | Medio | Preparar un conjunto de datos ficticios versionado en el repositorio (DAT-01). | — |
-| RP2 | Medio | Ejecutar primero los P1; si falta tiempo, se recortan los P3. | — |
-| RP3 | Bajo | Congelar la versión (commit `77f71b2`) y registrar cualquier cambio. | — |
+| R10 | Bajo | **Aceptado sin pruebas**: no hay entorno de carga y la exposición es baja. | - |
+| RP1 | Medio | Preparar un conjunto de datos ficticios versionado en el repositorio (DAT-01). | - |
+| RP2 | Medio | Ejecutar primero los P1; si falta tiempo, se recortan los P3. | - |
+| RP3 | Bajo | Congelar la versión (commit `77f71b2`) y registrar cualquier cambio. | - |
 
 ---
 
@@ -248,6 +249,8 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 > - **TC-01:** en SIDEM, el rol que se limita por departamento es el líder de departamento, y ese rol no tiene permiso para editar el seguimiento. Los revisores ven todos los departamentos. Por eso el caso ahora prueba al líder de departamento.
 > - **TC-03:** el semáforo no cuenta criterios, sino que suma sus pesos. Los datos se rehicieron para caer justo en los límites con los pesos reales (80 % y 50 %, y 77 % y 47 % justo por debajo).
 
+> - **TC-06:** además de la revisión manual en el navegador, se agregó una prueba automática que intenta reutilizar la cookie después de cerrar sesión, porque eso es lo que pide CP-09.
+
 **Procedimientos:**
 - **PROC-01 (P1):** TC-01 → TC-02 → TC-03 → TC-07.
 - **PROC-02 (P2):** TC-04 → TC-08 → TC-05 → TC-09.
@@ -267,6 +270,8 @@ Cada procedimiento empieza con la base de datos restaurada (DAT-01) y termina ce
 - 8 usuarios: superadmin, administrador, dos revisores, líder académico, líder de Sistemas Digitales, líder sin departamento y un usuario de solo consulta.
 - 6 cursos: 3 de Sistemas Digitales y 3 de Producción, con docentes ficticios.
 - Revisión 1 con sus 6 criterios. Los cumplidos dan 80, 77, 50, 47, 100 y 0 %.
+- Revisión 2 en Programación Básica y Bases de Datos, sin criterios cumplidos (para TC-07).
+- Base de datos con la zona horaria `America/Bogota`, igual que el servidor de SIDEM.
 - Reinicio: `docker compose down -v` y `docker compose up` dejan la base en su estado inicial.
 
 ### 5.5 Criterios de suspensión y finalización
@@ -311,10 +316,10 @@ El trabajo se reparte **por riesgo y módulo**: cada integrante es dueño de sus
 
 | Integrante | Rol adicional | Riesgos / casos a cargo |
 |---|---|---|
-| Marcos Duque Jaramillo | Líder de pruebas; entorno de demostración | R01, R02 — TC-01, TC-02 |
-| Sebastián Díaz Jiménez | Automatización (pytest) | R03, R05 — TC-07, TC-04 |
-| Nicolás Castaño Durango | Datos de prueba (DAT-01) | R04, R06 — TC-03, TC-08 |
-| Julián Ramírez Molina | Informe de cierre | R07, R08, R09 — TC-05, TC-09, TC-06 |
+| Marcos Duque Jaramillo | Líder de pruebas; entorno de demostración | R01, R02 - TC-01, TC-02 |
+| Sebastián Díaz Jiménez | Automatización (pytest) | R03, R05 - TC-07, TC-04 |
+| Nicolás Castaño Durango | Datos de prueba (DAT-01) | R04, R06 - TC-03, TC-08 |
+| Julián Ramírez Molina | Informe de cierre | R07, R08, R09 - TC-05, TC-09, TC-06 |
 
 > *Reparto propuesto; el equipo lo confirma en la semana 1.*
 
@@ -326,6 +331,6 @@ El trabajo se reparte **por riesgo y módulo**: cada integrante es dueño de sus
 
 | Semana | Fechas | Actividades | Hito |
 |---|---|---|---|
-| 1 | 09/11 – 14/11 | Revisar el plan con el docente; ajustar; levantar el entorno de demostración y cargar DAT-01. | **H1:** plan aprobado y entorno listo. |
-| 2 | 16/11 – 21/11 | Diseño detallado y automatización; ejecución de PROC-01 (P1) y PROC-02 (P2); reporte de defectos. | **H2:** ciclo 1 ejecutado. |
-| 3 | 23/11 – 27/11 | Regresión y retest; PROC-03 (P3); informe de cierre; ensayo de la exposición. | **H3:** informe de cierre y exposición (≈ 28/11/2026). |
+| 1 | 09/11 - 14/11 | Revisar el plan con el docente; ajustar; levantar el entorno de demostración y cargar DAT-01. | **H1:** plan aprobado y entorno listo. |
+| 2 | 16/11 - 21/11 | Diseño detallado y automatización; ejecución de PROC-01 (P1) y PROC-02 (P2); reporte de defectos. | **H2:** ciclo 1 ejecutado. |
+| 3 | 23/11 - 27/11 | Regresión y retest; PROC-03 (P3); informe de cierre; ensayo de la exposición. | **H3:** informe de cierre y exposición (≈ 28/11/2026). |
