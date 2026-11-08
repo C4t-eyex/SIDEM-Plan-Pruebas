@@ -2,6 +2,7 @@
 
 **Proyecto:** plan y ejecución de pruebas de SIDEM según ISO/IEC/IEEE 29119-3.
 **Equipo:** Marcos Duque Jaramillo, Sebastián Díaz Jiménez, Nicolás Castaño Durango y Julián Ramírez Molina.
+**Docente:** Roberto José Calderón Bermejo.
 **Fecha:** 08/11/2026. **Entrega y exposición:** alrededor del 28/11/2026.
 
 Este documento resume en qué va el trabajo y qué queremos revisar con usted. El detalle está en los documentos que se enlazan.

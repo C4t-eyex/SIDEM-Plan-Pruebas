@@ -15,7 +15,7 @@
 - **Autores:** Marcos Duque Jaramillo, Sebastián Díaz Jiménez, Nicolás Castaño Durango, Julián Ramírez Molina.
 
 ### 1.3 Autoridad de aprobación
-Docente del curso de Pruebas de Software. *(Nombre por confirmar.)*
+Roberto José Calderón Bermejo, docente del curso de Pruebas de Software.
 
 ### 1.4 Historial de cambios y control de versiones
 
@@ -123,7 +123,7 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 
 | Parte interesada | Interés |
 |---|---|
-| Docente del curso | Evalúa el plan y su ejecución; aprueba el documento. |
+| Docente del curso (Roberto José Calderón Bermejo) | Evalúa el plan y su ejecución; aprueba el documento. |
 | Equipo de pruebas (4 integrantes) | Diseña, ejecuta y reporta las pruebas. |
 | Líderes académicos (usuarios de SIDEM) | Necesitan que las métricas y el semáforo sean confiables. |
 | Revisores (usuarios de SIDEM) | Necesitan que lo que registran se guarde bien. |
