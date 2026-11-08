@@ -10,6 +10,7 @@ Trabajo final del curso **Pruebas de Software (2026-2)**. Aplica la norma **ISO/
 | Documento | Para qué |
 |---|---|
 | [`docs/plan-de-pruebas.md`](docs/plan-de-pruebas.md) | **Documento principal.** Plan completo en las 8 secciones pedidas. |
+| [`entrega/Plan_de_Pruebas_SIDEM.pdf`](entrega/Plan_de_Pruebas_SIDEM.pdf) | **El plan en PDF para el docente** (plan completo + anexo de defectos). Se regenera con `python entrega/generar_pdf.py`. |
 | [`docs/resumen-para-el-docente.md`](docs/resumen-para-el-docente.md) | **Para la reunión con el docente.** Qué se muestra, cómo vamos y qué falta. |
 | [`docs/preguntas-para-el-profe.md`](docs/preguntas-para-el-profe.md) | Dudas para validar con el docente. |
 | [`docs/avances.md`](docs/avances.md) | Bitácora de avances y hallazgos. |
@@ -29,6 +30,7 @@ Actividad 1 (alcance) → Actividad 2 (funcionalidades F01-F06) → Matriz de ri
 
 ```
 docs/                 Plan, bitácora, preguntas y antecedentes
+entrega/              PDF del plan para el docente y el script que lo genera
 entregables-previos/  Fuentes LaTeX de los talleres y script de la matriz
 demo/                 Copia de demostración de SIDEM con datos ficticios (fase 2)
 pruebas-automaticas/  Pruebas con pytest contra la demostración (fase 3)
