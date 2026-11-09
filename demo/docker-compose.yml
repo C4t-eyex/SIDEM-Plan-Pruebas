@@ -3,7 +3,9 @@ name: sidem-demo
 
 services:
   db:
-    image: postgres:17-alpine
+    # Imagen ya armada con el esquema oficial de SIDEM (Dockerfile.db). Para reconstruirla
+    # ver docker-compose.build.yml.
+    image: sidem-demo-db:77f71b2
     container_name: sidem-demo-db
     environment:
       POSTGRES_DB: seguimiento_docentes
@@ -15,9 +17,8 @@ services:
     # no se activa (hallazgo HAL-05 en docs/avances.md).
     command: ["postgres", "-c", "timezone=America/Bogota"]
     volumes:
-      # El esquema oficial de SIDEM se carga solo la primera vez que se crea la base (ver init-db.sh)
-      - ./sidem/API_seguimiento_docentes/sql/db.sql:/sidem-sql/db.sql:ro
-      - ./init-db.sh:/docker-entrypoint-initdb.d/01-schema.sh:ro
+      # El esquema oficial de SIDEM viene dentro de la imagen y se carga solo la primera vez
+      # que se crea la base (ver init-db.sh)
       - sidem-demo-datos:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U sidem -d seguimiento_docentes"]
@@ -25,7 +26,8 @@ services:
       retries: 20
 
   app:
-    build: .
+    # Imagen ya armada con el código de SIDEM en el commit 77f71b2 (Dockerfile)
+    image: sidem-demo-app:77f71b2
     container_name: sidem-demo-app
     depends_on:
       db:

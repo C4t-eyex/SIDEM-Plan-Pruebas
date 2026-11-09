@@ -1,6 +1,9 @@
 # Imagen de la demo de SIDEM (solo para pruebas en clase, no para producción)
 FROM python:3.14-slim
 
+LABEL org.opencontainers.image.source="https://github.com/C4t-eyex/SIDEM-Plan-Pruebas" \
+      org.opencontainers.image.description="Aplicación de la demo de SIDEM (commit 77f71b2)"
+
 ENV PYTHONUNBUFFERED=1 \
     PYTHONIOENCODING=utf-8 \
     PIP_NO_CACHE_DIR=1

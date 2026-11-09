@@ -1,0 +1,10 @@
+# Imagen de la base de datos de la demo de SIDEM (solo para pruebas en clase).
+# Lleva dentro el esquema oficial (sql/db.sql del commit 77f71b2), así los integrantes
+# no necesitan el código de SIDEM para montar la demo.
+FROM postgres:17-alpine
+
+LABEL org.opencontainers.image.source="https://github.com/C4t-eyex/SIDEM-Plan-Pruebas" \
+      org.opencontainers.image.description="Base de datos de la demo de SIDEM (commit 77f71b2)"
+
+COPY sidem/API_seguimiento_docentes/sql/db.sql /sidem-sql/db.sql
+COPY init-db.sh /docker-entrypoint-initdb.d/01-schema.sh

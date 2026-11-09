@@ -7,22 +7,30 @@ Cada integrante puede montarla en su propio equipo y ejecutar sus casos sin afec
 ## Qué se necesita
 
 - Docker Desktop encendido.
-- Git.
-- Acceso al repositorio privado de SIDEM. Si no lo tienes, pídele a Marcos que te agregue.
+- Acceso a este repositorio (`SIDEM-Plan-Pruebas`) y a la carpeta de Drive del equipo. No hace falta el código de SIDEM: la aplicación y la base vienen en dos imágenes de Docker ya armadas (`sidem-demo-app:77f71b2` y `sidem-demo-db:77f71b2`), guardadas en un solo archivo.
 
 ## Cómo levantarla
 
-Desde esta carpeta (`demo/`):
+**Solo la primera vez**, carga las imágenes en Docker:
+
+1. Descarga `sidem-demo-imagenes-77f71b2.tar.gz` (unos 253 MB) desde la carpeta de Drive del equipo: https://drive.google.com/drive/folders/1i7nXTlf7k8DhToZPXx2Hm70bDSp-vvhp?usp=sharing. El acceso es solo para los integrantes; si no te deja entrar, pídele acceso a Marcos.
+2. Con Docker Desktop abierto, en la carpeta donde quedó el archivo:
+
+   ```powershell
+   docker load -i sidem-demo-imagenes-77f71b2.tar.gz
+   ```
+
+   Debe terminar con `Loaded image: sidem-demo-app:77f71b2` y `Loaded image: sidem-demo-db:77f71b2`. Después puedes borrar el archivo.
+
+**Para arrancar**, desde esta carpeta (`demo/`):
 
 ```powershell
-# 1. Descarga SIDEM en la versión de las pruebas (solo la primera vez)
-.\preparar-demo.ps1          # en Linux/Mac: sh preparar-demo.sh
-
-# 2. Construye y arranca
-docker compose up --build -d
+docker compose up -d
 ```
 
-Cuando termine, abre http://localhost:8090. La primera vez tarda unos minutos porque descarga las imágenes e instala las dependencias.
+Cuando termine (menos de un minuto), abre http://localhost:8090.
+
+Si aparece `pull access denied` o `repository does not exist`, es que falta el paso de `docker load`.
 
 ## Usuarios de prueba
 
@@ -73,12 +81,26 @@ docker compose down
 
 | Archivo | Qué hace |
 |---|---|
-| `preparar-demo.ps1` / `.sh` | Descarga SIDEM en el commit `77f71b2` dentro de `demo/sidem/` (esa carpeta no se sube al repositorio). |
-| `docker-compose.yml` | Define la base de datos y la aplicación. |
-| `Dockerfile` | Arma la imagen de SIDEM. |
+| `docker-compose.yml` | Define la base de datos y la aplicación usando las imágenes ya armadas. |
+| `docker-compose.build.yml` | Solo para el líder: reconstruye las imágenes (ver abajo). |
+| `preparar-demo.ps1` / `.sh` | Solo para el líder: descarga SIDEM en el commit `77f71b2` dentro de `demo/sidem/` (esa carpeta no se sube al repositorio). |
+| `Dockerfile` | Arma la imagen de la aplicación con el código de SIDEM. |
+| `Dockerfile.db` | Arma la imagen de la base con el esquema oficial de SIDEM. |
 | `init-db.sh` | Carga el esquema oficial de SIDEM (`sql/db.sql`) al crear la base. |
 | `entrypoint.sh` | Completa el esquema, carga los datos ficticios y arranca SIDEM. |
 | `seed_demo.py` | Crea los usuarios, cursos y resultados de prueba (DAT-01). |
+
+## Reconstruir las imágenes (solo el líder)
+
+Requiere acceso al repositorio privado de SIDEM. Arma las imágenes, las guarda en el archivo comprimido y luego se sube ese archivo a la carpeta de Drive:
+
+```powershell
+.\preparar-demo.ps1
+docker compose -f docker-compose.yml -f docker-compose.build.yml build
+docker save sidem-demo-app:77f71b2 sidem-demo-db:77f71b2 | gzip > sidem-demo-imagenes-77f71b2.tar.gz   # en Git Bash
+```
+
+El archivo no va al repositorio: pesa más de los 100 MB que permite GitHub y contiene el código de SIDEM.
 
 ## Nota sobre el esquema
 

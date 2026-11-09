@@ -1,0 +1,12 @@
+# Solo para el líder de pruebas: reconstruye las imágenes de la demo desde demo/sidem/
+# (requiere haber corrido preparar-demo.* con acceso al repositorio privado de SIDEM).
+#
+#   docker compose -f docker-compose.yml -f docker-compose.build.yml build
+#   docker compose -f docker-compose.yml -f docker-compose.build.yml push
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+  app:
+    build: .
