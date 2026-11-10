@@ -1,0 +1,179 @@
+% Actividad de Clase 2 - Identificación del Objeto de Prueba (SIDEM)
+% Transcripción de la hoja entregada en clase, con F06 y el punto 6 completados.
+% El punto 7 (casillas y firmas) se deja en blanco para llenarlo a mano.
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage[margin=2cm,headheight=14pt]{geometry}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+
+\hypersetup{hidelinks,pdftitle={Actividad de Clase 2 - SIDEM},pdfauthor={Equipo SIDEM}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Plan de Pruebas de Software -- Actividad de Clase 2}
+\fancyhead[R]{\small ISO/IEC/IEEE 29119-3}
+\fancyfoot[C]{\small Página \thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\si}{$\boxtimes$\,Sí\enspace$\square$\,No}
+\newcommand{\vacia}{$\square$\,Sí\enspace$\square$\,No}
+\newcommand{\linea}[1]{\underline{\makebox[6.5cm][l]{#1}}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries ACTIVIDAD DE CLASE 2}\par\vspace{3pt}
+{\large Identificación del Objeto de Prueba (\textit{Test Items})}\par\vspace{2pt}
+{\small Norma ISO/IEC/IEEE 29119-3:2013 \quad|\quad Duración: 60 minutos}
+\end{center}
+\vspace{6pt}
+
+\noindent
+\begin{tabularx}{\textwidth}{|Y|Y|}
+\hline
+\textbf{EQUIPO DE TRABAJO} (Desarrolladores) & \textbf{EQUIPO REVISOR} (Evaluadores) \\
+\hline
+Sistema: \textbf{SIDEM} \newline Fecha: \textbf{24-09-2026} & Equipo: \textbf{RESTful Booker} \\
+\hline
+Integrantes: \newline
+1. Nicolás Castaño Durango \newline
+2. Julián Ramírez Molina \newline
+3. Sebastián Díaz Jiménez \newline
+4. Marcos Duque Jaramillo
+&
+Integrantes revisores: \newline
+1. Susana Romero García \newline
+2. Santiago Montoya Restrepo \newline
+3. Miguel Ángel Vallejo Giraldo \newline
+4. Luisa Fernanda Tamayo Arias \\
+\hline
+\end{tabularx}
+
+\section{Propósito y Marco Teórico}
+En la Actividad 1 se definieron la metodología, el objetivo y el alcance general del plan de pruebas. En esta actividad se avanza a \textbf{identificar los elementos concretos del sistema que serán objeto de prueba} (\textit{test items}).
+
+De acuerdo con la norma \textbf{ISO/IEC/IEEE 29119-3:2013}, los \textit{test items} corresponden a los módulos, componentes o funcionalidades susceptibles de ser evaluados. En esta fase no se diseñan casos de prueba detallados: se delimita qué se probará, bajo qué condiciones y con qué prioridad.
+
+\section{Identificación y Delimitación del Objeto de Prueba}
+Retomen el sistema de la Actividad 1 e identifiquen entre \textbf{6 y 7 funcionalidades clave}. Indiquen qué hace cada elemento, quién interactúa con él, si se incluye en el alcance y la razón técnica.
+
+\vspace{4pt}
+\noindent
+{\small
+\begin{tabularx}{\textwidth}{@{}P{0.8cm}P{2.6cm}YP{2.3cm}P{2.0cm}Y@{}}
+\toprule
+\textbf{ID} & \textbf{Elemento / Funcionalidad} & \textbf{¿Qué hace?} & \textbf{Actor principal} & \textbf{¿En alcance?} & \textbf{Justificación de selección o exclusión} \\
+\midrule
+F01 & Inicio de sesión & Permite el ingreso al sistema con usuario y contraseña. & Todos los usuarios & \si & Controla el acceso general al sistema. \\
+\addlinespace
+F02 & Gestión de usuarios y roles & Crea usuarios, asigna roles y define qué puede hacer cada uno. & Administrador & \si & Garantiza que cada usuario acceda a lo que le corresponde. \\
+\addlinespace
+F03 & Registro del seguimiento & Permite evaluar los criterios de cada curso en cada revisión. & Revisor & \si & Es la función principal del sistema y la fuente de los datos de métricas. \\
+\addlinespace
+F04 & Semáforo de cumplimiento & Clasifica en un color según el porcentaje de cumplimiento. & Líderes & \si & Resume el estado del seguimiento y apoya la toma de decisiones. \\
+\addlinespace
+F05 & Panel de métricas & Muestra estadísticas del seguimiento por revisión. & Líderes / administrador & \si & Permite validar que la información sea confiable. \\
+\addlinespace
+F06 & Exportación de informes & Genera un informe en Excel con los resultados del seguimiento. & Revisor / líderes & \si & Es la salida formal de la información y debe coincidir con lo registrado en el sistema. \\
+\addlinespace
+F07 & & & & \vacia & \\
+\bottomrule
+\end{tabularx}
+}
+
+\newpage
+\section{Condiciones de Prueba: Precondiciones y Criterios de Aceptación}
+Seleccionen \textbf{tres funcionalidades incluidas} en el alcance y describan las condiciones iniciales de entrada y el resultado esperado que validaría su correcto funcionamiento.
+
+\vspace{4pt}
+\noindent
+\begin{tabularx}{\textwidth}{@{}P{0.9cm}YY@{}}
+\toprule
+\textbf{ID} & \textbf{Precondiciones / Datos de entrada} & \textbf{Resultado esperado / Criterio de aceptación} \\
+\midrule
+F02 & Existe un usuario con un rol de solo consulta. Ese usuario intenta modificar un registro de seguimiento. & El sistema impide la modificación y muestra un mensaje de acceso denegado. El usuario solo puede ver la información. \\
+\addlinespace
+F03 & El revisor ha iniciado sesión y existe un curso asignado en una revisión abierta. El revisor marca los criterios y escribe una observación. & La información queda guardada, se asocia al curso y a la revisión correctos y se ve igual al volver a consultarla. \\
+\addlinespace
+F04 & Existen tres cursos evaluados en la misma revisión: uno con el 80\,\% de los criterios cumplidos, otro con el 50\,\% y otro con el 40\,\%. & El semáforo muestra verde, amarillo y rojo, respectivamente. \\
+\bottomrule
+\end{tabularx}
+
+\section{Priorización del Objeto de Prueba}
+Identifiquen \textbf{tres elementos prioritarios} para el proceso de pruebas. Justifiquen su elección según criterios técnicos o de negocio: \textit{Criticidad para el usuario, Complejidad técnica/integración, Frecuencia de uso o Impacto ante fallas.}
+
+\vspace{4pt}
+\noindent
+\begin{tabularx}{\textwidth}{@{}P{1.9cm}P{4.2cm}Y@{}}
+\toprule
+\textbf{Prioridad} & \textbf{Elemento (ID y nombre)} & \textbf{Justificación del criterio de priorización} \\
+\midrule
+1 (Alta) & F02 Gestión de usuarios y roles & Tiene el mayor impacto ante fallas: un error en los permisos permitiría ver o modificar información de otros usuarios o departamentos. \\
+\addlinespace
+2 (Media) & F03 Registro del seguimiento & Es la funcionalidad de mayor frecuencia de uso, y los errores en el registro afectan los resultados posteriores. \\
+\addlinespace
+3 (Media) & F04 Semáforo de cumplimiento & Es crítico para el usuario, porque los líderes toman decisiones con base en este resultado. Un cálculo incorrecto genera conclusiones equivocadas. \\
+\bottomrule
+\end{tabularx}
+
+\section{Revisión Cruzada entre Equipos (Coevaluación de Pares)}
+Intercambien el documento con otro equipo. El objetivo es verificar si una persona ajena al desarrollo comprende qué partes del sistema serán objeto de prueba y por qué.
+
+\vspace{4pt}
+\noindent
+\begin{tabularx}{\textwidth}{@{}Ycc@{}}
+\toprule
+\textbf{Criterio de evaluación} & \textbf{Sí} & \textbf{No} \\
+\midrule
+Los elementos identificados representan funcionalidades reales y concretas del sistema. & $\boxtimes$ & $\square$ \\
+Los actores principales de cada funcionalidad están claramente definidos. & $\boxtimes$ & $\square$ \\
+La delimitación del alcance es coherente con la Actividad 1 y sus exclusiones están justificadas. & $\boxtimes$ & $\square$ \\
+Las precondiciones y criterios de aceptación reflejan la lógica esperada del software. & $\boxtimes$ & $\square$ \\
+La priorización se justifica técnicamente (criticidad, complejidad o riesgo de negocio). & $\boxtimes$ & $\square$ \\
+\bottomrule
+\end{tabularx}
+
+\vspace{8pt}
+\noindent\textbf{Dos fortalezas o aspectos adecuadamente definidos:}\par
+1. Gestión de usuarios y roles.\par
+2. Semáforo de cumplimiento.
+
+\vspace{6pt}
+\noindent\textbf{Dos oportunidades de mejora o aspectos a precisar:}\par
+1. No se encontraron oportunidades o aspectos a mejorar.\par
+2. No se encontraron oportunidades o aspectos a mejorar.
+
+\section{Ajustes del Equipo y Reflexión Metacognitiva}
+\noindent\textbf{Ajustes realizados tras la coevaluación:}\par
+El equipo revisor no reportó oportunidades de mejora. En la autorrevisión se completó F06 (Exportación de informes) para cumplir el mínimo de 6 funcionalidades; los demás elementos se mantienen sin cambios.
+
+\vspace{6pt}
+\noindent\textbf{Reflexión pedagógica:} ¿Por qué es un error metodológico diseñar casos de prueba detallados antes de delimitar y priorizar el objeto de prueba?\par
+Porque se invierte esfuerzo sin criterio: se prueban funciones fuera del alcance y las más críticas quedan con poca cobertura. La norma ISO/IEC/IEEE 29119-3 pide definir primero qué se probará y con qué prioridad.
+
+\section{Registro de Entrega y Firmas}
+\noindent
+\begin{tabular}{@{}p{8cm}p{8cm}@{}}
+$\square$ Objeto de prueba delimitado. & $\square$ Coevaluación realizada con equipo par. \\
+$\square$ Condiciones de prueba descritas. & $\square$ Ajustes e integrantes registrados. \\
+\end{tabular}
+
+\vspace{14pt}
+\noindent\textbf{Firmas de Integrantes del Equipo:}\par\vspace{22pt}
+\noindent 1. \linea{}\hfill 3. \linea{}\par\vspace{22pt}
+\noindent 2. \linea{}\hfill 4. \linea{}
+
+\end{document}

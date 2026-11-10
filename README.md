@@ -31,7 +31,7 @@ Actividad 1 (alcance) → Actividad 2 (funcionalidades F01-F06) → Matriz de ri
 ```
 docs/                 Plan, bitácora, preguntas y antecedentes
 entrega/              PDF del plan para el docente y el script que lo genera
-entregables-previos/  Fuentes LaTeX de los talleres y script de la matriz
+entregables-previos/  Actividades 1 y 2 (escaneadas y en LaTeX), Talleres 4 y 5 y script de la matriz
 demo/                 Copia de demostración de SIDEM con datos ficticios (fase 2)
 pruebas-automaticas/  Pruebas con pytest contra la demostración (fase 3)
 evidencias/           Capturas y resultados de la ejecución (fase 3)

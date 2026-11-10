@@ -1,4 +1,4 @@
-> **Antecedente:** Actividad 1 del curso (septiembre 2026). Se conserva como se entregó. Los ajustes posteriores están en `../plan-de-pruebas.md`.
+> **Antecedente:** Actividad 1 del curso (septiembre 2026). Se conserva como se entregó. Los ajustes posteriores están en `../plan-de-pruebas.md`. Hoja original escaneada, con la revisión cruzada: `entregables-previos/Actividad1_SIDEM_escaneada.pdf`.
 
 # Plan de Pruebas - SIDEM
 

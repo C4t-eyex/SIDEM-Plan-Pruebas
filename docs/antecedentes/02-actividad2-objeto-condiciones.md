@@ -33,4 +33,6 @@
 
 **Ajustes tras la coevaluación:** el equipo revisor no reportó oportunidades de mejora. En la autorrevisión se completó F06 (Exportación de informes) para cumplir el mínimo de 6 funcionalidades.
 
-**Reflexión:** sin saber qué es más importante probar, se pierde esfuerzo en casos innecesarios y se descuidan las funciones críticas del sistema.
+**Reflexión:** diseñar casos antes de delimitar y priorizar invierte esfuerzo sin criterio: se prueban funciones fuera del alcance y las más críticas quedan con poca cobertura. La norma ISO/IEC/IEEE 29119-3 pide definir primero qué se probará y con qué prioridad.
+
+Hoja completa: `entregables-previos/Actividad2_SIDEM.pdf` (LaTeX). Hoja original escaneada con la coevaluación: `entregables-previos/Actividad2_SIDEM_escaneada.pdf`.
