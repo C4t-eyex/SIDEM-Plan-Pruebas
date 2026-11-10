@@ -3,7 +3,7 @@
 **Proyecto:** plan y ejecución de pruebas de SIDEM según ISO/IEC/IEEE 29119-3.
 **Equipo:** Marcos Duque Jaramillo, Sebastián Díaz Jiménez, Nicolás Castaño Durango y Julián Ramírez Molina.
 **Docente:** Roberto José Calderón Bermejo.
-**Fecha:** 08/11/2026. **Entrega y exposición:** alrededor del 28/11/2026.
+**Fecha:** 08/11/2026. **Entrega y exposición:** martes 17/11/2026.
 
 Este documento resume en qué va el trabajo y qué queremos revisar con usted. El detalle está en los documentos que se enlazan.
 
@@ -47,7 +47,7 @@ Las pruebas se enfocan en lo que más riesgo tiene: quién puede ver y modificar
 | Nicolás | TC-03, TC-08 | Ejecución manual y revisión de los datos de prueba. |
 | Julián | TC-05, TC-09, TC-06 | Ejecución manual de TC-05 y TC-06, y redactar el informe de cierre. |
 
-Las hojas para la ejecución manual están en [`ejecucion-manual.md`](ejecucion-manual.md). Después vienen el retest de los defectos y el informe de cierre (semana 3 del cronograma).
+Las hojas para la ejecución manual están en [`ejecucion-manual.md`](ejecucion-manual.md). Después vienen el retest de los defectos y el informe de cierre (15/11 y 16/11, según el cronograma).
 
 ## 5. Lo que necesitamos que nos confirme
 

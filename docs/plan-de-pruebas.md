@@ -1,14 +1,14 @@
 # Plan de Pruebas de Software - SIDEM
 
-> Basado en la norma ISO/IEC/IEEE 29119-3 (Documentación de pruebas), adaptada a un ciclo de 3 semanas.
-> **Estado:** BORRADOR v0.4 - pendiente de revisión con el docente.
+> Basado en la norma ISO/IEC/IEEE 29119-3 (Documentación de pruebas), adaptada a un ciclo corto de 9 días (09/11/2026 al 17/11/2026).
+> **Estado:** BORRADOR v0.5 - pendiente de revisión con el docente.
 
 ---
 
 ## 1. Información específica del documento
 
 ### 1.1 Identificador único del documento
-`SIDEM-PP-2026-01` (Plan de Pruebas, versión 0.4)
+`SIDEM-PP-2026-01` (Plan de Pruebas, versión 0.5)
 
 ### 1.2 Organización emisora y autores
 - **Organización:** Equipo SIDEM - curso Pruebas de Software, 2026-2.
@@ -25,6 +25,7 @@ Roberto José Calderón Bermejo, docente del curso de Pruebas de Software.
 | 0.2 | 08/11/2026 | Equipo SIDEM | Ajuste de TC-01, TC-03 y DAT-01 según el funcionamiento real de SIDEM, revisado al montar la demo. |
 | 0.3 | 08/11/2026 | Equipo SIDEM | DAT-01 con revisión 2 y zona horaria de la base; complemento automático de TC-06. |
 | 0.4 | 10/11/2026 | Equipo SIDEM | Casos identificados no ejecutados TC-10 a TC-17 (dos por integrante), según indicación del docente. |
+| 0.5 | 10/11/2026 | Equipo SIDEM | Cronograma ajustado a la exposición del 17/11/2026, según indicación del docente. |
 
 El control de versiones del documento se lleva en este repositorio (historial de commits de Git).
 
@@ -54,7 +55,7 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 
 **Declaración.** El proyecto aplica la norma ISO/IEC/IEEE 29119-3 con **conformidad adaptada (tailored conformance)**, no con conformidad completa.
 
-**Justificación.** SIDEM es un sistema académico interno de **criticidad media**. Una falla no pone en riesgo vidas ni dinero, pero afecta las decisiones académicas y la confidencialidad de la información de los docentes. Además, el proyecto tiene una restricción fuerte: **3 semanas de duración** con un equipo de 4 estudiantes a tiempo parcial.
+**Justificación.** SIDEM es un sistema académico interno de **criticidad media**. Una falla no pone en riesgo vidas ni dinero, pero afecta las decisiones académicas y la confidencialidad de la información de los docentes. Además, el proyecto tiene una restricción fuerte: **9 días de duración** (exposición el 17/11/2026) con un equipo de 4 estudiantes a tiempo parcial.
 
 **Qué se conserva.** Se mantiene completo todo lo que da trazabilidad: el plan, el análisis de riesgos, la estrategia, las condiciones, los casos, los procedimientos, los datos, el entorno, los reportes de defectos y el informe de cierre.
 
@@ -64,7 +65,7 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 |---|---|---|---|
 | Documentación organizacional (política y estrategia organizacional de pruebas, cl. 6.2 y 6.3) | Excluido | No existe una organización de pruebas; el plan es de un solo proyecto. | Bajo. No hay otros proyectos que deban alinearse. |
 | Especificaciones de diseño, casos y procedimientos como documentos separados | Consolidados en este plan y en `antecedentes/05` | Reduce la duplicación en un ciclo corto. | Bajo. La trazabilidad se conserva en la matriz 5.3. |
-| Informes de estado periódicos (*test status report*) | Simplificados | Se reemplazan por la bitácora `avances.md` y el tablero del repositorio. | Medio. Hay menos visibilidad formal del avance; se mitiga con revisión semanal del equipo. |
+| Informes de estado periódicos (*test status report*) | Simplificados | Se reemplazan por la bitácora `avances.md` y el tablero del repositorio. | Medio. Hay menos visibilidad formal del avance; se mitiga con seguimiento diario del equipo. |
 | Reporte de incidentes formal (*incident report*) | Simplificado | Se usa una plantilla de *issue* en GitHub con los campos mínimos de la norma. | Bajo. Se conservan los campos esenciales. |
 | Pruebas de rendimiento (R10) | Excluidas | La exposición del riesgo es baja (2) y no hay entorno de carga. | Bajo. Se acepta y queda documentado en 4.3. |
 | Integración con Moodle y seguimiento a estudiantes | Excluidos | No hay una instancia de Moodle disponible; el módulo de estudiantes está en beta. | Medio. Los criterios automáticos que consultan Moodle no se validan en este ciclo. |
@@ -116,7 +117,7 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 ### 3.3 Suposiciones y restricciones
 - **S1.** La versión fijada de SIDEM no cambia durante el ciclo. Si se corrige un defecto, se registra el nuevo commit y se hace regresión.
 - **S2.** Los datos ficticios representan los casos reales: varios departamentos, todos los roles y cursos con distintos porcentajes de cumplimiento.
-- **R1.** Duración total de 3 semanas (09/11/2026 al 27/11/2026).
+- **R1.** Duración total de 9 días (09/11/2026 al 17/11/2026). La exposición es el martes 17/11/2026.
 - **R2.** Equipo de 4 personas a tiempo parcial, unas 7,5 horas cada una.
 - **R3.** No se puede usar información real de docentes, por confidencialidad.
 
@@ -335,16 +336,17 @@ El trabajo se reparte **por riesgo y módulo**: cada integrante es dueño de sus
 | Nicolás Castaño Durango | Datos de prueba (DAT-01) | R04, R06 - TC-03, TC-08 | TC-12, TC-13 |
 | Julián Ramírez Molina | Informe de cierre | R07, R08, R09 - TC-05, TC-09, TC-06 | TC-14, TC-15 |
 
-> *Reparto propuesto; el equipo lo confirma en la semana 1.*
+> *Reparto propuesto; el equipo lo confirma en la iteración 1 (hasta el 11/11).*
 
 ---
 
 ## 8. Cronograma
 
-### 8.1 Hitos y fechas de ejecución (ciclo de 3 semanas)
+### 8.1 Hitos y fechas de ejecución (ciclo de 9 días)
 
-| Semana | Fechas | Actividades | Hito |
+| Iteración | Fechas | Actividades | Hito |
 |---|---|---|---|
-| 1 | 09/11 - 14/11 | Revisar el plan con el docente; ajustar; levantar el entorno de demostración y cargar DAT-01. | **H1:** plan aprobado y entorno listo. |
-| 2 | 16/11 - 21/11 | Diseño detallado y automatización; ejecución de PROC-01 (P1) y PROC-02 (P2); reporte de defectos. | **H2:** ciclo 1 ejecutado. |
-| 3 | 23/11 - 27/11 | Regresión y retest; PROC-03 (P3); informe de cierre; ensayo de la exposición. | **H3:** informe de cierre y exposición (≈ 28/11/2026). |
+| 1 | 09/11 - 11/11 | Revisar el plan con el docente; ajustar; levantar el entorno de demostración en los cuatro equipos y cargar DAT-01. | **H1:** plan ajustado y entorno listo. |
+| 2 | 12/11 - 14/11 | Corrida de pytest; ejecución de PROC-01 (P1), PROC-02 (P2) y PROC-03 (P3); reporte de defectos. | **H2:** ciclo 1 ejecutado. |
+| 3 | 15/11 - 16/11 | Regresión y retest; informe de cierre; diapositivas y ensayo de la exposición. | **H3:** informe de cierre listo. |
+| - | 17/11 | Entrega y exposición. | **H4:** exposición (17/11/2026). |
