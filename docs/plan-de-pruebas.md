@@ -1,14 +1,14 @@
 # Plan de Pruebas de Software - SIDEM
 
 > Basado en la norma ISO/IEC/IEEE 29119-3 (Documentación de pruebas), adaptada a un ciclo de 3 semanas.
-> **Estado:** BORRADOR v0.3 - pendiente de revisión con el docente.
+> **Estado:** BORRADOR v0.4 - pendiente de revisión con el docente.
 
 ---
 
 ## 1. Información específica del documento
 
 ### 1.1 Identificador único del documento
-`SIDEM-PP-2026-01` (Plan de Pruebas, versión 0.3)
+`SIDEM-PP-2026-01` (Plan de Pruebas, versión 0.4)
 
 ### 1.2 Organización emisora y autores
 - **Organización:** Equipo SIDEM - curso Pruebas de Software, 2026-2.
@@ -24,6 +24,7 @@ Roberto José Calderón Bermejo, docente del curso de Pruebas de Software.
 | 0.1 | 08/11/2026 | Equipo SIDEM | Primer borrador: consolida Actividades 1 y 2, matriz de riesgos y Talleres 4 y 5. |
 | 0.2 | 08/11/2026 | Equipo SIDEM | Ajuste de TC-01, TC-03 y DAT-01 según el funcionamiento real de SIDEM, revisado al montar la demo. |
 | 0.3 | 08/11/2026 | Equipo SIDEM | DAT-01 con revisión 2 y zona horaria de la base; complemento automático de TC-06. |
+| 0.4 | 10/11/2026 | Equipo SIDEM | Casos identificados no ejecutados TC-10 a TC-17 (dos por integrante), según indicación del docente. |
 
 El control de versiones del documento se lleva en este repositorio (historial de commits de Git).
 
@@ -258,6 +259,19 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 
 Cada procedimiento empieza con la base de datos restaurada (DAT-01) y termina cerrando todas las sesiones.
 
+**Casos identificados no ejecutados:** cada integrante propone dos casos adicionales sobre sus riesgos. Quedan registrados en el plan, pero no se ejecutan en esta ronda por el tiempo disponible (RP2): la estrategia basada en riesgos ejecuta primero TC-01 a TC-09. Pueden ejecutarse en una ronda posterior.
+
+| Caso | Integrante | Descripción | Resultado esperado | Riesgo | Técnica | Estado |
+|---|---|---|---|---|---|---|
+| TC-10 | Sebastián | Dos revisores editan el mismo curso y revisión y guardan casi al mismo tiempo. | El sistema avisa del conflicto o conserva ambos cambios; no se pierde en silencio lo del primero. | R05 | Transición de estados | Identificado - no ejecutado |
+| TC-11 | Sebastián | Guardar una observación en el límite de longitud, con tildes, ñ y `<script>alert(1)</script>`. | Se guarda completa en el curso correcto y se muestra como texto, sin ejecutar el script. | R05, R03 | Valores límite | Identificado - no ejecutado |
+| TC-12 | Nicolás | Curso sin criterios evaluados (0 de 0) o con criterios "No aplica". | No hay error de división por cero ni sale verde por defecto; se muestra "sin datos" o el color definido. | R04 | Clase de equivalencia inválida | Identificado - no ejecutado |
+| TC-13 | Nicolás | Curso con dos docentes o repetido en la revisión; cambiar el filtro de periodo. | El panel cuenta el curso una sola vez y los totales cambian según el filtro. | R06 | Clases de equivalencia | Identificado - no ejecutado |
+| TC-14 | Julián | Sesión abierta en dos navegadores; cambiar la contraseña en uno. | La sesión del otro navegador deja de funcionar y pide login. | R09 | Transición de estados | Identificado - no ejecutado |
+| TC-15 | Julián | Exportar un curso cuya observación empieza por `=` o `+` (ej. `=HYPERLINK(...)`) y lleva tildes. | En el Excel aparece como texto, no como fórmula; tildes y ñ correctas. | R07 | Clases de equivalencia | Identificado - no ejecutado |
+| TC-16 | Marcos | El líder de Sistemas Digitales cambia el ID en la URL o en la API para abrir un curso de Producción. | Respuesta 403 o 404, sin datos de Producción. | R01, R02 | Tabla de decisión | Identificado - no ejecutado |
+| TC-17 | Marcos | Un revisor intenta crear un usuario o subirse el rol a admin, desde la pantalla o con petición directa. | La acción se rechaza y el rol no cambia. | R01 | Tabla de decisión | Identificado - no ejecutado |
+
 ### 5.4 Requisitos de entorno y datos de prueba
 
 **Entorno AMB-01:**
@@ -314,12 +328,12 @@ Cada procedimiento empieza con la base de datos restaurada (DAT-01) y termina ce
 
 El trabajo se reparte **por riesgo y módulo**: cada integrante es dueño de sus casos, los ejecuta, guarda la evidencia y reporta los defectos.
 
-| Integrante | Rol adicional | Riesgos / casos a cargo |
-|---|---|---|
-| Marcos Duque Jaramillo | Líder de pruebas; entorno de demostración | R01, R02 - TC-01, TC-02 |
-| Sebastián Díaz Jiménez | Automatización (pytest) | R03, R05 - TC-07, TC-04 |
-| Nicolás Castaño Durango | Datos de prueba (DAT-01) | R04, R06 - TC-03, TC-08 |
-| Julián Ramírez Molina | Informe de cierre | R07, R08, R09 - TC-05, TC-09, TC-06 |
+| Integrante | Rol adicional | Riesgos / casos a cargo | Casos identificados (no ejecutados) |
+|---|---|---|---|
+| Marcos Duque Jaramillo | Líder de pruebas; entorno de demostración | R01, R02 - TC-01, TC-02 | TC-16, TC-17 |
+| Sebastián Díaz Jiménez | Automatización (pytest) | R03, R05 - TC-07, TC-04 | TC-10, TC-11 |
+| Nicolás Castaño Durango | Datos de prueba (DAT-01) | R04, R06 - TC-03, TC-08 | TC-12, TC-13 |
+| Julián Ramírez Molina | Informe de cierre | R07, R08, R09 - TC-05, TC-09, TC-06 | TC-14, TC-15 |
 
 > *Reparto propuesto; el equipo lo confirma en la semana 1.*
 
