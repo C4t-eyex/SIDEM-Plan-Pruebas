@@ -1,7 +1,7 @@
 # Resumen para la revisión con el docente
 
 **Proyecto:** plan y ejecución de pruebas de SIDEM según ISO/IEC/IEEE 29119-3.
-**Equipo:** Marcos Duque Jaramillo, Sebastián Díaz Jiménez, Nicolás Castaño Durango y Julián Ramírez Molina.
+**Equipo:** Marcos Duque Jaramillo, Sebastián Díaz Jiménez, Nicolás Cataño Durango y Julián Ramírez Molina.
 **Docente:** Roberto José Calderón Bermejo.
 **Fecha:** 08/11/2026. **Entrega y exposición:** martes 17/11/2026.
 

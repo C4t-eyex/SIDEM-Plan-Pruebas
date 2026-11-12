@@ -12,7 +12,7 @@
 | Identificador | `SIDEM-IC-2026-01` |
 | Versión | 0.1 (borrador) |
 | Fecha | 12/11/2026 |
-| Autores | Marcos Duque Jaramillo, Sebastián Díaz Jiménez, Nicolás Castaño Durango, Julián Ramírez Molina |
+| Autores | Marcos Duque Jaramillo, Sebastián Díaz Jiménez, Nicolás Cataño Durango, Julián Ramírez Molina |
 | Plan al que responde | `SIDEM-PP-2026-01`, versión 0.5 (`docs/plan-de-pruebas.md`) |
 | Aprobación | Roberto José Calderón Bermejo, docente del curso |
 
@@ -227,7 +227,7 @@ Observaciones basadas en lo que pasó en el ciclo:
 |---|---|
 | Marcos Duque Jaramillo | Líder de pruebas y entorno de demostración (Docker, imágenes y Drive del equipo). Casos TC-01 y TC-02. |
 | Sebastián Díaz Jiménez | Pruebas automáticas con pytest y corrida completa del 12/11/2026. Casos TC-07 y TC-04. |
-| Nicolás Castaño Durango | Datos de prueba DAT-01 y su verificación. Casos TC-03 y TC-08. |
+| Nicolás Cataño Durango | Datos de prueba DAT-01 y su verificación. Casos TC-03 y TC-08. |
 | Julián Ramírez Molina | Ejecución manual de TC-05 y TC-06, revisión de TC-09 y este informe. |
 
 ---
