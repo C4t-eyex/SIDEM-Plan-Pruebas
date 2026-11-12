@@ -1,0 +1,85 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.7.0 -- C:\Users\SebasDeveloper\AppData\Local\Programs\Python\Python311\python.exe
+rootdir: C:\Users\SebasDeveloper\Documents\pruebas de software final\pruebas-automaticas
+configfile: pytest.ini
+plugins: anyio-4.16.0
+collecting ... collected 19 items
+
+test_tc01_alcance_departamento.py::test_lider_ve_solo_su_departamento PASSED [  5%]
+test_tc01_alcance_departamento.py::test_lider_no_puede_pedir_metricas_de_otro_departamento PASSED [ 10%]
+test_tc01_alcance_departamento.py::test_lider_no_puede_modificar_seguimiento PASSED [ 15%]
+test_tc02_permisos_rol.py::test_consulta_puede_ver_el_seguimiento FAILED [ 21%]
+test_tc02_permisos_rol.py::test_consulta_no_puede_guardar PASSED         [ 26%]
+test_tc02_permisos_rol.py::test_lider_sin_departamento_no_ve_seguimiento PASSED [ 31%]
+test_tc02_permisos_rol.py::test_lider_sin_departamento_no_ve_metricas FAILED [ 36%]
+test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Programaci\xf3n B\xe1sica (DEMO)-80-verde] PASSED [ 42%]
+test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Bases de Datos (DEMO)-77-amarillo] PASSED [ 47%]
+test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Redes I (DEMO)-50-amarillo] PASSED [ 52%]
+test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Procesos Industriales (DEMO)-47-rojo] PASSED [ 57%]
+test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Calidad (DEMO)-100-verde] PASSED [ 63%]
+test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Log\xedstica (DEMO)-0-rojo] PASSED [ 68%]
+test_tc03_semaforo_limites.py::test_resumen_del_panel PASSED             [ 73%]
+test_tc05_exportar_excel.py::test_excel_coincide_con_pantalla[Sistemas Digitales] PASSED [ 78%]
+test_tc05_exportar_excel.py::test_excel_coincide_con_pantalla[Producci\xf3n] PASSED [ 84%]
+test_tc06_sesion_cerrada.py::test_sesion_cerrada_no_se_reutiliza FAILED  [ 89%]
+test_tc07_criterios_revision.py::test_registro_queda_en_el_curso_y_revision_correctos PASSED [ 94%]
+test_tc09_bloqueo_login.py::test_bloqueo_y_desbloqueo PASSED             [100%]
+
+================================== FAILURES ===================================
+___________________ test_consulta_puede_ver_el_seguimiento ____________________
+
+sesion = <function sesion.<locals>._abrir at 0x0000025B26E2CA40>
+
+    def test_consulta_puede_ver_el_seguimiento(sesion):
+        consulta = sesion("consulta@sidem.test")
+        cursos = cursos_revision(consulta, 1)
+>       assert len(cursos) == 6, f"El usuario de consulta ve {len(cursos)} cursos"
+E       AssertionError: El usuario de consulta ve 0 cursos
+E       assert 0 == 6
+E        +  where 0 = len([])
+
+test_tc02_permisos_rol.py:13: AssertionError
+_________________ test_lider_sin_departamento_no_ve_metricas __________________
+
+sesion = <function sesion.<locals>._abrir at 0x0000025B26EC04A0>
+
+    def test_lider_sin_departamento_no_ve_metricas(sesion):
+        lider = sesion("lider.sindep@sidem.test")
+        r = lider.get("/dashboard/stats/", params={"periodo": PERIODO, "revision_numero": 1})
+        assert r.status_code == 200
+        datos = r.json()
+>       assert datos["total_cursos"] == 0, (
+            f"Ve {datos['total_cursos']} cursos de "
+            f"{sorted({c['departamento'] for c in datos['docentes']})}"
+        )
+E       AssertionError: Ve 6 cursos de ['Producción', 'Sistemas Digitales']
+E       assert 6 == 0
+
+test_tc02_permisos_rol.py:36: AssertionError
+_____________________ test_sesion_cerrada_no_se_reutiliza _____________________
+
+    def test_sesion_cerrada_no_se_reutiliza():
+        cliente = iniciar_sesion("consulta@sidem.test")
+        token = cliente.cookies.get("access_token")
+        assert cliente.get("/auth/me").status_code == 200
+    
+        assert cliente.post("/auth/logout").status_code == 200
+        assert cliente.get("/auth/me").status_code == 401  # el navegador ya no tiene la cookie
+        cliente.close()
+    
+        # Alguien que copió la cookie antes del cierre intenta usarla
+        with nueva_sesion() as otro:
+            otro.cookies.set("access_token", token)
+>           assert otro.get("/auth/me").status_code == 401
+E           AssertionError: assert 200 == 401
+E            +  where 200 = <Response [200 OK]>.status_code
+E            +    where <Response [200 OK]> = get('/auth/me')
+E            +      where get = <httpx.Client object at 0x0000025B28484A50>.get
+
+test_tc06_sesion_cerrada.py:23: AssertionError
+- generated xml file: C:\Users\SebasDeveloper\Documents\pruebas de software final\evidencias\pytest\ejecucion_2026-11-12_Sebastian.xml -
+=========================== short test summary info ===========================
+FAILED test_tc02_permisos_rol.py::test_consulta_puede_ver_el_seguimiento - As...
+FAILED test_tc02_permisos_rol.py::test_lider_sin_departamento_no_ve_metricas
+FAILED test_tc06_sesion_cerrada.py::test_sesion_cerrada_no_se_reutiliza - Ass...
+================== 3 failed, 16 passed in 367.94s (0:06:07) ===================
