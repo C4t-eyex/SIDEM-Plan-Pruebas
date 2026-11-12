@@ -4,6 +4,7 @@ Registro de lo que se hace en el proyecto, del más reciente al más antiguo. Re
 
 | Fecha | Quién | Avance | Siguiente paso |
 |---|---|---|---|
+| 12/11/2026 | Julián Ramírez | Ejecución manual de TC-05 (Sistemas Digitales y Producción: el Excel coincide con la pantalla en cursos y SI/NO de la revisión 1) y TC-06 (cerrar sesión, "Atrás" y recargar terminan en el login). Revisión de la evidencia de TC-09 en `evidencias/pytest/ejecucion_2026-11-08.txt`: `test_bloqueo_y_desbloqueo` aparece como PASSED. Hojas llenas en `ejecucion-manual.md`; capturas y Excel en `evidencias/`. | Informe de cierre (`informe-de-cierre.md`). |
 | 08/11/2026 | Equipo | Primera corrida completa de las pruebas automáticas (TC-01, 02, 03, 05, 06, 07 y 09): 19 pruebas, 16 pasan y 3 fallan. Los 3 fallos son defectos de SIDEM (DEF-01, DEF-02 y DEF-04). Salida en `evidencias/pytest/ejecucion_2026-11-08.txt`. Se preparan las hojas de ejecución manual (`ejecucion-manual.md`). Plan en v0.3. | Ejecutar los casos manuales según el reparto y tomar las capturas. |
 | 08/11/2026 | Equipo | Se monta la demo de SIDEM con Docker y datos ficticios (`demo/`). Al revisar el sistema se ajustan TC-01, TC-03 y DAT-01 en el plan (v0.2). Aparecen dos hallazgos (ver abajo). | Que cada integrante levante la demo en su equipo y revise sus casos. |
 | 08/11/2026 | Equipo | Se crea el repositorio. Se consolidan Actividades 1 y 2, matriz de riesgos y Talleres 4 y 5. Primer borrador del plan (v0.1) con tailoring, trazabilidad y cronograma. | Revisar el plan con el docente (`preguntas-para-el-profe.md`). |
