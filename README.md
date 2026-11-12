@@ -2,7 +2,7 @@
 
 Trabajo final del curso **Pruebas de Software (2026-2)**. Aplica la norma **ISO/IEC/IEEE 29119-3** al sistema **SIDEM** (Sistema de Seguimiento de Docentes en Moodle).
 
-**Equipo:** Marcos Duque Jaramillo · Sebastián Díaz Jiménez · Nicolás Castaño Durango · Julián Ramírez Molina
+**Equipo:** Marcos Duque Jaramillo · Sebastián Díaz Jiménez · Nicolas Cataño Durango · Julián Ramírez Molina
 **Entrega y exposición:** martes 17/11/2026
 
 ## Por dónde empezar

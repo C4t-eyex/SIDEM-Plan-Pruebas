@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="19" time="367.907" timestamp="2026-11-12T17:10:36.650243-05:00" hostname="DESKTOP-GCMCOGL"><testcase classname="test_tc01_alcance_departamento" name="test_lider_ve_solo_su_departamento" time="5.265" /><testcase classname="test_tc01_alcance_departamento" name="test_lider_no_puede_pedir_metricas_de_otro_departamento" time="2.573" /><testcase classname="test_tc01_alcance_departamento" name="test_lider_no_puede_modificar_seguimiento" time="5.314" /><testcase classname="test_tc02_permisos_rol" name="test_consulta_puede_ver_el_seguimiento" time="2.601"><failure message="AssertionError: El usuario de consulta ve 0 cursos&#10;assert 0 == 6&#10; +  where 0 = len([])">sesion = &lt;function sesion.&lt;locals&gt;._abrir at 0x0000025B26E2CA40&gt;
+
+    def test_consulta_puede_ver_el_seguimiento(sesion):
+        consulta = sesion("consulta@sidem.test")
+        cursos = cursos_revision(consulta, 1)
+&gt;       assert len(cursos) == 6, f"El usuario de consulta ve {len(cursos)} cursos"
+E       AssertionError: El usuario de consulta ve 0 cursos
+E       assert 0 == 6
+E        +  where 0 = len([])
+
+test_tc02_permisos_rol.py:13: AssertionError</failure></testcase><testcase classname="test_tc02_permisos_rol" name="test_consulta_no_puede_guardar" time="5.208" /><testcase classname="test_tc02_permisos_rol" name="test_lider_sin_departamento_no_ve_seguimiento" time="2.585" /><testcase classname="test_tc02_permisos_rol" name="test_lider_sin_departamento_no_ve_metricas" time="2.550"><failure message="AssertionError: Ve 6 cursos de ['Producción', 'Sistemas Digitales']&#10;assert 6 == 0">sesion = &lt;function sesion.&lt;locals&gt;._abrir at 0x0000025B26EC04A0&gt;
+
+    def test_lider_sin_departamento_no_ve_metricas(sesion):
+        lider = sesion("lider.sindep@sidem.test")
+        r = lider.get("/dashboard/stats/", params={"periodo": PERIODO, "revision_numero": 1})
+        assert r.status_code == 200
+        datos = r.json()
+&gt;       assert datos["total_cursos"] == 0, (
+            f"Ve {datos['total_cursos']} cursos de "
+            f"{sorted({c['departamento'] for c in datos['docentes']})}"
+        )
+E       AssertionError: Ve 6 cursos de ['Producción', 'Sistemas Digitales']
+E       assert 6 == 0
+
+test_tc02_permisos_rol.py:36: AssertionError</failure></testcase><testcase classname="test_tc03_semaforo_limites" name="test_color_segun_porcentaje[Programaci\xf3n B\xe1sica (DEMO)-80-verde]" time="2.597" /><testcase classname="test_tc03_semaforo_limites" name="test_color_segun_porcentaje[Bases de Datos (DEMO)-77-amarillo]" time="0.001" /><testcase classname="test_tc03_semaforo_limites" name="test_color_segun_porcentaje[Redes I (DEMO)-50-amarillo]" time="0.001" /><testcase classname="test_tc03_semaforo_limites" name="test_color_segun_porcentaje[Procesos Industriales (DEMO)-47-rojo]" time="0.001" /><testcase classname="test_tc03_semaforo_limites" name="test_color_segun_porcentaje[Calidad (DEMO)-100-verde]" time="0.001" /><testcase classname="test_tc03_semaforo_limites" name="test_color_segun_porcentaje[Log\xedstica (DEMO)-0-rojo]" time="0.001" /><testcase classname="test_tc03_semaforo_limites" name="test_resumen_del_panel" time="0.000" /><testcase classname="test_tc05_exportar_excel" name="test_excel_coincide_con_pantalla[Sistemas Digitales]" time="3.913" /><testcase classname="test_tc05_exportar_excel" name="test_excel_coincide_con_pantalla[Producci\xf3n]" time="3.989" /><testcase classname="test_tc06_sesion_cerrada" name="test_sesion_cerrada_no_se_reutiliza" time="4.945"><failure message="AssertionError: assert 200 == 401&#10; +  where 200 = &lt;Response [200 OK]&gt;.status_code&#10; +    where &lt;Response [200 OK]&gt; = get('/auth/me')&#10; +      where get = &lt;httpx.Client object at 0x0000025B28484A50&gt;.get">def test_sesion_cerrada_no_se_reutiliza():
+        cliente = iniciar_sesion("consulta@sidem.test")
+        token = cliente.cookies.get("access_token")
+        assert cliente.get("/auth/me").status_code == 200
+    
+        assert cliente.post("/auth/logout").status_code == 200
+        assert cliente.get("/auth/me").status_code == 401  # el navegador ya no tiene la cookie
+        cliente.close()
+    
+        # Alguien que copió la cookie antes del cierre intenta usarla
+        with nueva_sesion() as otro:
+            otro.cookies.set("access_token", token)
+&gt;           assert otro.get("/auth/me").status_code == 401
+E           AssertionError: assert 200 == 401
+E            +  where 200 = &lt;Response [200 OK]&gt;.status_code
+E            +    where &lt;Response [200 OK]&gt; = get('/auth/me')
+E            +      where get = &lt;httpx.Client object at 0x0000025B28484A50&gt;.get
+
+test_tc06_sesion_cerrada.py:23: AssertionError</failure></testcase><testcase classname="test_tc07_criterios_revision" name="test_registro_queda_en_el_curso_y_revision_correctos" time="2.748" /><testcase classname="test_tc09_bloqueo_login" name="test_bloqueo_y_desbloqueo" time="322.548" /></testsuite></testsuites>
