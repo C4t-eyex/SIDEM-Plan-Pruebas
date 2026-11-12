@@ -38,13 +38,15 @@ Entrar como `lider@sidem.test`, abrir **Métricas**, periodo actual, revisión 1
 
 | # | Curso | Esperado | Obtenido | Pasa / Falla |
 |---|---|---|---|---|
-| 1 | Programación Básica (DEMO) | 80 % verde | | |
-| 2 | Bases de Datos (DEMO) | 77 % amarillo | | |
-| 3 | Redes I (DEMO) | 50 % amarillo | | |
-| 4 | Procesos Industriales (DEMO) | 47 % rojo | | |
-| 5 | Calidad (DEMO) | 100 % verde | | |
-| 6 | Logística (DEMO) | 0 % rojo | | |
-| 7 | Resumen del panel | 2 verdes, 2 amarillos, 2 rojos | | |
+| 1 | Programación Básica (DEMO) | 80 % verde | 80 % verde | Pasa |
+| 2 | Bases de Datos (DEMO) | 77 % amarillo | 77 % amarillo | Pasa |
+| 3 | Redes I (DEMO) | 50 % amarillo | 50 % amarillo | Pasa |
+| 4 | Procesos Industriales (DEMO) | 47 % rojo | 47 % rojo | Pasa |
+| 5 | Calidad (DEMO) | 100 % verde | 100 % verde | Pasa |
+| 6 | Logística (DEMO) | 0 % rojo | 0 % rojo | Pasa |
+| 7 | Resumen del panel | 2 verdes, 2 amarillos, 2 rojos | 6 cursos: 2 al día, 2 con alertas, 2 críticos | Pasa |
+
+Ejecutado el 12/11/2026 por Nicolás Cataño, con apoyo del asistente de IA en el navegador. Periodo 2026-2, revisión 1 - semana 2. Evidencia: `evidencias/TC-03_2026-11-12_Nicolas.png`.
 
 ### TC-07 - El registro queda en el curso y la revisión correctos · Sebastián
 
@@ -72,9 +74,11 @@ Entrar como `lider@sidem.test`, abrir **Métricas**, periodo actual, revisión 1
 
 | # | Paso | Esperado | Obtenido | Pasa / Falla |
 |---|---|---|---|---|
-| 1 | Con la base recién reiniciada, contar a mano en `demo/README.md` cuántos cursos hay por color. | 2 verdes, 2 amarillos, 2 rojos; 6 cursos. | | |
-| 2 | Entrar como `lider@sidem.test` y anotar los totales de **Métricas** y **Dashboard**. | Coinciden con el conteo del paso 1. | | |
-| 3 | Filtrar por Sistemas Digitales y luego por Producción. | SD: 1 verde, 2 amarillos. PR: 1 verde, 2 rojos. | | |
+| 1 | Con la base recién reiniciada, contar a mano en `demo/README.md` cuántos cursos hay por color. | 2 verdes, 2 amarillos, 2 rojos; 6 cursos. | Conteo hecho con la lista `CURSOS` de `demo/seed_demo.py` (ver "Verificación de DAT-01" en `avances.md`): 2 verdes, 2 amarillos, 2 rojos; 6 cursos. | Pasa |
+| 2 | Entrar como `lider@sidem.test` y anotar los totales de **Métricas** y **Dashboard**. | Coinciden con el conteo del paso 1. | Métricas, revisión 1: 6 cursos revisados, 2 al día, 2 con alertas, 2 críticos, cumplimiento global 59 %. El Dashboard del líder solo muestra los módulos (Métricas, Actividad en Moodle, Manual), sin totales. | Pasa |
+| 3 | Filtrar por Sistemas Digitales y luego por Producción. | SD: 1 verde, 2 amarillos. PR: 1 verde, 2 rojos. | SD: 3 cursos, 1 al día, 2 con alertas, 0 críticos (69 %). PR: 3 cursos, 1 al día, 0 con alertas, 2 críticos (49 %). | Pasa |
+
+Ejecutado el 12/11/2026 por Nicolás Cataño, con apoyo del asistente de IA en el navegador. La demo se levantó con `docker compose up -d` sin `down -v`, así que la base no se reinició antes de la ejecución; los datos de la revisión 1 coincidían con los de `demo/seed_demo.py`. Evidencias: `evidencias/TC-08_2026-11-12_Nicolas_todos.png`, `_SD.png` y `_PR.png`.
 
 ### TC-05 - El Excel coincide con la pantalla · Julián
 
