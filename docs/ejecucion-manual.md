@@ -52,10 +52,12 @@ Ejecutado el 12/11/2026 por Nicolás Cataño, con apoyo del asistente de IA en e
 
 | # | Paso | Esperado | Obtenido | Pasa / Falla |
 |---|---|---|---|---|
-| 1 | Entrar como `revisor.sd@sidem.test`, abrir **Seguimiento**, revisión 2. | Aparecen Programación Básica y Bases de Datos, sin criterios cumplidos. | | |
-| 2 | En Programación Básica marcar dos criterios con una observación y guardar. | Mensaje de guardado correcto. | | |
-| 3 | Revisar Bases de Datos en la revisión 2. | Sigue sin criterios cumplidos. | | |
-| 4 | Cambiar a la revisión 1 y revisar Programación Básica. | Sigue en 80 %, sin la observación nueva. | | |
+| 1 | Entrar como `revisor.sd@sidem.test`, abrir **Seguimiento**, revisión 2. | Aparecen Programación Básica y Bases de Datos, sin criterios cumplidos. | Seguimiento abrió directamente en "Revisión 2 - Semana 6". Aparecen solo Programación Básica y Bases de Datos, los dos con los 6 criterios en "No". Resumen: 0 criterios cumplidos, 12 pendientes, 0 %. | Pasa |
+| 2 | En Programación Básica marcar dos criterios con una observación y guardar. | Mensaje de guardado correcto. | En **Editar criterios** de Programación Básica marqué "Orientacion semanal" y "Resolucion preguntas" como "Cumple", con las observaciones `TC-07 manual - criterio 1` y `TC-07 manual - criterio 2`, y guardé. Salió "Criterios guardados correctamente.". La tabla muestra las dos observaciones y el resumen pasó a 2 cumplidos, 10 pendientes y 17 %. | Pasa |
+| 3 | Revisar Bases de Datos en la revisión 2. | Sigue sin criterios cumplidos. | En **Editar criterios** de Bases de Datos, revisión 2, los 6 criterios siguen en "No cumple" y las observaciones están vacías. En la tabla su columna de observaciones muestra "-". | Pasa |
+| 4 | Cambiar a la revisión 1 y revisar Programación Básica. | Sigue en 80 %, sin la observación nueva. | En la revisión 1, Programación Básica sigue con Sí, Sí, Sí, Sí, No, Sí y sin observaciones. En **Métricas**, revisión 1, sigue en 80 % y en verde ("Al día"). | Pasa |
+
+> Notas de la ejecución (12/11/2026, base recién reiniciada): al reabrir Programación Básica en la revisión 2 después de guardar, los dos criterios y sus observaciones seguían ahí. **Métricas** abre en la revisión 2 (ahí Programación Básica sale con 33 %, que corresponde a los dos criterios marcados: pesos 5 + 5 sobre 30), así que hubo que elegir la revisión 1 y el botón "Todos" para ver los 6 cursos. La tabla de Seguimiento es más ancha que la pantalla; las capturas se tomaron con la ventana ancha para que se vean todas las columnas. Capturas: `TC-07_2026-11-12_Sebastian.png` (paso 2), `_paso1-revision2.png`, `_paso3-bases-de-datos.png`, `_paso4-revision1.png` y `_paso4-metricas.png`.
 
 ---
 
@@ -65,10 +67,12 @@ Ejecutado el 12/11/2026 por Nicolás Cataño, con apoyo del asistente de IA en e
 
 | # | Paso | Esperado | Obtenido | Pasa / Falla |
 |---|---|---|---|---|
-| 1 | Entrar como `revisor.sd@sidem.test`, abrir Redes I (DEMO), revisión 1. | Se ven los 6 criterios. | | |
-| 2 | Marcar un criterio, escribir una observación y guardar. | Mensaje de guardado correcto. | | |
-| 3 | Recargar la página (F5) y abrir el mismo curso. | El criterio y la observación siguen ahí. | | |
-| 4 | Cerrar sesión, volver a entrar y abrir el curso. | Los datos siguen iguales. | | |
+| 1 | Entrar como `revisor.sd@sidem.test`, abrir Redes I (DEMO), revisión 1. | Se ven los 6 criterios. | En Seguimiento elegí "Revisión 1 - Semana 2" y abrí **Editar criterios** de Redes I (DEMO). Se ven los 6 criterios: Cumple, Cumple, No cumple, Cumple, No cumple, No cumple, sin observaciones. | Pasa |
+| 2 | Marcar un criterio, escribir una observación y guardar. | Mensaje de guardado correcto. | Marqué "Preparacion y Publicacion" (estaba en "No cumple") como "Cumple", con la observación `TC-04 manual - observación con tildes y ñ: revisión de contenidos del módulo`, y guardé. Salió "Criterios guardados correctamente.". | Pasa |
+| 3 | Recargar la página (F5) y abrir el mismo curso. | El criterio y la observación siguen ahí. | Después de recargar, la página siguió en la revisión 1. Al abrir Redes I, "Preparacion y Publicacion" sigue en "Cumple" y la observación aparece completa, con tildes y ñ. | Pasa |
+| 4 | Cerrar sesión, volver a entrar y abrir el curso. | Los datos siguen iguales. | Con **Salir** (en la página principal) volvió a `/login`. Al entrar de nuevo, Seguimiento abrió en la revisión 2; elegí la revisión 1 y abrí Redes I: el criterio y la observación siguen iguales. | Pasa |
+
+> Notas de la ejecución (12/11/2026, base recién reiniciada antes de PROC-02): la página de Seguimiento no tiene botón para cerrar sesión; **Salir** está en la página principal. Como se marcó un criterio, el cumplimiento de Redes I cambia; es lo esperado al registrar un criterio y no se toma como falla. Capturas: `TC-04_2026-11-12_Sebastian.png` (paso 3), `_paso1-criterios.png`, `_paso2-guardado.png`, `_paso4-tras-salir.png` y `_paso4-volver-a-entrar.png`.
 
 ### TC-08 - Totales del panel · Nicolás
 
