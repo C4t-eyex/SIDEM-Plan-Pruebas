@@ -4,6 +4,7 @@ Registro de lo que se hace en el proyecto, del más reciente al más antiguo. Re
 
 | Fecha | Quién | Avance | Siguiente paso |
 |---|---|---|---|
+| 12/11/2026 | Nicolás | Ejecución manual de TC-03 y TC-08 en la demo: los 6 cursos muestran el porcentaje y el color esperados, y los totales del panel coinciden en general, en Sistemas Digitales y en Producción. Todos los pasos pasan; no hay defectos nuevos. Evidencias en `evidencias/`. | Preparar la explicación de TC-12 y TC-13 y la exposición. |
 | 12/11/2026 | Nicolás | Verificación a mano de DAT-01: los 6 cursos de la demo dan 80, 77, 50, 47, 100 y 0 %, igual a lo esperado en `demo/seed_demo.py`. Tabla en la sección "Verificación de DAT-01 (Nicolás)". | Ejecutar a mano TC-03 y TC-08. |
 | 08/11/2026 | Equipo | Primera corrida completa de las pruebas automáticas (TC-01, 02, 03, 05, 06, 07 y 09): 19 pruebas, 16 pasan y 3 fallan. Los 3 fallos son defectos de SIDEM (DEF-01, DEF-02 y DEF-04). Salida en `evidencias/pytest/ejecucion_2026-11-08.txt`. Se preparan las hojas de ejecución manual (`ejecucion-manual.md`). Plan en v0.3. | Ejecutar los casos manuales según el reparto y tomar las capturas. |
 | 08/11/2026 | Equipo | Se monta la demo de SIDEM con Docker y datos ficticios (`demo/`). Al revisar el sistema se ajustan TC-01, TC-03 y DAT-01 en el plan (v0.2). Aparecen dos hallazgos (ver abajo). | Que cada integrante levante la demo en su equipo y revise sus casos. |
