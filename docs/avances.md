@@ -4,8 +4,9 @@ Registro de lo que se hace en el proyecto, del más reciente al más antiguo. Re
 
 | Fecha | Quién | Avance | Siguiente paso |
 |---|---|---|---|
-| 12/11/2026 | Julián Ramírez | Informe de cierre en borrador v0.1 (`informe-de-cierre.md`, `SIDEM-IC-2026-01`) con lo registrado en `main`: 9 casos planeados, 7 con ejecución, 5 pasan y 2 fallan (TC-02 y TC-06); 5 defectos abiertos. Las partes manuales de TC-01, 02, 03, 04, 07 y 08 aparecen como pendientes. | Actualizar el informe cuando se integren las demás hojas manuales; preparar las diapositivas. |
-| 12/11/2026 | Sebastián Díaz | Corrida completa de las pruebas automáticas en un segundo computador, con la demo recién reiniciada (`docker compose down -v` y `up -d`): 19 pruebas, 16 pasan y 3 fallan, igual que el 08/11. Fallan `test_consulta_puede_ver_el_seguimiento` (DEF-04), `test_lider_sin_departamento_no_ve_metricas` (DEF-01) y `test_sesion_cerrada_no_se_reutiliza` (DEF-02). Duración: 6 min 8 s. Salida en `evidencias/pytest/ejecucion_2026-11-12_Sebastian.txt` y `.xml`. | Ejecutar a mano TC-07 y TC-04. |
+| 12/11/2026 | Julián Ramírez | Informe de cierre en borrador v0.1 (`informe-de-cierre.md`, `SIDEM-IC-2026-01`) con lo registrado en `main`: 9 casos planeados, 8 con ejecución, 6 pasan y 2 fallan (TC-02 y TC-06); 5 defectos abiertos. Las partes manuales de TC-01, 02, 04 y 07 aparecen como pendientes. | Actualizar el informe cuando se integren las demás hojas manuales; preparar las diapositivas. |
+| 12/11/2026 | Nicolás Cataño | Ejecución manual de TC-03 y TC-08 en la demo: los 6 cursos muestran el porcentaje y el color esperados, y los totales del panel coinciden en general, en Sistemas Digitales y en Producción. Todos los pasos pasan; no hay defectos nuevos. Evidencias en `evidencias/`. | Preparar la explicación de TC-12 y TC-13 y la exposición. |
+| 12/11/2026 | Nicolás Cataño | Verificación a mano de DAT-01: los 6 cursos de la demo dan 80, 77, 50, 47, 100 y 0 %, igual a lo esperado en `demo/seed_demo.py`. Tabla en la sección "Verificación de DAT-01 (Nicolás)". | Ejecutar a mano TC-03 y TC-08. || 12/11/2026 | Sebastián Díaz | Corrida completa de las pruebas automáticas en un segundo computador, con la demo recién reiniciada (`docker compose down -v` y `up -d`): 19 pruebas, 16 pasan y 3 fallan, igual que el 08/11. Fallan `test_consulta_puede_ver_el_seguimiento` (DEF-04), `test_lider_sin_departamento_no_ve_metricas` (DEF-01) y `test_sesion_cerrada_no_se_reutiliza` (DEF-02). Duración: 6 min 8 s. Salida en `evidencias/pytest/ejecucion_2026-11-12_Sebastian.txt` y `.xml`. | Ejecutar a mano TC-07 y TC-04. |
 | 12/11/2026 | Julián Ramírez | Ejecución manual de TC-05 (Sistemas Digitales y Producción: el Excel coincide con la pantalla en cursos y SI/NO de la revisión 1) y TC-06 (cerrar sesión, "Atrás" y recargar terminan en el login). Revisión de la evidencia de TC-09 en `evidencias/pytest/ejecucion_2026-11-08.txt`: `test_bloqueo_y_desbloqueo` aparece como PASSED. Hojas llenas en `ejecucion-manual.md`; capturas y Excel en `evidencias/`. | Informe de cierre (`informe-de-cierre.md`). |
 | 08/11/2026 | Equipo | Primera corrida completa de las pruebas automáticas (TC-01, 02, 03, 05, 06, 07 y 09): 19 pruebas, 16 pasan y 3 fallan. Los 3 fallos son defectos de SIDEM (DEF-01, DEF-02 y DEF-04). Salida en `evidencias/pytest/ejecucion_2026-11-08.txt`. Se preparan las hojas de ejecución manual (`ejecucion-manual.md`). Plan en v0.3. | Ejecutar los casos manuales según el reparto y tomar las capturas. |
 | 08/11/2026 | Equipo | Se monta la demo de SIDEM con Docker y datos ficticios (`demo/`). Al revisar el sistema se ajustan TC-01, TC-03 y DAT-01 en el plan (v0.2). Aparecen dos hallazgos (ver abajo). | Que cada integrante levante la demo en su equipo y revise sus casos. |
@@ -14,6 +15,29 @@ Registro de lo que se hace en el proyecto, del más reciente al más antiguo. Re
 | - | Equipo | Matriz de riesgos R01-R10 y RP1-RP3. | - |
 | 29/09/2026 | Equipo | Actividad 2 con coevaluación del equipo de RESTful Booker. | - |
 | 22/09/2026 | Equipo | Actividad 1: alcance y metodología. | - |
+
+## Verificación de DAT-01 (Nicolás)
+
+SIDEM no cuenta criterios: suma sus pesos. Pesos de la revisión 1 (total 30):
+
+| Criterio | 1 | 2 | 3 | 4 | 6 | 7 | Total |
+|---|---|---|---|---|---|---|---|
+| Peso | 5 | 5 | 7 | 5 | 6 | 2 | 30 |
+
+Porcentaje = (suma de pesos cumplidos ÷ 30) × 100, redondeado. Verde si es ≥ 80, amarillo si es ≥ 50 y < 80, rojo si es < 50.
+
+| Curso | Criterios cumplidos | Suma de pesos | % calculado | Color esperado |
+|---|---|---|---|---|
+| Programación Básica | 1, 2, 3, 4, 7 | 5 + 5 + 7 + 5 + 2 = 24 | 24 ÷ 30 = 80 % | Verde (en el límite) |
+| Bases de Datos | 1, 2, 4, 6, 7 | 5 + 5 + 5 + 6 + 2 = 23 | 23 ÷ 30 = 76,7 → 77 % | Amarillo (justo debajo de 80) |
+| Redes I | 1, 2, 4 | 5 + 5 + 5 = 15 | 15 ÷ 30 = 50 % | Amarillo (en el límite) |
+| Procesos Industriales | 1, 3, 7 | 5 + 7 + 2 = 14 | 14 ÷ 30 = 46,7 → 47 % | Rojo (justo debajo de 50) |
+| Calidad | todos | 30 | 100 % | Verde |
+| Logística | ninguno | 0 | 0 % | Rojo |
+
+Los 6 valores coinciden con el % esperado de la lista `CURSOS` en `demo/seed_demo.py`.
+
+**Por qué estos valores.** Se usa la técnica de valores límite. Los errores suelen estar en los bordes, por ejemplo si el código usa `>` en vez de `>=`. Por eso se prueba justo en cada límite (80 y 50) y justo por debajo (77 y 47). Si el sistema compara mal, Programación Básica saldría amarilla en vez de verde, o Redes I saldría roja en vez de amarilla. Calidad (100 %) y Logística (0 %) cubren los extremos.
 
 ## Hallazgos
 
