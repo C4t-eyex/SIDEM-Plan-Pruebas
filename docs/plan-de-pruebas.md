@@ -12,7 +12,7 @@
 
 ### 1.2 Organización emisora y autores
 - **Organización:** Equipo SIDEM - curso Pruebas de Software, 2026-2.
-- **Autores:** Marcos Duque Jaramillo, Sebastián Díaz Jiménez, Nicolás Castaño Durango, Julián Ramírez Molina.
+- **Autores:** Marcos Duque Jaramillo, Sebastián Díaz Jiménez, Nicolás Cataño Durango, Julián Ramírez Molina.
 
 ### 1.3 Autoridad de aprobación
 Roberto José Calderón Bermejo, docente del curso de Pruebas de Software.
@@ -333,7 +333,7 @@ El trabajo se reparte **por riesgo y módulo**: cada integrante es dueño de sus
 |---|---|---|---|
 | Marcos Duque Jaramillo | Líder de pruebas; entorno de demostración | R01, R02 - TC-01, TC-02 | TC-16, TC-17 |
 | Sebastián Díaz Jiménez | Automatización (pytest) | R03, R05 - TC-07, TC-04 | TC-10, TC-11 |
-| Nicolás Castaño Durango | Datos de prueba (DAT-01) | R04, R06 - TC-03, TC-08 | TC-12, TC-13 |
+| Nicolás Cataño Durango | Datos de prueba (DAT-01) | R04, R06 - TC-03, TC-08 | TC-12, TC-13 |
 | Julián Ramírez Molina | Informe de cierre | R07, R08, R09 - TC-05, TC-09, TC-06 | TC-14, TC-15 |
 
 > *Reparto propuesto; el equipo lo confirma en la iteración 1 (hasta el 11/11).*

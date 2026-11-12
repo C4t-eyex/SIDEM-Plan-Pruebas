@@ -17,18 +17,22 @@ Guía para que cada integrante ejecute en el navegador los casos que le correspo
 
 | # | Paso | Esperado | Obtenido | Pasa / Falla |
 |---|---|---|---|---|
-| 1 | Entrar como `lider.sd@sidem.test` y abrir **Métricas**. | Solo aparecen los 3 cursos de Sistemas Digitales. | | |
-| 2 | Buscar en los filtros la opción de ver Producción. | No aparece, o si se fuerza, el sistema la rechaza. | | |
-| 3 | Intentar abrir **Seguimiento** desde el menú o escribiendo `/seguimiento`. | El líder de departamento no tiene acceso al seguimiento. | | |
-| 4 | Cerrar sesión, entrar como `admin@sidem.test` y revisar Logística (DEMO). | Sus criterios no cambiaron. | | |
+| 1 | Entrar como `lider.sd@sidem.test` y abrir **Métricas**. | Solo aparecen los 3 cursos de Sistemas Digitales. | Revisión 1: 3 cursos (Redes I 50 %, Bases de Datos 77 %, Programación Básica 80 %), todos de Sistemas Digitales. El filtro de departamento no aparece. | Pasa |
+| 2 | Buscar en los filtros la opción de ver Producción. | No aparece, o si se fuerza, el sistema la rechaza. | No hay opción de Producción. Al forzarla en la URL (`departamento=Producción`) siguen apareciendo solo los 3 cursos de Sistemas Digitales. | Pasa |
+| 3 | Intentar abrir **Seguimiento** desde el menú o escribiendo `/seguimiento`. | El líder de departamento no tiene acceso al seguimiento. | El menú no muestra Seguimiento. Al escribir `/seguimiento` el sistema redirige a la página principal. | Pasa |
+| 4 | Cerrar sesión, entrar como `admin@sidem.test` y revisar Logística (DEMO). | Sus criterios no cambiaron. | En Seguimiento, revisión 1, Logística (DEMO) sigue con 0 criterios cumplidos y 6 pendientes (0 %), igual que en los datos iniciales. | Pasa |
+
+Ejecutado el 12/11/2026 por Marcos Duque, con apoyo del asistente de IA en el navegador. La base no se reinició con `down -v` antes de la ejecución. Evidencias: `evidencias/TC-01_2026-11-12_Marcos_paso1-solo-SD.png` a `_paso4-logistica-admin.png`.
 
 ### TC-02 - Permisos por rol · Marcos
 
 | # | Paso | Esperado | Obtenido | Pasa / Falla |
 |---|---|---|---|---|
-| 1 | Entrar como `consulta@sidem.test` y abrir **Seguimiento**. | Ve los cursos, sin botón de guardar o con el guardado bloqueado. | | |
-| 2 | Si hay algún control de edición, intentar guardar un cambio. | El sistema no deja guardar. | | |
-| 3 | Entrar como `lider.sindep@sidem.test` y abrir **Métricas**. | No ve ningún curso. | | |
+| 1 | Entrar como `consulta@sidem.test` y abrir **Seguimiento**. | Ve los cursos, sin botón de guardar o con el guardado bloqueado. | Seguimiento, revisión 1: "Sin datos para el período y revisión seleccionados". No ve ningún curso (DEF-04). | Falla |
+| 2 | Si hay algún control de edición, intentar guardar un cambio. | El sistema no deja guardar. | No se pudo probar: al no haber cursos, no hay criterios que editar. Se ve el botón "Cargar cursos" (subir un .xlsx), que no se probó para no cambiar los datos. | No ejecutado |
+| 3 | Entrar como `lider.sindep@sidem.test` y abrir **Métricas**. | No ve ningún curso. | Métricas, revisión 1: ve los 6 cursos de toda la institución (2 al día, 2 con alertas, 2 críticos) y el filtro de departamento en "Todos" (DEF-01). | Falla |
+
+Ejecutado el 12/11/2026 por Marcos Duque, con apoyo del asistente de IA en el navegador. Evidencias: `evidencias/TC-02_2026-11-12_Marcos_paso1-consulta-sin-cursos.png` y `_paso3-sindep-ve-todo.png`.
 
 > La prueba automática ya mostró que los pasos 1 y 3 no dan lo esperado (HAL-02 y HAL-04 en `avances.md`). La captura de pantalla sirve como evidencia visual del defecto.
 
