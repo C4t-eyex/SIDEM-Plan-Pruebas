@@ -1,0 +1,61 @@
+From 7410695fa4549588d3d8c866c8abba3eeded3c55 Mon Sep 17 00:00:00 2001
+From: Marcos Duque <90621408+C4t-eyex@users.noreply.github.com>
+Date: Thu, 12 Nov 2026 21:47:44 -0500
+Subject: [PATCH 2/5] fix(auth): rol personalizado con acceso al modulo ve los
+ cursos de su alcance (DEF-04)
+
+Sin departamento asignado ve todos; con departamentos, solo esos. El rol permanencia sigue sin acceso a docentes.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ .../services/auth_service.py                   |  7 ++++++-
+ .../tests/test_auth_service_permisos.py        | 18 ++++++++++++++++++
+ 2 files changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/API_seguimiento_docentes/services/auth_service.py b/API_seguimiento_docentes/services/auth_service.py
+index 424305a..696473c 100644
+--- a/API_seguimiento_docentes/services/auth_service.py
++++ b/API_seguimiento_docentes/services/auth_service.py
+@@ -379,7 +379,12 @@ def get_departamentos_permitidos(usuario) -> list | None:
+         return None  # todos
+     if usuario.rol == "lider_departamento":
+         return get_departamentos(usuario) or []
+-    return []
++    if usuario.rol == "permanencia":
++        return []  # solo accede al módulo de estudiantes
++    # Rol personalizado (DEF-04): el acceso al módulo ya lo valida
++    # requiere_permiso; aquí solo se limita el alcance. Con departamentos
++    # asignados ve solo esos; sin ninguno, ve todos.
++    return get_departamentos(usuario) or None
+ 
+ 
+ # ── Restablecimiento de contraseña por correo ─────────────────────────────────
+diff --git a/API_seguimiento_docentes/tests/test_auth_service_permisos.py b/API_seguimiento_docentes/tests/test_auth_service_permisos.py
+index 140f71d..4268f87 100644
+--- a/API_seguimiento_docentes/tests/test_auth_service_permisos.py
++++ b/API_seguimiento_docentes/tests/test_auth_service_permisos.py
+@@ -98,3 +98,21 @@ def test_requiere_permiso_rol_protegido_siempre_pasa(client, db_session):
+     app.include_router(router_prueba4, dependencies=[Depends(requiere_permiso("dashboard", nivel_minimo="completo"))])
+     resp = client.get("/ruta-protegida-test-4/", headers={"origin": "http://localhost:5000"})
+     assert resp.status_code == 200
++
++
++def test_rol_personalizado_ve_departamentos_segun_asignacion():
++    """Regresión DEF-04: un rol personalizado con acceso al módulo (validado
++    por requiere_permiso) no debe quedar con una lista vacía. Sin
++    departamento asignado ve todos; con departamento, solo los suyos."""
++    from types import SimpleNamespace
++    from services.auth_service import get_departamentos_permitidos
++
++    sin_dep = SimpleNamespace(rol="consulta", departamento=None, departamentos_extra=None)
++    assert get_departamentos_permitidos(sin_dep) is None
++
++    con_dep = SimpleNamespace(rol="consulta", departamento="Producción", departamentos_extra=None)
++    assert get_departamentos_permitidos(con_dep) == ["Producción"]
++
++    # permanencia sigue sin ver cursos de docentes
++    permanencia = SimpleNamespace(rol="permanencia", departamento=None, departamentos_extra=None)
++    assert get_departamentos_permitidos(permanencia) == []
+-- 
+2.56.0.windows.4
+

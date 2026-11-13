@@ -1,0 +1,108 @@
+From 0c99cefc6749d4a719002208ddffd96bec3fa521 Mon Sep 17 00:00:00 2001
+From: Marcos Duque <90621408+C4t-eyex@users.noreply.github.com>
+Date: Thu, 12 Nov 2026 21:51:23 -0500
+Subject: [PATCH 3/5] fix(auth): cerrar sesion invalida el token en el servidor
+ (DEF-02)
+
+logout reusa password_changed_at, igual que forzar_logout. Se normaliza la fecha a UTC al comparar.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ API_seguimiento_docentes/routes/auth.py       |  5 +--
+ .../services/auth_service.py                  | 14 ++++++++-
+ API_seguimiento_docentes/tests/test_auth.py   | 31 +++++++++++++++++++
+ 3 files changed, 47 insertions(+), 3 deletions(-)
+
+diff --git a/API_seguimiento_docentes/routes/auth.py b/API_seguimiento_docentes/routes/auth.py
+index 393bbe4..7b6ff75 100644
+--- a/API_seguimiento_docentes/routes/auth.py
++++ b/API_seguimiento_docentes/routes/auth.py
+@@ -134,11 +134,12 @@ def logout(
+     db: Session = Depends(get_db),
+     access_token: Optional[str] = Cookie(default=None),
+ ):
+-    """Cierra la sesión eliminando la cookie."""
++    """Cierra la sesión: invalida el token en el servidor y elimina la cookie."""
+     from services.log_service import registrar_log
+     try:
+-        from services.auth_service import get_current_user
++        from services.auth_service import get_current_user, invalidar_sesiones
+         usuario = get_current_user(db, access_token)
++        invalidar_sesiones(db, usuario)  # DEF-02: el token copiado deja de servir
+         registrar_log(db, usuario.id, "logout", modulo="autenticacion")
+     except Exception:
+         pass
+diff --git a/API_seguimiento_docentes/services/auth_service.py b/API_seguimiento_docentes/services/auth_service.py
+index 696473c..cbfba91 100644
+--- a/API_seguimiento_docentes/services/auth_service.py
++++ b/API_seguimiento_docentes/services/auth_service.py
+@@ -246,7 +246,10 @@ def get_current_user(
+                 token_emitido = datetime.fromtimestamp(iat, tz=timezone.utc)
+             else:
+                 token_emitido = iat if getattr(iat, "tzinfo", None) else iat.replace(tzinfo=timezone.utc)
+-            if token_emitido < usuario.password_changed_at:
++            invalido_desde = usuario.password_changed_at
++            if invalido_desde.tzinfo is None:  # SQLite no guarda la zona; se asume UTC
++                invalido_desde = invalido_desde.replace(tzinfo=timezone.utc)
++            if token_emitido < invalido_desde:
+                 raise HTTPException(
+                     status_code=status.HTTP_401_UNAUTHORIZED,
+                     detail="Sesión expirada, inicia sesión nuevamente.",
+@@ -255,6 +258,15 @@ def get_current_user(
+     return usuario
+ 
+ 
++def invalidar_sesiones(db: Session, usuario: Usuario) -> None:
++    """Invalida los tokens emitidos antes de este momento (DEF-02). Reusa
++    password_changed_at, igual que forzar_logout. Se trunca al segundo
++    porque el iat del JWT se guarda en segundos: así un login nuevo en el
++    mismo segundo no queda rechazado."""
++    usuario.password_changed_at = datetime.now(timezone.utc).replace(microsecond=0)
++    db.commit()
++
++
+ def require_superadmin(usuario):
+     """Lanza 403 si el usuario no es superadmin."""
+     if usuario.rol != "superadmin":
+diff --git a/API_seguimiento_docentes/tests/test_auth.py b/API_seguimiento_docentes/tests/test_auth.py
+index d661598..dff2789 100644
+--- a/API_seguimiento_docentes/tests/test_auth.py
++++ b/API_seguimiento_docentes/tests/test_auth.py
+@@ -201,3 +201,34 @@ class TestJWT:
+         resp = client.get("/auth/me")
+         assert resp.status_code == 200
+         assert resp.json()["email"] == "jwt@test.com"
++
++
++class TestLogout:
++    def test_token_copiado_no_sirve_despues_de_logout(self, client, db_session):
++        """Regresión DEF-02: cerrar sesión debe invalidar el token en el
++        servidor, no solo borrar la cookie del navegador."""
++        import jwt
++        from datetime import datetime, timedelta, timezone
++        from services.auth_service import SECRET_KEY, ALGORITHM
++
++        usuario = _crear_usuario(db_session, email="logout@test.com", rol="admin", password="Test1234!")
++        emitido = datetime.now(timezone.utc) - timedelta(seconds=5)
++        token = jwt.encode({"sub": str(usuario.id), "iat": emitido, "exp": emitido + timedelta(hours=1)},
++                           SECRET_KEY, algorithm=ALGORITHM)
++
++        client.cookies.set("access_token", token)
++        assert client.get("/auth/me").status_code == 200
++
++        assert client.post("/auth/logout", headers=_ORIGIN).status_code == 200
++
++        client.cookies.set("access_token", token)  # cookie copiada antes de salir
++        assert client.get("/auth/me").status_code == 401
++
++    def test_puede_volver_a_entrar_despues_de_logout(self, client, db_session):
++        _crear_usuario(db_session, email="relogin@test.com", rol="admin", password="Test1234!")
++        assert client.post("/auth/login", json={"email": "relogin@test.com", "password": "Test1234!"}).status_code == 200
++        assert client.post("/auth/logout", headers=_ORIGIN).status_code == 200
++        resp = client.post("/auth/login", json={"email": "relogin@test.com", "password": "Test1234!"})
++        assert resp.status_code == 200
++        client.cookies.set("access_token", resp.cookies["access_token"])
++        assert client.get("/auth/me").status_code == 200
+-- 
+2.56.0.windows.4
+

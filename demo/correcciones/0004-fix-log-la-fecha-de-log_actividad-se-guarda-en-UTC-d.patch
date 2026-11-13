@@ -1,0 +1,71 @@
+From 42ebb9844c733db5b22329b52cf9b942d480460a Mon Sep 17 00:00:00 2001
+From: Marcos Duque <90621408+C4t-eyex@users.noreply.github.com>
+Date: Thu, 12 Nov 2026 21:54:26 -0500
+Subject: [PATCH 4/5] fix(log): la fecha de log_actividad se guarda en UTC
+ desde la aplicacion (DEF-03)
+
+El default con AT TIME ZONE dependia de la zona de PostgreSQL y dejaba sin efecto el bloqueo por intentos fallidos.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ API_seguimiento_docentes/models/__init__.py    |  4 +++-
+ API_seguimiento_docentes/sql/db.sql            |  2 +-
+ .../tests/test_log_service.py                  | 18 ++++++++++++++++++
+ 3 files changed, 22 insertions(+), 2 deletions(-)
+ create mode 100644 API_seguimiento_docentes/tests/test_log_service.py
+
+diff --git a/API_seguimiento_docentes/models/__init__.py b/API_seguimiento_docentes/models/__init__.py
+index e866132..36f6ff8 100644
+--- a/API_seguimiento_docentes/models/__init__.py
++++ b/API_seguimiento_docentes/models/__init__.py
+@@ -309,7 +309,9 @@ class LogActividad(Base):
+     accion     = Column(String(50), nullable=False)
+     detalle    = Column(Text, nullable=True)
+     ip         = Column(String(45), nullable=True)
+-    fecha      = Column(DateTime, server_default=func.now())
++    # DEF-03: la fecha la pone la aplicación en UTC. El default de la base
++    # dependía de su zona horaria y rompía el conteo de intentos fallidos.
++    fecha      = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), server_default=func.now())
+ 
+     usuario = relationship("Usuario", foreign_keys=[usuario_id])
+ 
+diff --git a/API_seguimiento_docentes/sql/db.sql b/API_seguimiento_docentes/sql/db.sql
+index 4c390a7..2944669 100644
+--- a/API_seguimiento_docentes/sql/db.sql
++++ b/API_seguimiento_docentes/sql/db.sql
+@@ -307,7 +307,7 @@ CREATE TABLE log_actividad (
+     accion     VARCHAR(50) NOT NULL,
+     detalle    TEXT,
+     ip         VARCHAR(45),
+-    fecha      TIMESTAMPTZ DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'America/Bogota')
++    fecha      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP  -- DEF-03: sin AT TIME ZONE, que desfasaba la hora según la zona de la base
+ );
+ 
+ CREATE INDEX idx_log_usuario ON log_actividad(usuario_id);
+diff --git a/API_seguimiento_docentes/tests/test_log_service.py b/API_seguimiento_docentes/tests/test_log_service.py
+new file mode 100644
+index 0000000..6a2b131
+--- /dev/null
++++ b/API_seguimiento_docentes/tests/test_log_service.py
+@@ -0,0 +1,18 @@
++"""
++Regresión DEF-03: la fecha de log_actividad la pone la aplicación en UTC, no
++el valor por defecto de la base. Ese valor dependía de la zona horaria de
++PostgreSQL: con la base en UTC quedaba 5 horas atrás y el bloqueo por
++intentos fallidos nunca se activaba. SQLite siempre usa UTC, así que aquí no
++se puede reproducir el desfase; se verifica que la fecha venga de Python.
++"""
++from datetime import datetime, timedelta, timezone
++
++from models import LogActividad
++
++
++def test_fecha_del_log_tiene_default_en_python_utc():
++    default = LogActividad.__table__.c.fecha.default
++    assert default is not None, "la fecha no puede depender solo del default de la base"
++    valor = default.arg(None)
++    assert valor.tzinfo is not None
++    assert abs(datetime.now(timezone.utc) - valor) < timedelta(seconds=5)
+-- 
+2.56.0.windows.4
+

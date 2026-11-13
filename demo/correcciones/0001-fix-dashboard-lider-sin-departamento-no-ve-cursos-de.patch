@@ -1,0 +1,79 @@
+From b32ffed2bd9785fde4a194d04116ec354533d495 Mon Sep 17 00:00:00 2001
+From: Marcos Duque <90621408+C4t-eyex@users.noreply.github.com>
+Date: Thu, 12 Nov 2026 21:46:07 -0500
+Subject: [PATCH 1/5] fix(dashboard): lider sin departamento no ve cursos de
+ toda la institucion (DEF-01)
+
+La lista vacia de departamentos se trataba como 'sin filtro'. Ahora None significa todos y [] significa ninguno.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ .../services/dashboard_service.py             |  9 ++++++---
+ .../tests/test_dashboard_service.py           | 20 +++++++++++++++++++
+ 2 files changed, 26 insertions(+), 3 deletions(-)
+
+diff --git a/API_seguimiento_docentes/services/dashboard_service.py b/API_seguimiento_docentes/services/dashboard_service.py
+index 044505a..fd128df 100644
+--- a/API_seguimiento_docentes/services/dashboard_service.py
++++ b/API_seguimiento_docentes/services/dashboard_service.py
+@@ -76,7 +76,8 @@ def obtener_stats(
+             .joinedload(ResultadoRevision.criterio)
+         )
+     )
+-    if dept_lista:
++    # None = todos los departamentos; [] = ninguno (DEF-01)
++    if dept_lista is not None:
+         query = query.filter(Curso.departamento.in_(dept_lista))
+ 
+     cursos = query.all()
+@@ -310,7 +311,8 @@ def obtener_historico_agregado(
+             Curso.oculto_estadisticas.is_(False),
+         )
+     )
+-    if dept_lista:
++    # None = todos los departamentos; [] = ninguno (DEF-01)
++    if dept_lista is not None:
+         q = q.filter(Curso.departamento.in_(dept_lista))
+     q = q.filter(ResultadoRevision.cumplido == True)
+ 
+@@ -384,7 +386,8 @@ def obtener_semaforo_departamentos(
+             Curso.oculto_estadisticas.is_(False),
+         )
+     )
+-    if dept_lista:
++    # None = todos los departamentos; [] = ninguno (DEF-01)
++    if dept_lista is not None:
+         q = q.filter(Curso.departamento.in_(dept_lista))
+     rows = q.all()
+ 
+diff --git a/API_seguimiento_docentes/tests/test_dashboard_service.py b/API_seguimiento_docentes/tests/test_dashboard_service.py
+index 2eaa7b0..52a57ca 100644
+--- a/API_seguimiento_docentes/tests/test_dashboard_service.py
++++ b/API_seguimiento_docentes/tests/test_dashboard_service.py
+@@ -149,3 +149,23 @@ def test_obtener_historico_agregado_excluye_cursos_regiones(db_session):
+         assert periodos == []  # el curso Regiones no debe generar ninguna entrada
+     finally:
+         _limpiar_criterios_regiones(db_session, nuevos, curso_id=curso_r.id, revision_id=revision_r.id)
++
++
++def test_lista_vacia_de_departamentos_no_ve_ningun_curso(db_session):
++    """Regresión DEF-01: un líder de departamento sin departamento asignado
++    recibe dept_lista=[] y no debe ver ningún curso. None significa "todos";
++    la lista vacía significa "ninguno"."""
++    import services.dashboard_service as ds
++    curso, revision, nuevos = _curso_con_revision_regiones(db_session, 900006, "2046-1", [True] * 6)
++    try:
++        stats = ds.obtener_stats(db_session, "2046-1", 1, [], "", tipo_seguimiento="regiones")
++        assert stats["total_cursos"] == 0
++
++        semaforo = ds.obtener_semaforo_departamentos(db_session, "2046-1", [], "", tipo_seguimiento="regiones")
++        assert all(d["departamento"] != "Sistemas Digitales" for d in semaforo["departamentos"])
++
++        # Control: con None (todos) el mismo curso sí aparece
++        stats_todos = ds.obtener_stats(db_session, "2046-1", 1, None, "", tipo_seguimiento="regiones")
++        assert stats_todos["total_cursos"] >= 1
++    finally:
++        _limpiar_criterios_regiones(db_session, nuevos, curso_id=curso.id, revision_id=revision.id)
+-- 
+2.56.0.windows.4
+

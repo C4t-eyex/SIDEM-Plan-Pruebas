@@ -1,0 +1,57 @@
+From afc3de0a894845ada8ca21a3f975dfdab71753a8 Mon Sep 17 00:00:00 2001
+From: Marcos Duque <90621408+C4t-eyex@users.noreply.github.com>
+Date: Thu, 12 Nov 2026 21:55:31 -0500
+Subject: [PATCH 5/5] fix(sql): db.sql se instala completo en una base nueva
+ (DEF-05)
+
+El backfill de estado_seguimiento solo corre si la columna vieja existe.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ API_seguimiento_docentes/sql/db.sql | 30 +++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
+
+diff --git a/API_seguimiento_docentes/sql/db.sql b/API_seguimiento_docentes/sql/db.sql
+index 2944669..1f95a55 100644
+--- a/API_seguimiento_docentes/sql/db.sql
++++ b/API_seguimiento_docentes/sql/db.sql
+@@ -590,16 +590,26 @@ CREATE TABLE IF NOT EXISTS estados_seguimiento_estudiante (
+ 
+ ALTER TABLE seguimientos_estudiantes ADD COLUMN IF NOT EXISTS estado_estudiante_id INTEGER REFERENCES estados_seguimiento_estudiante(id);
+ 
+-INSERT INTO estados_seguimiento_estudiante (nombre, orden)
+-SELECT DISTINCT estado_seguimiento, 0
+-FROM seguimientos_estudiantes
+-WHERE estado_seguimiento IS NOT NULL
+-  AND estado_seguimiento NOT IN (SELECT nombre FROM estados_seguimiento_estudiante);
+-
+-UPDATE seguimientos_estudiantes s
+-SET estado_estudiante_id = e.id
+-FROM estados_seguimiento_estudiante e
+-WHERE s.estado_seguimiento = e.nombre AND s.estado_estudiante_id IS NULL;
++-- DEF-05: el backfill solo corre si la columna vieja existe. En una base
++-- nueva no existe y el INSERT/UPDATE fallaba.
++DO $$
++BEGIN
++    IF EXISTS (
++        SELECT 1 FROM information_schema.columns
++        WHERE table_name = 'seguimientos_estudiantes' AND column_name = 'estado_seguimiento'
++    ) THEN
++        INSERT INTO estados_seguimiento_estudiante (nombre, orden)
++        SELECT DISTINCT estado_seguimiento, 0
++        FROM seguimientos_estudiantes
++        WHERE estado_seguimiento IS NOT NULL
++          AND estado_seguimiento NOT IN (SELECT nombre FROM estados_seguimiento_estudiante);
++
++        UPDATE seguimientos_estudiantes s
++        SET estado_estudiante_id = e.id
++        FROM estados_seguimiento_estudiante e
++        WHERE s.estado_seguimiento = e.nombre AND s.estado_estudiante_id IS NULL;
++    END IF;
++END $$;
+ 
+ -- Scoping por facultad/programa en Seguimiento a Estudiantes (lider_departamento) —
+ -- taxonomía propia, distinta del departamento de docentes (ver comentario en CREATE TABLE usuarios).
+-- 
+2.56.0.windows.4
+
