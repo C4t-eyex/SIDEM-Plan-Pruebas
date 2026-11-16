@@ -37,6 +37,7 @@ entregables-previos/  Actividades 1 y 2 (escaneadas y en LaTeX), Talleres 4 y 5 
 demo/                 Copia de demostración de SIDEM con datos ficticios (fase 2)
 pruebas-automaticas/  Pruebas con pytest contra la demostración (fase 3)
 evidencias/           Capturas y resultados de la ejecución (fase 3)
+exposicion/           Diapositivas de cada integrante y guía de la exposición final
 .github/              Plantilla para reportar defectos
 ```
 
