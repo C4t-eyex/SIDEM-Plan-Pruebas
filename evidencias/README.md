@@ -22,3 +22,13 @@ Convención de nombres: `TC-XX_AAAA-MM-DD_<integrante>.png`. Si un caso tiene va
 |---|---|---|
 | `pytest/ejecucion_2026-11-08.txt` y `.xml` | Equipo | 19 pruebas: 16 pasan, 3 fallan (DEF-01, DEF-02, DEF-04) |
 | `pytest/ejecucion_2026-11-12_Sebastian.txt` y `.xml` | Sebastián | 19 pruebas: 16 pasan, 3 fallan (los mismos) |
+| `pytest/ejecucion_2026-11-16_retest_Sebastian.txt` y `.xml` | Sebastián | Retest con `77f71b2-correcciones` y la base en UTC: 19 pruebas, 19 pasan, 0 fallan |
+
+## Retest (16/11/2026)
+
+| Defecto | Qué se revisó | Archivos |
+|---|---|---|
+| DEF-01 | `lider.sindep@sidem.test` en Métricas, revisión 1: 0 cursos y "Sin datos". | `TC-02_2026-11-16_retest_Sebastian_sindep-inicio.png` (usuario conectado), `_sindep-sin-datos.png` |
+| DEF-04 | `consulta@sidem.test` (alcance "Todos") en Seguimiento, revisión 1: ve los 6 cursos. | `TC-02_2026-11-16_retest_Sebastian_consulta-inicio.png` (usuario conectado), `_consulta-ve-6-cursos.png` |
+| DEF-01 a DEF-04 | Suite completa de pytest. | `pytest/ejecucion_2026-11-16_retest_Sebastian.txt` y `.xml` |
+| DEF-05 | Log de la base al crearla: 0 líneas `ERROR:`. | `DEF-05_2026-11-16_retest_Sebastian_log-base.txt` |

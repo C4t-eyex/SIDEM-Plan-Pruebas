@@ -6,13 +6,15 @@ Versión de SIDEM probada: commit `77f71b2`. Entorno: demo con Docker (AMB-01) y
 
 Las correcciones están en [`demo/correcciones/`](../demo/correcciones/), una por defecto. Se cierran cuando el retest las confirme ([`retest.md`](retest.md)).
 
+**Retest del 16/11/2026** (Sebastián), con las imágenes `77f71b2-correcciones` y la base en UTC: las 19 pruebas automáticas pasan y `db.sql` se instala sin errores. Los 5 defectos quedan cerrados.
+
 | ID | Caso | Riesgo | Severidad | Resumen | Estado |
 |---|---|---|---|---|---|
-| DEF-01 | TC-02 | R02 | Alta | El líder de departamento sin departamento asignado ve las métricas de toda la institución. | Corregido, pendiente de retest |
-| DEF-02 | TC-06 | R09 | Media | La cookie de sesión sigue sirviendo después de cerrar sesión. | Corregido, pendiente de retest |
-| DEF-03 | TC-09 | R08 | Media | El bloqueo de login depende de la zona horaria de PostgreSQL; con UTC no se activa. | Corregido, pendiente de retest |
-| DEF-04 | TC-02 | R01 | Baja | Un rol personalizado con permiso de ver el seguimiento no ve ningún curso. | Corregido, pendiente de retest |
-| DEF-05 | - | - | Baja | `sql/db.sql` falla al instalar SIDEM en una base nueva. | Corregido, pendiente de retest |
+| DEF-01 | TC-02 | R02 | Alta | El líder de departamento sin departamento asignado ve las métricas de toda la institución. | Cerrado (retest 16/11) |
+| DEF-02 | TC-06 | R09 | Media | La cookie de sesión sigue sirviendo después de cerrar sesión. | Cerrado (retest 16/11) |
+| DEF-03 | TC-09 | R08 | Media | El bloqueo de login depende de la zona horaria de PostgreSQL; con UTC no se activa. | Cerrado (retest 16/11) |
+| DEF-04 | TC-02 | R01 | Baja | Un rol personalizado con permiso de ver el seguimiento no ve ningún curso. | Cerrado (retest 16/11) |
+| DEF-05 | - | - | Baja | `sql/db.sql` falla al instalar SIDEM en una base nueva. | Cerrado (retest 16/11) |
 
 ---
 
@@ -34,6 +36,8 @@ Las correcciones están en [`demo/correcciones/`](../demo/correcciones/), una po
 
 **Evidencia:** `evidencias/pytest/ejecucion_2026-11-08.txt`.
 
+**Retest (16/11/2026):** `test_lider_sin_departamento_no_ve_metricas` pasa. En **Métricas**, revisión 1, `lider.sindep@sidem.test` ve 0 cursos y el mensaje "Sin datos para los filtros seleccionados". Evidencia: `evidencias/pytest/ejecucion_2026-11-16_retest_Sebastian.txt`, `evidencias/TC-02_2026-11-16_retest_Sebastian_sindep-inicio.png` y `_sindep-sin-datos.png`. **Cerrado.**
+
 ## DEF-02 - La sesión cerrada se puede reutilizar
 
 - **Caso:** TC-06 (complemento automático) · **Riesgo:** R09 · **Severidad:** Media
@@ -50,6 +54,8 @@ Las correcciones están en [`demo/correcciones/`](../demo/correcciones/), una po
 **Causa probable:** `logout()` en `routes/auth.py` solo le pide al navegador que borre la cookie. El token sigue siendo válido en el servidor hasta que vence.
 
 **Evidencia:** `evidencias/pytest/ejecucion_2026-11-08.txt`.
+
+**Retest (16/11/2026):** con el contador de sesión `token_version`, `test_sesion_cerrada_no_se_reutiliza` pasa: después de cerrar sesión, la cookie copiada antes da 401. La prueba hace el login y el logout en milisegundos, que era el caso que podía fallar con la primera versión del parche (comparaba la hora redondeada al segundo). Evidencia: `evidencias/pytest/ejecucion_2026-11-16_retest_Sebastian.txt`. **Cerrado.**
 
 ## DEF-03 - El bloqueo de login depende de la zona horaria de la base
 
@@ -70,6 +76,8 @@ Las correcciones están en [`demo/correcciones/`](../demo/correcciones/), una po
 
 **Evidencia:** `evidencias/pytest/ejecucion_2026-11-08.txt` (corrida con la base corregida) y los registros de `log_actividad` de la primera corrida, con fecha 14:08 cuando en UTC eran las 19:08.
 
+**Retest (16/11/2026):** con la base en UTC (`show timezone` responde `UTC`), `test_bloqueo_y_desbloqueo` pasa: los 5 intentos fallidos dan 401, el 6.º con la clave correcta da 429 y después de 300 s vuelve a entrar. Evidencia: `evidencias/pytest/ejecucion_2026-11-16_retest_Sebastian.txt`. **Cerrado.**
+
 ## DEF-04 - Rol personalizado con permiso de ver no ve cursos
 
 - **Caso:** TC-02 · **Riesgo:** R01 · **Severidad:** Baja
@@ -86,6 +94,8 @@ Las correcciones están en [`demo/correcciones/`](../demo/correcciones/), una po
 
 **Evidencia:** `evidencias/pytest/ejecucion_2026-11-08.txt`.
 
+**Retest (16/11/2026):** con el alcance explícito, `consulta@sidem.test` tiene "Todos" y en **Seguimiento**, revisión 1, ve los 6 cursos. `test_consulta_puede_ver_el_seguimiento` y `test_consulta_no_puede_guardar` pasan, así que sigue sin poder guardar. Evidencia: `evidencias/pytest/ejecucion_2026-11-16_retest_Sebastian.txt`, `evidencias/TC-02_2026-11-16_retest_Sebastian_consulta-inicio.png` y `_consulta-ve-6-cursos.png`. **Cerrado.**
+
 ## DEF-05 - El esquema oficial falla en una base nueva
 
 - **Caso:** ninguno (apareció al montar la demo) · **Severidad:** Baja
@@ -101,3 +111,5 @@ Las correcciones están en [`demo/correcciones/`](../demo/correcciones/), una po
 **Causa probable:** la migración supone que la columna ya existe de una versión anterior. En una instalación nueva no está.
 
 **Nota:** el módulo de estudiantes está fuera del alcance, pero el error afecta a cualquiera que instale SIDEM desde cero. La demo lo rodea cargando el archivo sin detenerse y completando con `verificar_schema.py --aplicar`.
+
+**Retest (16/11/2026):** al crear la base de la demo, el log de `sidem-demo-db` tiene 0 líneas `ERROR:`. Además, `db.sql` se cargó en una base vacía aparte con `ON_ERROR_STOP=1` (se detiene en el primer error): terminó con código 0 y creó las 23 tablas. Esa base se borró después. Evidencia: `evidencias/DEF-05_2026-11-16_retest_Sebastian_log-base.txt`. **Cerrado.**

@@ -1,0 +1,50 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.7.0 -- C:\Users\SebasDeveloper\AppData\Local\Programs\Python\Python311\python.exe
+rootdir: C:\Users\SebasDeveloper\Documents\pruebas de software final\pruebas-automaticas
+configfile: pytest.ini
+plugins: anyio-4.16.0
+collecting ... collected 19 items
+
+test_tc01_alcance_departamento.py::test_lider_ve_solo_su_departamento PASSED [  5%]
+test_tc01_alcance_departamento.py::test_lider_no_puede_pedir_metricas_de_otro_departamento PASSED [ 10%]
+test_tc01_alcance_departamento.py::test_lider_no_puede_modificar_seguimiento PASSED [ 15%]
+test_tc02_permisos_rol.py::test_consulta_puede_ver_el_seguimiento PASSED [ 21%]
+test_tc02_permisos_rol.py::test_consulta_no_puede_guardar PASSED         [ 26%]
+test_tc02_permisos_rol.py::test_lider_sin_departamento_no_ve_seguimiento PASSED [ 31%]
+test_tc02_permisos_rol.py::test_lider_sin_departamento_no_ve_metricas PASSED [ 36%]
+test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Programaci\xf3n B\xe1sica (DEMO)-80-verde] PASSED [ 42%]
+test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Bases de Datos (DEMO)-77-amarillo] PASSED [ 47%]
+test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Redes I (DEMO)-50-amarillo] PASSED [ 52%]
+test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Procesos Industriales (DEMO)-47-rojo] PASSED [ 57%]
+test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Calidad (DEMO)-100-verde] PASSED [ 63%]
+test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Log\xedstica (DEMO)-0-rojo] PASSED [ 68%]
+test_tc03_semaforo_limites.py::test_resumen_del_panel PASSED             [ 73%]
+test_tc05_exportar_excel.py::test_excel_coincide_con_pantalla[Sistemas Digitales] PASSED [ 78%]
+test_tc05_exportar_excel.py::test_excel_coincide_con_pantalla[Producci\xf3n] PASSED [ 84%]
+test_tc06_sesion_cerrada.py::test_sesion_cerrada_no_se_reutiliza PASSED  [ 89%]
+test_tc07_criterios_revision.py::test_registro_queda_en_el_curso_y_revision_correctos PASSED [ 94%]
+test_tc09_bloqueo_login.py::test_bloqueo_y_desbloqueo PASSED             [100%]
+
+=================================== PASSES ====================================
+- generated xml file: C:\Users\SebasDeveloper\Documents\pruebas de software final\evidencias\pytest\ejecucion_2026-11-16_retest_Sebastian.xml -
+=========================== short test summary info ===========================
+PASSED test_tc01_alcance_departamento.py::test_lider_ve_solo_su_departamento
+PASSED test_tc01_alcance_departamento.py::test_lider_no_puede_pedir_metricas_de_otro_departamento
+PASSED test_tc01_alcance_departamento.py::test_lider_no_puede_modificar_seguimiento
+PASSED test_tc02_permisos_rol.py::test_consulta_puede_ver_el_seguimiento
+PASSED test_tc02_permisos_rol.py::test_consulta_no_puede_guardar
+PASSED test_tc02_permisos_rol.py::test_lider_sin_departamento_no_ve_seguimiento
+PASSED test_tc02_permisos_rol.py::test_lider_sin_departamento_no_ve_metricas
+PASSED test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Programaci\xf3n B\xe1sica (DEMO)-80-verde]
+PASSED test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Bases de Datos (DEMO)-77-amarillo]
+PASSED test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Redes I (DEMO)-50-amarillo]
+PASSED test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Procesos Industriales (DEMO)-47-rojo]
+PASSED test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Calidad (DEMO)-100-verde]
+PASSED test_tc03_semaforo_limites.py::test_color_segun_porcentaje[Log\xedstica (DEMO)-0-rojo]
+PASSED test_tc03_semaforo_limites.py::test_resumen_del_panel
+PASSED test_tc05_exportar_excel.py::test_excel_coincide_con_pantalla[Sistemas Digitales]
+PASSED test_tc05_exportar_excel.py::test_excel_coincide_con_pantalla[Producci\xf3n]
+PASSED test_tc06_sesion_cerrada.py::test_sesion_cerrada_no_se_reutiliza
+PASSED test_tc07_criterios_revision.py::test_registro_queda_en_el_curso_y_revision_correctos
+PASSED test_tc09_bloqueo_login.py::test_bloqueo_y_desbloqueo
+======================= 19 passed in 368.28s (0:06:08) ========================
