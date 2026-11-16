@@ -39,6 +39,8 @@ Se insertan en la lámina 5 en pares (antes a la izquierda, después a la derech
 ## Contenido de la lámina 5 (defectos y correcciones)
 
 > **Decisión de Marcos (16/11):** en la presentación van **todos** los defectos encontrados, no solo los del video. Cada uno se muestra con el **antes** (qué hacía SIDEM al encontrarlo) y el **después** (qué hace con la corrección), con su evidencia: GIF para DEF-01 y DEF-02, y capturas o resultados del retest para DEF-03, DEF-04 y DEF-05 (ver `evidencias/README.md`, sección "Retest").
+>
+> Los casos agregados **TC-06 a TC-09** siguen una dinámica parecida, como pruebas: qué se quería comprobar, cómo se probó y qué resultado dio. TC-06 y TC-09 encontraron DEF-02 y DEF-03, así que se ven con antes y después; TC-07 y TC-08 pasaron sin defecto. **TC-10 a TC-17** solo se mencionan.
 
 | Defecto | Riesgo | Qué pasaba | Qué se hizo |
 |---|---|---|---|
