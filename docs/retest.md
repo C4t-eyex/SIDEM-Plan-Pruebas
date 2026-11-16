@@ -18,7 +18,7 @@ Guía para repetir las pruebas sobre SIDEM con las correcciones de DEF-01 a DEF-
 
 ## Pasos
 
-1. **Descargar las imágenes.** Baja `sidem-demo-imagenes-77f71b2-correcciones.tar.gz` (unos 264 MB) de la carpeta de Drive del equipo (enlace en [`demo/README.md`](../demo/README.md)) y cárgalo:
+1. **Descargar las imágenes.** Baja `sidem-demo-imagenes-77f71b2-correcciones.tar.gz` (unos 264 MB) de la [carpeta de Drive del equipo](https://drive.google.com/drive/folders/1i7nXTlf7k8DhToZPXx2Hm70bDSp-vvhp?usp=drive_link) (ya está subido) y cárgalo:
 
    ```powershell
    docker load -i sidem-demo-imagenes-77f71b2-correcciones.tar.gz

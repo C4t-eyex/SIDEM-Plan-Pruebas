@@ -13,7 +13,7 @@ Cada integrante puede montarla en su propio equipo y ejecutar sus casos sin afec
 
 **Solo la primera vez**, carga las imágenes en Docker:
 
-1. Descarga `sidem-demo-imagenes-77f71b2-correcciones.tar.gz` (unos 264 MB) desde la carpeta de Drive del equipo: https://drive.google.com/drive/folders/1i7nXTlf7k8DhToZPXx2Hm70bDSp-vvhp?usp=sharing. El acceso es solo para los integrantes; si no te deja entrar, pídele acceso a Marcos.
+1. Descarga `sidem-demo-imagenes-77f71b2-correcciones.tar.gz` (unos 264 MB) desde la carpeta de Drive del equipo: https://drive.google.com/drive/folders/1i7nXTlf7k8DhToZPXx2Hm70bDSp-vvhp?usp=drive_link. El acceso es solo para los integrantes; si no te deja entrar, pídele acceso a Marcos.
 2. Con Docker Desktop abierto, en la carpeta donde quedó el archivo:
 
    ```powershell
