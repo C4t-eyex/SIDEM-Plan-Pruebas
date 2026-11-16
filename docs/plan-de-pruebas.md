@@ -1,14 +1,14 @@
 # Plan de Pruebas de Software - SIDEM
 
 > Basado en la norma ISO/IEC/IEEE 29119-3 (Documentación de pruebas), adaptada a un ciclo corto de 9 días (09/11/2026 al 17/11/2026).
-> **Estado:** BORRADOR v0.5 - pendiente de revisión con el docente.
+> **Estado:** BORRADOR v0.6 - respuestas del docente incorporadas; pendiente la revisión final.
 
 ---
 
 ## 1. Información específica del documento
 
 ### 1.1 Identificador único del documento
-`SIDEM-PP-2026-01` (Plan de Pruebas, versión 0.5)
+`SIDEM-PP-2026-01` (Plan de Pruebas, versión 0.6)
 
 ### 1.2 Organización emisora y autores
 - **Organización:** Equipo SIDEM - curso Pruebas de Software, 2026-2.
@@ -26,6 +26,7 @@ Roberto José Calderón Bermejo, docente del curso de Pruebas de Software.
 | 0.3 | 08/11/2026 | Equipo SIDEM | DAT-01 con revisión 2 y zona horaria de la base; complemento automático de TC-06. |
 | 0.4 | 10/11/2026 | Equipo SIDEM | Casos identificados no ejecutados TC-10 a TC-17 (dos por integrante), según indicación del docente. |
 | 0.5 | 10/11/2026 | Equipo SIDEM | Cronograma ajustado a la exposición del 17/11/2026, según indicación del docente. |
+| 0.6 | 16/11/2026 | Equipo SIDEM | Respuestas del docente incorporadas (`preguntas-para-el-profe.md`): escala 1-3 válida, R10 fuera del alcance del equipo, entrega final en PDF. |
 
 El control de versiones del documento se lleva en este repositorio (historial de commits de Git).
 
@@ -67,7 +68,7 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 | Especificaciones de diseño, casos y procedimientos como documentos separados | Consolidados en este plan y en `antecedentes/05` | Reduce la duplicación en un ciclo corto. | Bajo. La trazabilidad se conserva en la matriz 5.3. |
 | Informes de estado periódicos (*test status report*) | Simplificados | Se reemplazan por la bitácora `avances.md` y el tablero del repositorio. | Medio. Hay menos visibilidad formal del avance; se mitiga con seguimiento diario del equipo. |
 | Reporte de incidentes formal (*incident report*) | Simplificado | Se usa una plantilla de *issue* en GitHub con los campos mínimos de la norma. | Bajo. Se conservan los campos esenciales. |
-| Pruebas de rendimiento (R10) | Excluidas | La exposición del riesgo es baja (2) y no hay entorno de carga. | Bajo. Se acepta y queda documentado en 4.3. |
+| Pruebas de rendimiento (R10) | Excluidas | No es uno de los casos que trabaja el equipo (confirmado con el docente el 16/11); además la exposición es baja (2) y no hay entorno de carga. | Bajo. Se acepta y queda documentado en 4.3. |
 | Integración con Moodle y seguimiento a estudiantes | Excluidos | No hay una instancia de Moodle disponible; el módulo de estudiantes está en beta. | Medio. Los criterios automáticos que consultan Moodle no se validan en este ciclo. |
 
 ### 2.4 Glosario
@@ -196,7 +197,7 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 | R07 | Medio | Mitigar con pruebas. | P2 |
 | R08 | Medio | Mitigar con pruebas. | P2 |
 | R09 | Bajo | Verificación ligera con lista de chequeo (decisión del Taller 4). | P3 |
-| R10 | Bajo | **Aceptado sin pruebas**: no hay entorno de carga y la exposición es baja. | - |
+| R10 | Bajo | **Aceptado sin pruebas**: no está entre los casos del equipo, no hay entorno de carga y la exposición es baja. | - |
 | RP1 | Medio | Preparar un conjunto de datos ficticios versionado en el repositorio (DAT-01). | - |
 | RP2 | Medio | Ejecutar primero los P1; si falta tiempo, se recortan los P3. | - |
 | RP3 | Bajo | Congelar la versión (commit `77f71b2`) y registrar cualquier cambio. | - |

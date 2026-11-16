@@ -1,6 +1,7 @@
 # Informe de cierre de pruebas - SIDEM
 
 > Basado en la norma ISO/IEC/IEEE 29119-3 (*Test Completion Report*).
+> **Este es el *Test Completion Report* de la entrega final. Lo termina Julián** después del retest (confirmado con el docente el 16/11, pregunta 8 de `preguntas-para-el-profe.md`).
 > **Estado:** BORRADOR v0.1. Todos los datos salen de lo registrado en el repositorio. Lo que no está registrado aparece como "pendiente".
 
 ---
@@ -201,7 +202,7 @@ Criterios de la sección 5.5 del plan, comparados con lo registrado hasta hoy.
 | R07 | Cubierto: TC-05 pasa en manual y en automático para los dos departamentos. |
 | R08 | TC-09 pasa con la base en `America/Bogota`. DEF-03 sigue abierto hasta revisar la zona horaria de producción. |
 | R09 | DEF-02 abierto: una cookie copiada antes de cerrar sesión sigue funcionando. El comportamiento del navegador sí es correcto (TC-06 manual). TC-14 (cambio de contraseña con dos sesiones) no se ejecutó. |
-| R10 | Aceptado sin pruebas en el plan (no hay entorno de carga). |
+| R10 | Aceptado sin pruebas en el plan: no está entre los casos del equipo y no hay entorno de carga. |
 
 También quedan fuera de este ciclo, por decisión del plan: la integración con Moodle, el seguimiento a estudiantes y las pruebas de rendimiento. Los casos TC-10 a TC-17 quedan identificados, no ejecutados. TC-15 (fórmulas en el Excel exportado) es relevante para R07, que hoy solo se cubrió con datos normales.
 

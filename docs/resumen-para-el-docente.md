@@ -21,7 +21,7 @@ Las pruebas se enfocan en lo que más riesgo tiene: quién puede ver y modificar
 | 2 | La trazabilidad: cada riesgo tiene su condición y su caso de prueba. | Plan, secciones 4 y 5 |
 | 3 | La demo de SIDEM con datos ficticios, funcionando en el computador. | [`demo/README.md`](../demo/README.md) |
 | 4 | La primera ejecución de las pruebas automáticas y los defectos encontrados. | [`defectos.md`](defectos.md), [`evidencias/pytest/`](../evidencias/pytest/) |
-| 5 | Las dudas que tenemos sobre el formato y el alcance. | [`preguntas-para-el-profe.md`](preguntas-para-el-profe.md) |
+| 5 | Las preguntas al docente sobre formato y alcance, con sus respuestas. | [`preguntas-para-el-profe.md`](preguntas-para-el-profe.md) |
 
 ## 3. Cómo vamos
 
@@ -49,10 +49,10 @@ Las pruebas se enfocan en lo que más riesgo tiene: quién puede ver y modificar
 
 Las hojas para la ejecución manual están en [`ejecucion-manual.md`](ejecucion-manual.md). Después vienen el retest de los defectos y el informe de cierre (15/11 y 16/11, según el cronograma).
 
-## 5. Lo que necesitamos que nos confirme
+## 5. Lo que confirmó el docente (16/11)
 
-Las preguntas completas están en [`preguntas-para-el-profe.md`](preguntas-para-el-profe.md). Las principales:
+Las respuestas completas están en [`preguntas-para-el-profe.md`](preguntas-para-el-profe.md). Las principales:
 
-1. Si el formato en Markdown dentro de un repositorio sirve como entrega.
-2. Si el tailoring que hicimos (documentos que juntamos u omitimos) es aceptable.
-3. Si en la exposición se espera una demo en vivo o basta con las evidencias.
+1. El trabajo queda en el repositorio y al final se entrega en PDF (LaTeX o Markdown, da igual).
+2. El tailoring es aceptable. Se citan cláusulas de la norma solo si apoyan la exposición.
+3. La exposición dura de 20 a 30 minutos y muestra el aplicativo antes y después de las correcciones, con el video de la demo.

@@ -1,12 +1,16 @@
-# Preguntas para validar con el docente
+# Preguntas al docente y sus respuestas
 
-1. **Formato de entrega.** ¿El plan se entrega solo en Markdown dentro del repositorio, o también en PDF?
-2. **Escala de riesgos.** Usamos probabilidad e impacto de 1 a 3 (exposición máxima 9). ¿Es válida, o se espera una escala de 1 a 5?
-3. **Niveles de exposición.** Con nuestra escala ningún riesgo llega a Crítico. ¿Es aceptable, o hay que justificarlo de otra forma?
-4. **Riesgo aceptado.** Aceptamos R10 (rendimiento) sin pruebas por su exposición baja. ¿Es correcto dejarlo así?
-5. **Tailoring.** ¿La tabla de exclusiones de la sección 2.3 es suficiente, o se espera citar cláusulas específicas de la norma?
-6. **Documentos consolidados.** ¿Se pueden mantener los casos y procedimientos dentro del plan, o deben ir como documentos separados (especificación de casos y de procedimientos)?
-7. **Ejecución.** ¿Basta con evidencias (capturas y reporte de pytest) o hay que entregar también un informe de estado semanal?
-8. **Informe de cierre.** ¿Se espera el *Test Completion Report* de la norma como documento aparte?
-9. **Exposición.** ¿Cuánto dura y qué debe mostrarse: el plan, la ejecución en vivo o ambos?
-10. **Casos nuevos.** Agregamos TC-07 a TC-09 para cubrir riesgos sin caso en el Taller 5. ¿Está bien ampliar lo entregado?
+Respuestas recibidas el 16/11/2026. Lo que cambió en los documentos por cada respuesta aparece en la columna "Qué hacemos".
+
+| # | Pregunta | Respuesta del docente | Qué hacemos |
+|---|---|---|---|
+| 1 | **Formato de entrega.** ¿Solo Markdown en el repositorio o también PDF? | El trabajo se va registrando en el repositorio con los commits. Al final se entrega el PDF del trabajo terminado; da igual si se hace en LaTeX o en Markdown. | Todo queda en el repositorio y al cerrar se regenera [`entrega/Plan_de_Pruebas_SIDEM.pdf`](../entrega/Plan_de_Pruebas_SIDEM.pdf) con `python entrega/generar_pdf.py`. |
+| 2 | **Escala de riesgos.** ¿Sirve 1 a 3 o se espera 1 a 5? | Cualquiera de las dos sirve, tomando como referencia lo que recomienda la norma. | Se mantiene la escala de 1 a 3 (probabilidad × impacto). |
+| 3 | **Niveles de exposición.** Ningún riesgo llega a Crítico. ¿Es aceptable? | Sí. Al probar un aplicativo escogido por el equipo puede que ninguno llegue a crítico. Lo importante es mostrar qué casos pueden perjudicar el aplicativo y qué se hizo para solucionarlo. | En la exposición y en el informe de cierre se destacan los riesgos altos (R01 a R04), los defectos encontrados y su corrección. |
+| 4 | **Riesgo aceptado.** ¿Está bien dejar R10 (rendimiento) sin pruebas? | Sí. El rendimiento no se tomó como un caso a revisar. Eso no quiere decir que no sea importante; el foco está en los casos que trabaja el equipo. | R10 queda fuera del alcance porque no está entre los casos del equipo (plan 2.3 y 4.3). |
+| 5 | **Tailoring.** ¿Basta la tabla de exclusiones o hay que citar cláusulas? | Se pueden citar cláusulas de la norma solo cuando apoyen la exposición. Si el texto es muy técnico, se organiza para que sea fácil de explicar. | Se citan cláusulas solo donde ayudan a explicar. La exposición del tailoring se hace en lenguaje sencillo. |
+| 6 | **Documentos consolidados.** ¿Casos y procedimientos dentro del plan o aparte? | Cualquiera sirve, siempre que el orden sea claro: qué se encontró, qué se tomó y qué se hizo. No hay que ser muy técnicos. | Se mantienen dentro del plan, con ese orden. |
+| 7 | **Ejecución.** ¿Bastan las evidencias o se pide un informe semanal? | Bastan las capturas y el reporte de pytest. Todo el proceso duró menos de 15 días, así que un avance semanal no aplica. | No se hace informe semanal. Evidencias en [`evidencias/`](../evidencias/). |
+| 8 | **Informe de cierre.** ¿Se espera el *Test Completion Report* aparte? | Sí, es el documento final que hace Julián. | [`informe-de-cierre.md`](informe-de-cierre.md) es el *Test Completion Report* de la norma y lo termina **Julián** después del retest. |
+| 9 | **Exposición.** ¿Cuánto dura y qué se muestra? | De 20 a 30 minutos, según el equipo. Lo importante es organizar bien las partes y mostrar cómo estaba el aplicativo antes y después de las correcciones. Se puede usar un video. | Se usa el video de la demo: el "antes" ya está grabado y el "después" se agrega al mismo video cuando estén las correcciones (Marcos). |
+| 10 | **Casos nuevos.** ¿Está bien haber agregado TC-07 a TC-09? | Sí. Al final se indica que se identificaron para complementar. Los 9 casos (TC-01 a TC-09) son los que se prueban; los demás (TC-10 a TC-17) solo se mencionan. | En el plan y en la exposición se explica que TC-07 a TC-09 se agregaron para complementar. TC-10 a TC-17 se mencionan como identificados y no ejecutados. |
