@@ -2,6 +2,8 @@
 
 Guía para repetir las pruebas sobre SIDEM con las correcciones de DEF-01 a DEF-05. Lo ejecuta **Sebastián**; con el resultado, **Julián** actualiza el informe de cierre.
 
+> **Hecho el 16/11/2026 por Sebastián:** 19 de 19 pruebas pasan y los 5 defectos quedan cerrados. Detalle en [`defectos.md`](defectos.md) y en `evidencias/pytest/ejecucion_2026-11-16_retest_Sebastian.txt`. Falta que Julián comente los issues #1 a #5 y actualice el informe de cierre.
+
 ## Qué cambió
 
 - **Versión probada:** commit `77f71b2` más los parches `0001` a `0005` de [`demo/correcciones/`](../demo/correcciones/). Las imágenes de Docker se llaman `sidem-demo-app:77f71b2-correcciones` y `sidem-demo-db:77f71b2-correcciones`.

@@ -52,8 +52,7 @@ Mensaje para decir: las correcciones están como parches sobre la versión proba
 
 | Pendiente | Quién | Depende de |
 |---|---|---|
-| Diapositivas del cierre (`Julian_cierre.pptx`) | Julián | Resultado del retest |
-| Actualizar la lámina 2 de Sebastián con el retest (19 de 19) | Sebastián | Retest |
+| Diapositivas del cierre (`Julian_cierre.pptx`) | Julián | - (el retest ya está: 19 de 19, defectos cerrados) |
 | Lámina 5 de defectos y correcciones con los GIF | Marcos | - |
 | Unir las 4 presentaciones en `Exposicion_SIDEM.pptx` con portada, agenda y cierre | Marcos | Todas las anteriores |
 | Ensayo completo cronometrado | Todos | Presentación unida |

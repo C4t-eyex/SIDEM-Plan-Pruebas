@@ -47,7 +47,7 @@ exposicion/           Diapositivas de cada integrante y guía de la exposición 
 |---|---|---|
 | 1 | Organizar documentos y plan para revisión con el docente | Lista; respuestas del docente incorporadas (plan v0.6) |
 | 2 | Demo de SIDEM con Docker y datos ficticios ([`demo/README.md`](demo/README.md)) | Lista, con imágenes del retest |
-| 3 | Ejecución real (manual + automática), defectos y evidencias | Ejecución hecha; 5 defectos corregidos con parches; retest pendiente ([`docs/retest.md`](docs/retest.md)) |
+| 3 | Ejecución real (manual + automática), defectos y evidencias | Lista: 5 defectos corregidos y cerrados con el retest del 16/11 (19 de 19, [`docs/retest.md`](docs/retest.md)) |
 | 4 | Informe de cierre y exposición | En curso |
 
 > La versión de SIDEM bajo prueba es el commit `77f71b2`. El retest usa ese commit más los parches de [`demo/correcciones/`](demo/correcciones/). No se usan datos reales.
