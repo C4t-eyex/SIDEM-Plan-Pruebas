@@ -19,7 +19,7 @@ La historia sigue el orden del trabajo: qué se planeó → cómo se probó → 
 | 2 | Matriz de riesgos | Marcos | `Marcos_plan_y_riesgos.pptx` 3 | 2 min | Los 4 riesgos altos (R01 a R04) se volvieron casos P1. Ninguno llega a crítico. Menciona TC-16 y TC-17. |
 | 3 | Valores límite (TC-03, TC-08) | Nicolás | `Nicolas_valores_limite.pptx` 1-2 | 3 min | Los errores están en los bordes: 80 %, 77 %, 50 %, 47 %. Los 6 cursos y los totales salieron bien. Menciona TC-12 y TC-13. |
 | 4 | Pruebas automáticas | Sebastián | `Sebastian_pruebas_automaticas.pptx` 1-2 | 4 min | pytest contra la API. Primera ronda: 16 de 19, y los 3 fallos eran defectos de SIDEM. Menciona TC-10 y TC-11. |
-| 5 | Defectos y correcciones (antes / después) | Marcos | Lámina nueva + video | 6 min | Los 5 defectos, qué riesgo tocaban y cómo se corrigieron. Video de DEF-01 y DEF-02 antes y después. |
+| 5 | Defectos y correcciones (antes / después) | Marcos | Láminas nuevas + video | 8 min | **Todos** los defectos encontrados (DEF-01 a DEF-05), cada uno con qué hacía SIDEM antes de corregirlo y qué hace después. Video de DEF-01 y DEF-02. |
 | 6 | Retest y cierre | Julián | `Julian_cierre.pptx` (falta) | 4 min | Retest: 19 de 19. Estado final de los defectos, criterios de finalización cumplidos y lecciones aprendidas. Menciona TC-14 y TC-15. |
 | 7 | Preguntas | Todos | - | 2-5 min | - |
 
@@ -37,6 +37,8 @@ En la carpeta compartida del equipo (no va al repositorio por el peso):
 Se insertan en la lámina 5 en pares (antes a la izquierda, después a la derecha) o uno tras otro. Los GIF se reproducen solos en PowerPoint.
 
 ## Contenido de la lámina 5 (defectos y correcciones)
+
+> **Decisión de Marcos (16/11):** en la presentación van **todos** los defectos encontrados, no solo los del video. Cada uno se muestra con el **antes** (qué hacía SIDEM al encontrarlo) y el **después** (qué hace con la corrección), con su evidencia: GIF para DEF-01 y DEF-02, y capturas o resultados del retest para DEF-03, DEF-04 y DEF-05 (ver `evidencias/README.md`, sección "Retest").
 
 | Defecto | Riesgo | Qué pasaba | Qué se hizo |
 |---|---|---|---|
