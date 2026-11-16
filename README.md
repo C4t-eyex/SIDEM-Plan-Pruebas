@@ -2,7 +2,7 @@
 
 Trabajo final del curso **Pruebas de Software (2026-2)**. Aplica la norma **ISO/IEC/IEEE 29119-3** al sistema **SIDEM** (Sistema de Seguimiento de Docentes en Moodle).
 
-**Equipo:** Marcos Duque Jaramillo · Sebastián Díaz Jiménez · Nicolas Cataño Durango · Julián Ramírez Molina
+**Equipo:** Marcos Duque Jaramillo · Sebastián Díaz Jiménez · Nicolás Cataño Durango · Julián Ramírez Molina
 **Entrega y exposición:** martes 17/11/2026
 
 ## Por dónde empezar
@@ -15,6 +15,8 @@ Trabajo final del curso **Pruebas de Software (2026-2)**. Aplica la norma **ISO/
 | [`docs/preguntas-para-el-profe.md`](docs/preguntas-para-el-profe.md) | Preguntas al docente y sus respuestas (16/11). |
 | [`docs/avances.md`](docs/avances.md) | Bitácora de avances y hallazgos. |
 | [`docs/defectos.md`](docs/defectos.md) | Defectos encontrados en la ejecución. |
+| [`docs/retest.md`](docs/retest.md) | **Guía del retest** de los defectos corregidos (Sebastián) y qué actualizar después (Julián). |
+| [`docs/informe-de-cierre.md`](docs/informe-de-cierre.md) | Informe de cierre (*Test Completion Report*), a cargo de Julián. |
 | [`docs/ejecucion-manual.md`](docs/ejecucion-manual.md) | Hojas para ejecutar los casos manuales. |
 | [`docs/antecedentes/`](docs/antecedentes/) | Entregas previas (Actividades 1 y 2, matriz de riesgos, Talleres 4 y 5). |
 
@@ -42,9 +44,9 @@ evidencias/           Capturas y resultados de la ejecución (fase 3)
 
 | Fase | Contenido | Estado |
 |---|---|---|
-| 1 | Organizar documentos y plan para revisión con el docente | Lista para revisión |
-| 2 | Demo de SIDEM con Docker y datos ficticios ([`demo/README.md`](demo/README.md)) | Lista |
-| 3 | Ejecución real (manual + automática), defectos y evidencias | En curso: automáticas ejecutadas, manuales pendientes |
-| 4 | Informe de cierre y exposición | Pendiente |
+| 1 | Organizar documentos y plan para revisión con el docente | Lista; respuestas del docente incorporadas (plan v0.6) |
+| 2 | Demo de SIDEM con Docker y datos ficticios ([`demo/README.md`](demo/README.md)) | Lista, con imágenes del retest |
+| 3 | Ejecución real (manual + automática), defectos y evidencias | Ejecución hecha; 5 defectos corregidos con parches; retest pendiente ([`docs/retest.md`](docs/retest.md)) |
+| 4 | Informe de cierre y exposición | En curso |
 
-> La versión de SIDEM bajo prueba es el commit `77f71b2`. No se usan datos reales.
+> La versión de SIDEM bajo prueba es el commit `77f71b2`. El retest usa ese commit más los parches de [`demo/correcciones/`](demo/correcciones/). No se usan datos reales.

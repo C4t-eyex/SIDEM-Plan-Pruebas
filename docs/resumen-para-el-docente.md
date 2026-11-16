@@ -47,7 +47,7 @@ Las pruebas se enfocan en lo que más riesgo tiene: quién puede ver y modificar
 | Nicolás | TC-03, TC-08 | Ejecución manual y revisión de los datos de prueba. |
 | Julián | TC-05, TC-09, TC-06 | Ejecución manual de TC-05 y TC-06, y redactar el informe de cierre. |
 
-Las hojas para la ejecución manual están en [`ejecucion-manual.md`](ejecucion-manual.md). Después vienen el retest de los defectos y el informe de cierre (15/11 y 16/11, según el cronograma).
+Las hojas para la ejecución manual están en [`ejecucion-manual.md`](ejecucion-manual.md). Los 5 defectos ya tienen corrección; el retest lo hace Sebastián con la guía [`retest.md`](retest.md) y después Julián cierra el informe.
 
 ## 5. Lo que confirmó el docente (16/11)
 

@@ -4,13 +4,15 @@ Defectos encontrados al montar la demo y al ejecutar los casos de prueba. Se reg
 
 Versión de SIDEM probada: commit `77f71b2`. Entorno: demo con Docker (AMB-01) y datos DAT-01.
 
+Las correcciones están en [`demo/correcciones/`](../demo/correcciones/), una por defecto. Se cierran cuando el retest las confirme ([`retest.md`](retest.md)).
+
 | ID | Caso | Riesgo | Severidad | Resumen | Estado |
 |---|---|---|---|---|---|
-| DEF-01 | TC-02 | R02 | Alta | El líder de departamento sin departamento asignado ve las métricas de toda la institución. | Abierto |
-| DEF-02 | TC-06 | R09 | Media | La cookie de sesión sigue sirviendo después de cerrar sesión. | Abierto |
-| DEF-03 | TC-09 | R08 | Media | El bloqueo de login depende de la zona horaria de PostgreSQL; con UTC no se activa. | Abierto |
-| DEF-04 | TC-02 | R01 | Baja | Un rol personalizado con permiso de ver el seguimiento no ve ningún curso. | Abierto |
-| DEF-05 | - | - | Baja | `sql/db.sql` falla al instalar SIDEM en una base nueva. | Abierto |
+| DEF-01 | TC-02 | R02 | Alta | El líder de departamento sin departamento asignado ve las métricas de toda la institución. | Corregido, pendiente de retest |
+| DEF-02 | TC-06 | R09 | Media | La cookie de sesión sigue sirviendo después de cerrar sesión. | Corregido, pendiente de retest |
+| DEF-03 | TC-09 | R08 | Media | El bloqueo de login depende de la zona horaria de PostgreSQL; con UTC no se activa. | Corregido, pendiente de retest |
+| DEF-04 | TC-02 | R01 | Baja | Un rol personalizado con permiso de ver el seguimiento no ve ningún curso. | Corregido, pendiente de retest |
+| DEF-05 | - | - | Baja | `sql/db.sql` falla al instalar SIDEM en una base nueva. | Corregido, pendiente de retest |
 
 ---
 

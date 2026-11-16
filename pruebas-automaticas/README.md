@@ -37,4 +37,4 @@ TC-04, TC-08 y la parte de pantalla de los demás casos son manuales (`docs/ejec
 
 ## Resultados
 
-La salida de cada corrida se guarda en `evidencias/pytest/` (texto y XML). El resumen y los hallazgos quedan en `docs/avances.md` y `docs/defectos.md`.
+La salida de cada corrida se guarda en `evidencias/pytest/` (texto y XML). Para el retest de los defectos corregidos, ver [`docs/retest.md`](../docs/retest.md). El resumen y los hallazgos quedan en `docs/avances.md` y `docs/defectos.md`.
