@@ -1,4 +1,4 @@
-From 22432fe277acce1fc5a4eed2546eabe3fd8289c7 Mon Sep 17 00:00:00 2001
+From fb18152da0308e1a570f992a319b981fbe6c7eb9 Mon Sep 17 00:00:00 2001
 From: Marcos Duque <90621408+C4t-eyex@users.noreply.github.com>
 Date: Thu, 12 Nov 2026 21:54:26 -0500
 Subject: [PATCH 4/5] fix(log): la fecha de log_actividad se guarda en UTC
@@ -15,10 +15,10 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
  create mode 100644 API_seguimiento_docentes/tests/test_log_service.py
 
 diff --git a/API_seguimiento_docentes/models/__init__.py b/API_seguimiento_docentes/models/__init__.py
-index 8836aa3..3e62042 100644
+index ee5e49c..2dd3bbb 100644
 --- a/API_seguimiento_docentes/models/__init__.py
 +++ b/API_seguimiento_docentes/models/__init__.py
-@@ -309,7 +309,9 @@ class LogActividad(Base):
+@@ -313,7 +313,9 @@ class LogActividad(Base):
      accion     = Column(String(50), nullable=False)
      detalle    = Column(Text, nullable=True)
      ip         = Column(String(45), nullable=True)
@@ -30,10 +30,10 @@ index 8836aa3..3e62042 100644
      usuario = relationship("Usuario", foreign_keys=[usuario_id])
  
 diff --git a/API_seguimiento_docentes/sql/db.sql b/API_seguimiento_docentes/sql/db.sql
-index 4c390a7..2944669 100644
+index 44dbaad..d11dd9f 100644
 --- a/API_seguimiento_docentes/sql/db.sql
 +++ b/API_seguimiento_docentes/sql/db.sql
-@@ -307,7 +307,7 @@ CREATE TABLE log_actividad (
+@@ -309,7 +309,7 @@ CREATE TABLE log_actividad (
      accion     VARCHAR(50) NOT NULL,
      detalle    TEXT,
      ip         VARCHAR(45),

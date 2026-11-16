@@ -1,23 +1,54 @@
-From f8ab80a85cbcf60bf8ca9670db2a12c9980c1e2c Mon Sep 17 00:00:00 2001
+From c1849af156e38699e439c58371ca0d6c8db85323 Mon Sep 17 00:00:00 2001
 From: Marcos Duque <90621408+C4t-eyex@users.noreply.github.com>
 Date: Thu, 12 Nov 2026 21:51:23 -0500
 Subject: [PATCH 3/5] fix(auth): cerrar sesion invalida el token en el servidor
  (DEF-02)
 
-logout reusa password_changed_at, igual que forzar_logout. Se normaliza la fecha a UTC al comparar.
+Cada usuario tiene un contador de sesion (token_version) que va en el
+token. Cerrar sesion lo incrementa, asi el token copiado deja de servir
+aunque el login y el logout pasen en el mismo segundo. Un token sin el
+contador cuenta como version 0. Se normaliza password_changed_at a UTC
+al comparar.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 ---
- API_seguimiento_docentes/routes/auth.py       |  5 +--
- .../services/auth_service.py                  | 14 ++++++++-
- API_seguimiento_docentes/tests/test_auth.py   | 31 +++++++++++++++++++
- 3 files changed, 47 insertions(+), 3 deletions(-)
+ API_seguimiento_docentes/models/__init__.py   |  4 ++
+ API_seguimiento_docentes/routes/auth.py       |  8 ++--
+ .../services/auth_service.py                  | 22 +++++++++-
+ API_seguimiento_docentes/sql/db.sql           |  8 +++-
+ API_seguimiento_docentes/tests/test_auth.py   | 43 +++++++++++++++++++
+ 5 files changed, 80 insertions(+), 5 deletions(-)
 
+diff --git a/API_seguimiento_docentes/models/__init__.py b/API_seguimiento_docentes/models/__init__.py
+index 8836aa3..ee5e49c 100644
+--- a/API_seguimiento_docentes/models/__init__.py
++++ b/API_seguimiento_docentes/models/__init__.py
+@@ -50,6 +50,10 @@ class Usuario(Base):
+     creado_en    = Column(DateTime, server_default=func.now())
+     # Migración: ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS password_changed_at TIMESTAMPTZ;
+     password_changed_at = Column(DateTime, nullable=True, default=None)
++    # Contador de sesión (DEF-02): va en cada token ("tv") y cerrar sesión lo
++    # incrementa, así los tokens anteriores dejan de servir sin depender de la hora.
++    # Migración: ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS token_version INTEGER NOT NULL DEFAULT 0;
++    token_version = Column(Integer, nullable=False, default=0, server_default="0")
+     # Restablecimiento de contraseña por correo (admin dispara el envío desde
+     # Panel de Usuarios) - solo puede haber UN link vigente a la vez, uno
+     # nuevo pisa al anterior. Se guarda el HASH del token, nunca el token
 diff --git a/API_seguimiento_docentes/routes/auth.py b/API_seguimiento_docentes/routes/auth.py
-index 393bbe4..7b6ff75 100644
+index 393bbe4..f524e95 100644
 --- a/API_seguimiento_docentes/routes/auth.py
 +++ b/API_seguimiento_docentes/routes/auth.py
-@@ -134,11 +134,12 @@ def logout(
+@@ -94,7 +94,8 @@ async def login(data: LoginRequest, request: Request, response: Response, db: Se
+ 
+     # 4. Login exitoso — generar token
+     limpiar_intentos(email)
+-    token = crear_token({"sub": str(usuario.id), "rol": usuario.rol})
++    token = crear_token({"sub": str(usuario.id), "rol": usuario.rol,
++                         "tv": usuario.token_version or 0})  # DEF-02
+     registrar_log(db, usuario.id, "login", f"Rol: {usuario.rol}", ip, modulo="autenticacion")
+ 
+     # Sincronizar max_age de la cookie con el mismo valor que usó crear_token()
+@@ -134,11 +135,12 @@ def logout(
      db: Session = Depends(get_db),
      access_token: Optional[str] = Cookie(default=None),
  ):
@@ -33,10 +64,10 @@ index 393bbe4..7b6ff75 100644
      except Exception:
          pass
 diff --git a/API_seguimiento_docentes/services/auth_service.py b/API_seguimiento_docentes/services/auth_service.py
-index 39227b1..11766b8 100644
+index 39227b1..36c0434 100644
 --- a/API_seguimiento_docentes/services/auth_service.py
 +++ b/API_seguimiento_docentes/services/auth_service.py
-@@ -246,7 +246,10 @@ def get_current_user(
+@@ -246,15 +246,35 @@ def get_current_user(
                  token_emitido = datetime.fromtimestamp(iat, tz=timezone.utc)
              else:
                  token_emitido = iat if getattr(iat, "tzinfo", None) else iat.replace(tzinfo=timezone.utc)
@@ -48,27 +79,61 @@ index 39227b1..11766b8 100644
                  raise HTTPException(
                      status_code=status.HTTP_401_UNAUTHORIZED,
                      detail="Sesión expirada, inicia sesión nuevamente.",
-@@ -255,6 +258,15 @@ def get_current_user(
+                 )
+ 
++    # DEF-02: el token debe ser de la sesión vigente. Un token sin "tv" cuenta
++    # como versión 0 (tokens emitidos antes de este cambio).
++    if payload.get("tv", 0) != (usuario.token_version or 0):
++        raise HTTPException(
++            status_code=status.HTTP_401_UNAUTHORIZED,
++            detail="Sesión expirada, inicia sesión nuevamente.",
++        )
++
      return usuario
  
  
 +def invalidar_sesiones(db: Session, usuario: Usuario) -> None:
-+    """Invalida los tokens emitidos antes de este momento (DEF-02). Reusa
-+    password_changed_at, igual que forzar_logout. Se trunca al segundo
-+    porque el iat del JWT se guarda en segundos: así un login nuevo en el
-+    mismo segundo no queda rechazado."""
-+    usuario.password_changed_at = datetime.now(timezone.utc).replace(microsecond=0)
++    """Invalida todos los tokens emitidos hasta ahora (DEF-02): incrementa el
++    contador de sesión del usuario, que va en cada token. No depende de la
++    hora, así que sirve aunque el login y el logout pasen en el mismo segundo,
++    y un login nuevo recibe la versión nueva."""
++    usuario.token_version = (usuario.token_version or 0) + 1
 +    db.commit()
 +
 +
  def require_superadmin(usuario):
      """Lanza 403 si el usuario no es superadmin."""
      if usuario.rol != "superadmin":
+diff --git a/API_seguimiento_docentes/sql/db.sql b/API_seguimiento_docentes/sql/db.sql
+index 4c390a7..44dbaad 100644
+--- a/API_seguimiento_docentes/sql/db.sql
++++ b/API_seguimiento_docentes/sql/db.sql
+@@ -24,6 +24,8 @@ CREATE TABLE usuarios (
+     creado_en            TIMESTAMPTZ DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'America/Bogota'),
+     -- Usado para invalidar tokens JWT emitidos antes del último cambio de contraseña (Fix A3)
+     password_changed_at  TIMESTAMPTZ,
++    -- Contador de sesión: va en el token y cerrar sesión lo incrementa (DEF-02)
++    token_version        INTEGER NOT NULL DEFAULT 0,
+     -- Restablecimiento de contraseña por correo (admin dispara el envío desde
+     -- Panel de Usuarios). Solo el HASH del token, nunca el token crudo - un
+     -- leak de BD no deja links usables. Un token nuevo pisa al anterior.
+@@ -615,4 +617,8 @@ CREATE INDEX IF NOT EXISTS ix_seguimientos_estudiantes_estado_estudiante_id ON s
+ -- Panel de Usuarios, ver POST /usuarios/{id}/enviar-restablecimiento). Solo
+ -- el HASH del token, nunca el token crudo.
+ ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS reset_token_hash VARCHAR(64);
+-ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS reset_token_expira TIMESTAMPTZ;
+\ No newline at end of file
++ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS reset_token_expira TIMESTAMPTZ;
++
++-- Contador de sesión (DEF-02): cerrar sesión lo incrementa e invalida los
++-- tokens emitidos antes, aunque el logout pase en el mismo segundo del login.
++ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS token_version INTEGER NOT NULL DEFAULT 0;
+\ No newline at end of file
 diff --git a/API_seguimiento_docentes/tests/test_auth.py b/API_seguimiento_docentes/tests/test_auth.py
-index d661598..dff2789 100644
+index d661598..032db24 100644
 --- a/API_seguimiento_docentes/tests/test_auth.py
 +++ b/API_seguimiento_docentes/tests/test_auth.py
-@@ -201,3 +201,34 @@ class TestJWT:
+@@ -201,3 +201,46 @@ class TestJWT:
          resp = client.get("/auth/me")
          assert resp.status_code == 200
          assert resp.json()["email"] == "jwt@test.com"
@@ -103,6 +168,18 @@ index d661598..dff2789 100644
 +        assert resp.status_code == 200
 +        client.cookies.set("access_token", resp.cookies["access_token"])
 +        assert client.get("/auth/me").status_code == 200
++
++    def test_token_copiado_no_sirve_aunque_logout_sea_en_el_mismo_segundo(self, client, db_session):
++        """Regresión DEF-02 / TC-06: login, copia de la cookie y logout pasan
++        en menos de un segundo. El token copiado igual debe quedar inválido."""
++        _crear_usuario(db_session, email="mismo-segundo@test.com", rol="admin", password="Test1234!")
++        resp = client.post("/auth/login", json={"email": "mismo-segundo@test.com", "password": "Test1234!"})
++        token = resp.cookies["access_token"]
++        client.cookies.set("access_token", token)
++        assert client.post("/auth/logout", headers=_ORIGIN).status_code == 200
++
++        client.cookies.set("access_token", token)
++        assert client.get("/auth/me").status_code == 401
 -- 
 2.56.0.windows.4
 

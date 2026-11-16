@@ -1,4 +1,4 @@
-From b81f688723cceb3a54dc90cec9f16a51a086dd2b Mon Sep 17 00:00:00 2001
+From 706007bfe3b177bed9324df89aaa239f20d4ddbb Mon Sep 17 00:00:00 2001
 From: Marcos Duque <90621408+C4t-eyex@users.noreply.github.com>
 Date: Thu, 12 Nov 2026 21:55:31 -0500
 Subject: [PATCH 5/5] fix(sql): db.sql se instala completo en una base nueva
@@ -12,10 +12,10 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
  1 file changed, 20 insertions(+), 10 deletions(-)
 
 diff --git a/API_seguimiento_docentes/sql/db.sql b/API_seguimiento_docentes/sql/db.sql
-index 2944669..1f95a55 100644
+index d11dd9f..9ed6638 100644
 --- a/API_seguimiento_docentes/sql/db.sql
 +++ b/API_seguimiento_docentes/sql/db.sql
-@@ -590,16 +590,26 @@ CREATE TABLE IF NOT EXISTS estados_seguimiento_estudiante (
+@@ -592,16 +592,26 @@ CREATE TABLE IF NOT EXISTS estados_seguimiento_estudiante (
  
  ALTER TABLE seguimientos_estudiantes ADD COLUMN IF NOT EXISTS estado_estudiante_id INTEGER REFERENCES estados_seguimiento_estudiante(id);
  
