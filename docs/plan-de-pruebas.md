@@ -93,7 +93,7 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 | Elemento | Detalle |
 |---|---|
 | Sistema | SIDEM - API FastAPI + interfaz web (plantillas HTML). |
-| Versión bajo prueba | Commit `77f71b2` de la rama `main` del repositorio de SIDEM. Se congela durante el ciclo (mitiga RP3). |
+| Versión bajo prueba | Commit `77f71b2` de la rama `main` del repositorio de SIDEM. Se congela durante el ciclo (mitiga RP3). El retest usa ese mismo commit más los parches `0001` a `0005` de `demo/correcciones/` (imágenes `77f71b2-correcciones`). |
 | Instancia de prueba | Copia de demostración con **datos ficticios**, levantada con Docker (ver 5.4). No se usa la base de producción. |
 
 ### 3.2 Alcance y exclusiones de las pruebas
@@ -287,7 +287,7 @@ Cada procedimiento empieza con la base de datos restaurada (DAT-01) y termina ce
 - 6 cursos: 3 de Sistemas Digitales y 3 de Producción, con docentes ficticios.
 - Revisión 1 con sus 6 criterios. Los cumplidos dan 80, 77, 50, 47, 100 y 0 %.
 - Revisión 2 en Programación Básica y Bases de Datos, sin criterios cumplidos (para TC-07).
-- Base de datos con la zona horaria `America/Bogota`, igual que el servidor de SIDEM.
+- Zona horaria de la base: `America/Bogota` en la primera ronda (commit `77f71b2`), igual que el servidor de SIDEM. En el retest, con las correcciones aplicadas, la base queda en UTC para comprobar que TC-09 ya no depende de la zona horaria (DEF-03).
 - Reinicio: `docker compose down -v` y `docker compose up` dejan la base en su estado inicial.
 
 ### 5.5 Criterios de suspensión y finalización

@@ -5,17 +5,16 @@ services:
   db:
     # Imagen ya armada con el esquema oficial de SIDEM (Dockerfile.db). Para reconstruirla
     # ver docker-compose.build.yml.
-    image: sidem-demo-db:77f71b2
+    image: sidem-demo-db:77f71b2-correcciones
     container_name: sidem-demo-db
     environment:
       POSTGRES_DB: seguimiento_docentes
       POSTGRES_USER: sidem
       POSTGRES_PASSWORD: sidem_demo_local
-      TZ: America/Bogota
-    # Zona horaria de la base igual a la de SIDEM en el servidor. Con UTC (la que trae
-    # la imagen), las fechas de log_actividad quedan 5 h atrás y el bloqueo de login
-    # no se activa (hallazgo HAL-05 en docs/avances.md).
-    command: ["postgres", "-c", "timezone=America/Bogota"]
+    # La base queda en UTC (la zona que trae la imagen oficial de PostgreSQL). Antes se
+    # ponía en America/Bogota porque con UTC el bloqueo de login no se activaba (DEF-03,
+    # hallazgo HAL-05 en docs/avances.md). Con el parche 0004 la fecha de log_actividad
+    # la pone la aplicación en UTC, así que TC-09 debe pasar con la base en UTC.
     volumes:
       # El esquema oficial de SIDEM viene dentro de la imagen y se carga solo la primera vez
       # que se crea la base (ver init-db.sh)
@@ -26,8 +25,9 @@ services:
       retries: 20
 
   app:
-    # Imagen ya armada con el código de SIDEM en el commit 77f71b2 (Dockerfile)
-    image: sidem-demo-app:77f71b2
+    # Imagen ya armada con el código de SIDEM en el commit 77f71b2 más los parches
+    # de correcciones/ (DEF-01 a DEF-05), para el retest (Dockerfile)
+    image: sidem-demo-app:77f71b2-correcciones
     container_name: sidem-demo-app
     depends_on:
       db:

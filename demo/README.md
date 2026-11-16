@@ -1,26 +1,26 @@
 # Demo de SIDEM con datos ficticios
 
-Esta carpeta levanta una copia de SIDEM para hacer las pruebas y mostrarlas en clase. Usa la versión fijada en el plan (commit `77f71b2`) y una base de datos propia con datos inventados. No se conecta a Moodle ni a la base de producción.
+Esta carpeta levanta una copia de SIDEM para hacer las pruebas y mostrarlas en clase. Usa la versión fijada en el plan (commit `77f71b2`) con las correcciones de [`correcciones/`](correcciones/) (DEF-01 a DEF-05) para el retest, y una base de datos propia con datos inventados en UTC. No se conecta a Moodle ni a la base de producción.
 
 Cada integrante puede montarla en su propio equipo y ejecutar sus casos sin afectar a los demás.
 
 ## Qué se necesita
 
 - Docker Desktop encendido.
-- Acceso a este repositorio (`SIDEM-Plan-Pruebas`) y a la carpeta de Drive del equipo. No hace falta el código de SIDEM: la aplicación y la base vienen en dos imágenes de Docker ya armadas (`sidem-demo-app:77f71b2` y `sidem-demo-db:77f71b2`), guardadas en un solo archivo.
+- Acceso a este repositorio (`SIDEM-Plan-Pruebas`) y a la carpeta de Drive del equipo. No hace falta el código de SIDEM: la aplicación y la base vienen en dos imágenes de Docker ya armadas (`sidem-demo-app:77f71b2-correcciones` y `sidem-demo-db:77f71b2-correcciones`), guardadas en un solo archivo.
 
 ## Cómo levantarla
 
 **Solo la primera vez**, carga las imágenes en Docker:
 
-1. Descarga `sidem-demo-imagenes-77f71b2.tar.gz` (unos 253 MB) desde la carpeta de Drive del equipo: https://drive.google.com/drive/folders/1i7nXTlf7k8DhToZPXx2Hm70bDSp-vvhp?usp=sharing. El acceso es solo para los integrantes; si no te deja entrar, pídele acceso a Marcos.
+1. Descarga `sidem-demo-imagenes-77f71b2-correcciones.tar.gz` (unos 264 MB) desde la carpeta de Drive del equipo: https://drive.google.com/drive/folders/1i7nXTlf7k8DhToZPXx2Hm70bDSp-vvhp?usp=sharing. El acceso es solo para los integrantes; si no te deja entrar, pídele acceso a Marcos.
 2. Con Docker Desktop abierto, en la carpeta donde quedó el archivo:
 
    ```powershell
-   docker load -i sidem-demo-imagenes-77f71b2.tar.gz
+   docker load -i sidem-demo-imagenes-77f71b2-correcciones.tar.gz
    ```
 
-   Debe terminar con `Loaded image: sidem-demo-app:77f71b2` y `Loaded image: sidem-demo-db:77f71b2`. Después puedes borrar el archivo.
+   Debe terminar con `Loaded image: sidem-demo-app:77f71b2-correcciones` y `Loaded image: sidem-demo-db:77f71b2-correcciones`. Después puedes borrar el archivo. Si ya tenías la demo anterior, corre `docker compose down -v` antes de `up`: el seed solo crea los usuarios que faltan y la base debe partir vacía.
 
 **Para arrancar**, desde esta carpeta (`demo/`):
 
@@ -45,7 +45,7 @@ Todos usan la misma contraseña de demo: `Demo-SIDEM-2026` (se puede cambiar con
 | `lider@sidem.test` | líder académico | Métricas y semáforo (TC-03, TC-08) |
 | `lider.sd@sidem.test` | líder de departamento, Sistemas Digitales | Alcance por departamento (TC-01) |
 | `lider.sindep@sidem.test` | líder de departamento, sin departamento | Usuario sin departamento (TC-02) |
-| `consulta@sidem.test` | consulta (rol creado para la demo) | Ver sin poder guardar (TC-02) |
+| `consulta@sidem.test` | consulta (rol creado para la demo), alcance "Todos" | Ver sin poder guardar (TC-02) |
 
 ## Cursos de prueba (revisión 1, periodo actual)
 
@@ -96,8 +96,10 @@ Requiere acceso al repositorio privado de SIDEM. Arma las imágenes, las guarda 
 
 ```powershell
 .\preparar-demo.ps1
+git -C sidem switch -c demo-correcciones
+git -C sidem am ../correcciones/0001*.patch ../correcciones/0002*.patch ../correcciones/0003*.patch ../correcciones/0004*.patch ../correcciones/0005*.patch
 docker compose -f docker-compose.yml -f docker-compose.build.yml build
-docker save sidem-demo-app:77f71b2 sidem-demo-db:77f71b2 | gzip > sidem-demo-imagenes-77f71b2.tar.gz   # en Git Bash
+docker save sidem-demo-app:77f71b2-correcciones sidem-demo-db:77f71b2-correcciones | gzip > sidem-demo-imagenes-77f71b2-correcciones.tar.gz   # en Git Bash
 ```
 
 El archivo no va al repositorio: pesa más de los 100 MB que permite GitHub y contiene el código de SIDEM.

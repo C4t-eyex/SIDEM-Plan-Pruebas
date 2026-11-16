@@ -2,7 +2,7 @@
 FROM python:3.14-slim
 
 LABEL org.opencontainers.image.source="https://github.com/C4t-eyex/SIDEM-Plan-Pruebas" \
-      org.opencontainers.image.description="Aplicación de la demo de SIDEM (commit 77f71b2)"
+      org.opencontainers.image.description="Aplicación de la demo de SIDEM (commit 77f71b2 + parches DEF-01 a DEF-05)"
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONIOENCODING=utf-8 \
