@@ -1,4 +1,4 @@
-From afc3de0a894845ada8ca21a3f975dfdab71753a8 Mon Sep 17 00:00:00 2001
+From b81f688723cceb3a54dc90cec9f16a51a086dd2b Mon Sep 17 00:00:00 2001
 From: Marcos Duque <90621408+C4t-eyex@users.noreply.github.com>
 Date: Thu, 12 Nov 2026 21:55:31 -0500
 Subject: [PATCH 5/5] fix(sql): db.sql se instala completo en una base nueva

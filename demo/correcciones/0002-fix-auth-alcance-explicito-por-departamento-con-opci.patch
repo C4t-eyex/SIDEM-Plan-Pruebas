@@ -1,0 +1,453 @@
+From 95d0d14ba786effb316361df0fb8cf48783f728d Mon Sep 17 00:00:00 2001
+From: Marcos Duque <90621408+C4t-eyex@users.noreply.github.com>
+Date: Thu, 12 Nov 2026 21:47:44 -0500
+Subject: [PATCH 2/5] fix(auth): alcance explicito por departamento con opcion
+ "Todos" (DEF-04)
+
+Lider de departamento y roles personalizados se limitan por el
+departamento asignado. "Todos" ve todos los departamentos; sin
+departamento asignado no ve ningun curso. Al crear o editar el usuario
+el departamento es obligatorio para esos roles. El rol permanencia
+sigue sin acceso a docentes.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ API_seguimiento_docentes/models/__init__.py   |  5 ++
+ API_seguimiento_docentes/routes/actividad.py  | 10 ++--
+ API_seguimiento_docentes/routes/dashboard.py  |  6 +--
+ API_seguimiento_docentes/routes/usuarios.py   | 35 ++++++++++----
+ .../services/auth_service.py                  | 25 ++++++----
+ .../templates/actividad.html                  |  4 +-
+ .../templates/usuarios.html                   | 35 ++++++++++----
+ .../tests/test_auth_service_permisos.py       | 24 ++++++++++
+ .../tests/test_routes_usuarios.py             | 47 +++++++++++++++++++
+ 9 files changed, 153 insertions(+), 38 deletions(-)
+
+diff --git a/API_seguimiento_docentes/models/__init__.py b/API_seguimiento_docentes/models/__init__.py
+index e866132..8836aa3 100644
+--- a/API_seguimiento_docentes/models/__init__.py
++++ b/API_seguimiento_docentes/models/__init__.py
+@@ -631,6 +631,11 @@ class ConfigInicioSemestre(Base):
+     fecha_inicio_clases = Column(Date, nullable=False)
+ 
+ 
++# Valor de alcance que el admin asigna explícitamente para "ver todos los
++# departamentos" (DEF-04). Sin departamento asignado, el usuario no ve ninguno.
++DEPARTAMENTO_TODOS = "Todos"
++
++
+ def get_departamentos(usuario) -> list:
+     """Retorna lista de todos los departamentos del usuario (primario + extras)."""
+     import json
+diff --git a/API_seguimiento_docentes/routes/actividad.py b/API_seguimiento_docentes/routes/actividad.py
+index 232dab4..a2c8472 100644
+--- a/API_seguimiento_docentes/routes/actividad.py
++++ b/API_seguimiento_docentes/routes/actividad.py
+@@ -22,7 +22,7 @@ from sqlalchemy.orm import Session
+ 
+ from core.validadores import validar_periodo as _validar_periodo
+ from database import get_db, SessionLocal
+-from models import Curso, ActividadHistorico, get_departamentos
++from models import Curso, ActividadHistorico, get_departamentos, DEPARTAMENTO_TODOS
+ from services.auth_service import get_current_user
+ from services.actividad_moodle import (
+     ActividadMoodle,
+@@ -109,7 +109,7 @@ def obtener_docentes_periodo(
+     ).filter(Curso.periodo == periodo, Curso.docente_correo.isnot(None))
+ 
+     # Restricción por departamento (lider_departamento, puede tener varios)
+-    if usuario.rol == "lider_departamento":
++    if usuario.rol == "lider_departamento" and DEPARTAMENTO_TODOS not in get_departamentos(usuario):
+         deps = get_departamentos(usuario)
+         if not deps:
+             return []  # sin departamento configurado → lista vacía, nunca todos
+@@ -229,7 +229,7 @@ async def enrichir_docentes_moodle(
+         Curso.periodo == periodo, Curso.docente_correo.isnot(None)
+     )
+     # Restricción por departamento (lider_departamento, puede tener varios)
+-    if usuario.rol == "lider_departamento":
++    if usuario.rol == "lider_departamento" and DEPARTAMENTO_TODOS not in get_departamentos(usuario):
+         deps = get_departamentos(usuario)
+         if not deps:
+             return {}  # sin departamento configurado → vacío, nunca todos
+@@ -502,7 +502,7 @@ async def obtener_detalle(
+     usuario = await asyncio.to_thread(get_current_user, db, access_token)
+ 
+     # Verificación IDOR: solo lider_departamento tiene restricción (lider ve todos)
+-    if usuario.rol == "lider_departamento":
++    if usuario.rol == "lider_departamento" and DEPARTAMENTO_TODOS not in get_departamentos(usuario):
+         deps = get_departamentos(usuario)
+         if not deps:
+             raise HTTPException(status_code=403, detail="Sin permiso para ver este profesor.")
+@@ -817,7 +817,7 @@ async def obtener_detalle_mes(
+         raise HTTPException(status_code=422, detail="Año inválido.")
+ 
+     # Verificación IDOR: solo lider_departamento tiene restricción (lider ve todos)
+-    if usuario.rol == "lider_departamento":
++    if usuario.rol == "lider_departamento" and DEPARTAMENTO_TODOS not in get_departamentos(usuario):
+         deps = get_departamentos(usuario)
+         if not deps:
+             raise HTTPException(status_code=403, detail="Sin permiso para ver este profesor.")
+diff --git a/API_seguimiento_docentes/routes/dashboard.py b/API_seguimiento_docentes/routes/dashboard.py
+index be308fc..94895e1 100644
+--- a/API_seguimiento_docentes/routes/dashboard.py
++++ b/API_seguimiento_docentes/routes/dashboard.py
+@@ -181,8 +181,8 @@ def actividad_historico_departamento(
+         raise HTTPException(status_code=403, detail="No tienes permiso para acceder a esta sección.")
+ 
+     dept_filtro = None if departamento == "todos" else departamento
+-    if usuario.rol == "lider_departamento":
+-        from models import get_departamentos
++    from models import get_departamentos, DEPARTAMENTO_TODOS
++    if usuario.rol == "lider_departamento" and DEPARTAMENTO_TODOS not in get_departamentos(usuario):
+         deps_usuario = get_departamentos(usuario)
+         if not deps_usuario:
+             return {
+@@ -197,7 +197,7 @@ def actividad_historico_departamento(
+ 
+     try:
+         q_correos = db.query(Curso.docente_correo).filter(Curso.docente_correo.isnot(None))
+-        if usuario.rol == "lider_departamento":
++        if usuario.rol == "lider_departamento" and DEPARTAMENTO_TODOS not in get_departamentos(usuario):
+             from models import get_departamentos as _gdeps
+             q_correos = q_correos.filter(Curso.departamento.in_(_gdeps(usuario)))
+         elif dept_filtro:
+diff --git a/API_seguimiento_docentes/routes/usuarios.py b/API_seguimiento_docentes/routes/usuarios.py
+index 0712a3a..0f3929d 100644
+--- a/API_seguimiento_docentes/routes/usuarios.py
++++ b/API_seguimiento_docentes/routes/usuarios.py
+@@ -25,6 +25,12 @@ def _get_usuario_auth(db, access_token):
+     return usuario
+ 
+ 
++def _usa_alcance_departamento(rol: str) -> bool:
++    """lider_departamento y los roles personalizados se limitan por
++    departamento (DEF-01/DEF-04); los roles fijos no usan ese campo."""
++    return rol not in ("superadmin", "admin", "revisor", "lider", "permanencia")
++
++
+ @router.get("/")
+ def listar_usuarios(
+     db: Session = Depends(get_db),
+@@ -67,11 +73,12 @@ def crear_usuario(
+     if not rol_valido or (rol_valido.protegido and not (rol_valido.nombre == "admin" and admin.rol == "superadmin")):
+         raise HTTPException(status_code=400, detail="Rol inválido.")
+ 
+-    # lider_departamento requiere departamento
+-    if data.rol == "lider_departamento" and not data.departamento:
++    # lider_departamento y roles personalizados requieren alcance explícito:
++    # un departamento o "Todos" (DEF-01/DEF-04)
++    if _usa_alcance_departamento(data.rol) and not data.departamento:
+         raise HTTPException(
+             status_code=400,
+-            detail="El rol lider_departamento requiere especificar un departamento.",
++            detail=f"El rol {data.rol} requiere especificar un departamento o la opción \"Todos\".",
+         )
+ 
+     if not data.password or len(data.password) < 8:
+@@ -86,8 +93,8 @@ def crear_usuario(
+         email        = data.email.strip().lower(),
+         password     = hash_password(data.password),
+         rol          = data.rol,
+-        departamento = data.departamento if data.rol == "lider_departamento" else None,
+-        departamentos_extra = data.departamentos_extra if data.rol == "lider_departamento" else None,
++        departamento = data.departamento if _usa_alcance_departamento(data.rol) else None,
++        departamentos_extra = data.departamentos_extra if _usa_alcance_departamento(data.rol) else None,
+         facultad_estudiantes = data.facultad_estudiantes if data.rol == "lider_departamento" else None,
+         facultades_estudiantes_extra = data.facultades_estudiantes_extra if data.rol == "lider_departamento" else None,
+         programas_estudiante_ids = data.programas_estudiante_ids if data.rol == "lider_departamento" else None,
+@@ -131,17 +138,18 @@ def actualizar_usuario(
+         if not rol_valido or (rol_valido.protegido and not (rol_valido.nombre == "admin" and admin.rol == "superadmin")):
+             raise HTTPException(status_code=400, detail="Rol inválido.")
+         usuario.rol = data.rol
+-        # Si cambia a lider_departamento sin departamento, limpiar
+-        if data.rol != "lider_departamento":
++        # Si cambia a un rol sin alcance por departamento, limpiar
++        if not _usa_alcance_departamento(data.rol):
+             usuario.departamento = None
+             usuario.departamentos_extra = None
++        if data.rol != "lider_departamento":
+             usuario.facultad_estudiantes = None
+             usuario.facultades_estudiantes_extra = None
+             usuario.programas_estudiante_ids = None
+     if data.departamento is not None:
+-        usuario.departamento = data.departamento if usuario.rol == "lider_departamento" else None
++        usuario.departamento = data.departamento if _usa_alcance_departamento(usuario.rol) else None
+     if data.departamentos_extra is not None:
+-        usuario.departamentos_extra = data.departamentos_extra if usuario.rol == "lider_departamento" else None
++        usuario.departamentos_extra = data.departamentos_extra if _usa_alcance_departamento(usuario.rol) else None
+     if data.facultad_estudiantes is not None:
+         usuario.facultad_estudiantes = data.facultad_estudiantes if usuario.rol == "lider_departamento" else None
+     if data.facultades_estudiantes_extra is not None:
+@@ -151,6 +159,15 @@ def actualizar_usuario(
+     if data.activo is not None:
+         usuario.activo = data.activo
+ 
++    # Al cambiar rol o alcance, el alcance debe quedar explícito (DEF-01/DEF-04)
++    if (data.rol is not None or data.departamento is not None) \
++            and _usa_alcance_departamento(usuario.rol) and not usuario.departamento:
++        db.expire(usuario)  # descarta los cambios sin guardar de este usuario
++        raise HTTPException(
++            status_code=400,
++            detail=f"El rol {usuario.rol} requiere especificar un departamento o la opción \"Todos\".",
++        )
++
+     db.commit()
+     registrar_log(db, admin.id, "usuario_actualizado", f"ID {usuario_id} · {usuario.nombre}", modulo="usuarios")
+     return {"message": "Usuario actualizado correctamente."}
+diff --git a/API_seguimiento_docentes/services/auth_service.py b/API_seguimiento_docentes/services/auth_service.py
+index 424305a..39227b1 100644
+--- a/API_seguimiento_docentes/services/auth_service.py
++++ b/API_seguimiento_docentes/services/auth_service.py
+@@ -26,7 +26,7 @@ from passlib.context import CryptContext
+ from fastapi import Cookie, Depends, HTTPException, status
+ from sqlalchemy.orm import Session
+ 
+-from models import Usuario, LogActividad, get_departamentos
++from models import Usuario, LogActividad, get_departamentos, DEPARTAMENTO_TODOS
+ from database import get_db, SessionLocal
+ 
+ logger = logging.getLogger(__name__)
+@@ -349,13 +349,11 @@ def puede_ver_departamento(usuario, departamento: str) -> bool:
+     Verifica si el usuario puede ver un departamento específico.
+     - superadmin, admin y revisor: ven todos
+     - lider: ve todos (solo lectura)
+-    - lider_departamento: solo ve su departamento asignado
++    - lider_departamento y roles personalizados: según su alcance asignado
++      (ver get_departamentos_permitidos)
+     """
+-    if usuario.rol in ("superadmin", "admin", "revisor", "lider"):
+-        return True
+-    if usuario.rol == "lider_departamento":
+-        return usuario.departamento == departamento
+-    return False
++    permitidos = get_departamentos_permitidos(usuario)
++    return permitidos is None or departamento in permitidos
+ 
+ 
+ def require_verificacion_role(
+@@ -377,9 +375,16 @@ def get_departamentos_permitidos(usuario) -> list | None:
+     """
+     if usuario.rol in ("superadmin", "admin", "revisor", "lider"):
+         return None  # todos
+-    if usuario.rol == "lider_departamento":
+-        return get_departamentos(usuario) or []
+-    return []
++    if usuario.rol == "permanencia":
++        return []  # solo accede al módulo de estudiantes
++    # lider_departamento y roles personalizados (DEF-01/DEF-04): el acceso al
++    # módulo ya lo valida requiere_permiso; aquí solo se limita el alcance.
++    # El alcance es explícito: "Todos" ve todos, con departamentos ve solo
++    # esos y sin ninguno asignado no ve ningún curso.
++    deps = get_departamentos(usuario)
++    if DEPARTAMENTO_TODOS in deps:
++        return None
++    return deps
+ 
+ 
+ # ── Restablecimiento de contraseña por correo ─────────────────────────────────
+diff --git a/API_seguimiento_docentes/templates/actividad.html b/API_seguimiento_docentes/templates/actividad.html
+index dd9d399..356ffab 100644
+--- a/API_seguimiento_docentes/templates/actividad.html
++++ b/API_seguimiento_docentes/templates/actividad.html
+@@ -1118,7 +1118,9 @@ function _aplicarSort(data) {
+ function renderTabla(docentes, periodo) {
+     // Filtro de seguridad frontend: solo lider_departamento filtra por departamento(s)
+     // lider ve todos - sin filtro
+-    const filtrarDepto = _rolUsuario === 'lider_departamento' && _userDeptos.length > 0;
++    // "Todos" es alcance explícito a todos los departamentos (DEF-04)
++    const filtrarDepto = _rolUsuario === 'lider_departamento' && _userDeptos.length > 0
++        && !_userDeptos.includes('Todos');
+     if (filtrarDepto) {
+         const deptos = _userDeptos.map(d => d.trim().toLowerCase());
+         docentes = docentes.filter(d =>
+diff --git a/API_seguimiento_docentes/templates/usuarios.html b/API_seguimiento_docentes/templates/usuarios.html
+index 6e52e89..947fdfd 100644
+--- a/API_seguimiento_docentes/templates/usuarios.html
++++ b/API_seguimiento_docentes/templates/usuarios.html
+@@ -414,6 +414,7 @@
+                     <label class="form-label" for="crearDepartamento">Departamento</label>
+                     <select class="form-select" id="crearDepartamento">
+                         <option value="">Seleccionar...</option>
++                        <option value="Todos">Todos</option>
+                     </select>
+                     <!-- Tags de departamentos adicionales (solo para lider_departamento) -->
+                     <div id="crearCampoDepExtra" class="mt-2">
+@@ -504,6 +505,7 @@
+                     <label class="form-label" for="editarDepartamento">Departamento</label>
+                     <select class="form-select" id="editarDepartamento">
+                         <option value="">Seleccionar...</option>
++                        <option value="Todos">Todos</option>
+                     </select>
+                     <!-- Tags de departamentos adicionales (solo para lider_departamento) -->
+                     <div id="editarCampoDepExtra" class="mt-2">
+@@ -974,10 +976,22 @@ function badgeRolHtml(rol, colorOverride) {
+     return `<span class="badge-generico">${label}</span>`;
+ }
+ 
+-// Mostrar/ocultar campo de departamento según el rol
++// lider_departamento y los roles personalizados se limitan por departamento
++// (DEF-01/DEF-04); los roles fijos no usan ese campo. Igual que
++// routes/usuarios.py:_usa_alcance_departamento.
++const ROLES_SIN_ALCANCE_DEPTO = new Set(['superadmin', 'admin', 'revisor', 'lider', 'permanencia']);
++function usaAlcanceDepto(rol) {
++    return !ROLES_SIN_ALCANCE_DEPTO.has(rol);
++}
++
++// Mostrar/ocultar campo de departamento según el rol. La facultad/programas
++// de Estudiantes siguen siendo solo para lider_departamento.
+ function toggleDeptField(fieldId, rol) {
+     document.getElementById(fieldId).style.display =
+-        rol === 'lider_departamento' ? 'block' : 'none';
++        usaAlcanceDepto(rol) ? 'block' : 'none';
++    const modo = fieldId === 'crearDept' ? 'crear' : 'editar';
++    const bloqueFac = document.getElementById(`${modo}Facultad`).closest('.mt-3');
++    bloqueFac.style.display = rol === 'lider_departamento' ? 'block' : 'none';
+ }
+ 
+ // ── Tags de departamentos adicionales ──────────────────────────────────────
+@@ -1269,8 +1283,8 @@ async function crearUsuario() {
+         email:        document.getElementById('crearEmail').value.trim(),
+         password:     document.getElementById('crearPassword').value,
+         rol:          rol,
+-        departamento: rol === 'lider_departamento' ? dept : null,
+-        departamentos_extra: rol === 'lider_departamento'
++        departamento: usaAlcanceDepto(rol) ? dept : null,
++        departamentos_extra: usaAlcanceDepto(rol)
+             ? (document.getElementById('crearDepartamentosExtraHidden').value || null)
+             : null,
+         facultad_estudiantes: rol === 'lider_departamento'
+@@ -1286,8 +1300,8 @@ async function crearUsuario() {
+     if (!body.nombre || !body.email || !body.password) {
+         toast('danger', 'Completa todos los campos.'); return;
+     }
+-    if (rol === 'lider_departamento' && !dept) {
+-        toast('danger', 'Selecciona un departamento para el líder.'); return;
++    if (usaAlcanceDepto(rol) && !dept) {
++        toast('danger', 'Selecciona un departamento o "Todos".'); return;
+     }
+     try {
+         const res = await fetch('/usuarios/', {
+@@ -1368,8 +1382,8 @@ async function guardarEdicion() {
+     const body = {
+         nombre:       document.getElementById('editarNombre').value.trim(),
+         rol:          rol,
+-        departamento: rol === 'lider_departamento' ? dept : null,
+-        departamentos_extra: rol === 'lider_departamento'
++        departamento: usaAlcanceDepto(rol) ? dept : null,
++        departamentos_extra: usaAlcanceDepto(rol)
+             ? (document.getElementById('editarDepartamentosExtraHidden').value || null)
+             : null,
+         facultad_estudiantes: rol === 'lider_departamento'
+@@ -1383,8 +1397,8 @@ async function guardarEdicion() {
+             : null,
+         activo:       document.getElementById('editarActivo').value === 'true',
+     };
+-    if (rol === 'lider_departamento' && !dept) {
+-        toast('danger', 'Selecciona un departamento para el líder.'); return;
++    if (usaAlcanceDepto(rol) && !dept) {
++        toast('danger', 'Selecciona un departamento o "Todos".'); return;
+     }
+     try {
+         const res = await fetch(`/usuarios/${id}`, {
+@@ -1683,6 +1697,7 @@ async function cargarRolesDisponibles() {
+             .join('');
+         document.getElementById('crearRol').innerHTML  = opciones;
+         document.getElementById('editarRol').innerHTML = opciones;
++        toggleDeptField('crearDept', document.getElementById('crearRol').value);
+     } catch (e) {
+         console.error('Error cargando roles disponibles', e);
+     }
+diff --git a/API_seguimiento_docentes/tests/test_auth_service_permisos.py b/API_seguimiento_docentes/tests/test_auth_service_permisos.py
+index 140f71d..4c41e59 100644
+--- a/API_seguimiento_docentes/tests/test_auth_service_permisos.py
++++ b/API_seguimiento_docentes/tests/test_auth_service_permisos.py
+@@ -98,3 +98,27 @@ def test_requiere_permiso_rol_protegido_siempre_pasa(client, db_session):
+     app.include_router(router_prueba4, dependencies=[Depends(requiere_permiso("dashboard", nivel_minimo="completo"))])
+     resp = client.get("/ruta-protegida-test-4/", headers={"origin": "http://localhost:5000"})
+     assert resp.status_code == 200
++
++
++def test_rol_personalizado_ve_departamentos_segun_asignacion():
++    """Regresión DEF-04: el alcance es explícito. Con "Todos" ve todos, con
++    departamento solo los suyos y sin departamento asignado ninguno."""
++    from types import SimpleNamespace
++    from services.auth_service import get_departamentos_permitidos
++
++    sin_dep = SimpleNamespace(rol="consulta", departamento=None, departamentos_extra=None)
++    assert get_departamentos_permitidos(sin_dep) == []
++
++    todos = SimpleNamespace(rol="consulta", departamento="Todos", departamentos_extra=None)
++    assert get_departamentos_permitidos(todos) is None
++
++    con_dep = SimpleNamespace(rol="consulta", departamento="Producción", departamentos_extra=None)
++    assert get_departamentos_permitidos(con_dep) == ["Producción"]
++
++    # "Todos" también aplica al líder de departamento (DEF-01)
++    lider_todos = SimpleNamespace(rol="lider_departamento", departamento="Todos", departamentos_extra=None)
++    assert get_departamentos_permitidos(lider_todos) is None
++
++    # permanencia sigue sin ver cursos de docentes
++    permanencia = SimpleNamespace(rol="permanencia", departamento=None, departamentos_extra=None)
++    assert get_departamentos_permitidos(permanencia) == []
+diff --git a/API_seguimiento_docentes/tests/test_routes_usuarios.py b/API_seguimiento_docentes/tests/test_routes_usuarios.py
+index 2685957..2d67c4d 100644
+--- a/API_seguimiento_docentes/tests/test_routes_usuarios.py
++++ b/API_seguimiento_docentes/tests/test_routes_usuarios.py
+@@ -132,6 +132,53 @@ def test_actualizar_usuario_admin_actor_no_puede_ascender_a_admin(client, db_ses
+     assert resp.status_code == 400
+ 
+ 
++def _rol_personalizado(db, nombre="consulta"):
++    from models import Role
++    if not db.query(Role).filter(Role.nombre == nombre).first():
++        db.add(Role(nombre=nombre, protegido=False, color="#64748b"))
++        db.commit()
++
++
++def test_crear_rol_personalizado_exige_departamento_o_todos(client, db_session):
++    """Regresión DEF-04: el alcance es explícito. Sin departamento se rechaza;
++    con "Todos" o un departamento se guarda."""
++    from services import permisos_service
++    permisos_service.sembrar_roles_legacy(db_session)
++    _rol_personalizado(db_session)
++    admin = _crear_usuario(db_session, "admin", "admin-alcance-crear@test.com")
++    _login(client, admin)
++    base = {"nombre": "X", "password": "Test12345!", "rol": "consulta"}
++
++    resp = client.post("/usuarios/", json={**base, "email": "sin-dep@test.com"}, headers=_ORIGIN)
++    assert resp.status_code == 400
++
++    resp = client.post("/usuarios/", json={**base, "email": "todos@test.com", "departamento": "Todos"},
++                       headers=_ORIGIN)
++    assert resp.status_code == 201
++    u = db_session.query(Usuario).filter(Usuario.email == "todos@test.com").first()
++    assert u.departamento == "Todos"
++
++
++def test_actualizar_a_rol_personalizado_sin_departamento_se_rechaza(client, db_session):
++    from services import permisos_service
++    permisos_service.sembrar_roles_legacy(db_session)
++    _rol_personalizado(db_session)
++    admin = _crear_usuario(db_session, "admin", "admin-alcance-editar@test.com")
++    objetivo = _crear_usuario(db_session, "revisor", "revisor-a-consulta@test.com")
++    _login(client, admin)
++
++    resp = client.put(f"/usuarios/{objetivo.id}", json={"rol": "consulta"}, headers=_ORIGIN)
++    assert resp.status_code == 400
++    db_session.refresh(objetivo)
++    assert objetivo.rol == "revisor"
++
++    resp = client.put(f"/usuarios/{objetivo.id}", json={"rol": "consulta", "departamento": "Todos"},
++                      headers=_ORIGIN)
++    assert resp.status_code == 200
++    db_session.refresh(objetivo)
++    assert (objetivo.rol, objetivo.departamento) == ("consulta", "Todos")
++
++
+ def test_enviar_restablecimiento_admin_ok(client, db_session):
+     """SMTP no configurado en el entorno de test - notificar_restablecimiento_password
+     solo loguea un warning y retorna, así que el endpoint igual responde 200
+-- 
+2.56.0.windows.4
+

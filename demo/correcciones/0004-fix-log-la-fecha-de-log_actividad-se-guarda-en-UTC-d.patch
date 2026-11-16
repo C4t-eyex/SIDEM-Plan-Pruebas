@@ -1,4 +1,4 @@
-From 42ebb9844c733db5b22329b52cf9b942d480460a Mon Sep 17 00:00:00 2001
+From 22432fe277acce1fc5a4eed2546eabe3fd8289c7 Mon Sep 17 00:00:00 2001
 From: Marcos Duque <90621408+C4t-eyex@users.noreply.github.com>
 Date: Thu, 12 Nov 2026 21:54:26 -0500
 Subject: [PATCH 4/5] fix(log): la fecha de log_actividad se guarda en UTC
@@ -15,7 +15,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
  create mode 100644 API_seguimiento_docentes/tests/test_log_service.py
 
 diff --git a/API_seguimiento_docentes/models/__init__.py b/API_seguimiento_docentes/models/__init__.py
-index e866132..36f6ff8 100644
+index 8836aa3..3e62042 100644
 --- a/API_seguimiento_docentes/models/__init__.py
 +++ b/API_seguimiento_docentes/models/__init__.py
 @@ -309,7 +309,9 @@ class LogActividad(Base):

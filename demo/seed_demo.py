@@ -34,7 +34,8 @@ USUARIOS = [
     ("lider@sidem.test",        "Líder Académico Demo",          "lider",              None),
     ("lider.sd@sidem.test",     "Líder Sistemas Digitales Demo", "lider_departamento", "Sistemas Digitales"),
     ("lider.sindep@sidem.test", "Líder sin Departamento Demo",   "lider_departamento", None),
-    ("consulta@sidem.test",     "Usuario Solo Consulta Demo",    "consulta",           None),
+    # Alcance explícito "Todos" (DEF-04): sin departamento no vería ningún curso.
+    ("consulta@sidem.test",     "Usuario Solo Consulta Demo",    "consulta",           "Todos"),
 ]
 
 # Rol personalizado de solo consulta: ve el seguimiento pero no puede guardar.

@@ -1,4 +1,4 @@
-From 0c99cefc6749d4a719002208ddffd96bec3fa521 Mon Sep 17 00:00:00 2001
+From f8ab80a85cbcf60bf8ca9670db2a12c9980c1e2c Mon Sep 17 00:00:00 2001
 From: Marcos Duque <90621408+C4t-eyex@users.noreply.github.com>
 Date: Thu, 12 Nov 2026 21:51:23 -0500
 Subject: [PATCH 3/5] fix(auth): cerrar sesion invalida el token en el servidor
@@ -33,7 +33,7 @@ index 393bbe4..7b6ff75 100644
      except Exception:
          pass
 diff --git a/API_seguimiento_docentes/services/auth_service.py b/API_seguimiento_docentes/services/auth_service.py
-index 696473c..cbfba91 100644
+index 39227b1..11766b8 100644
 --- a/API_seguimiento_docentes/services/auth_service.py
 +++ b/API_seguimiento_docentes/services/auth_service.py
 @@ -246,7 +246,10 @@ def get_current_user(
