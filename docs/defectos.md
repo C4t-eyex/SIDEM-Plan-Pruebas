@@ -4,7 +4,7 @@ Defectos encontrados al montar la demo y al ejecutar los casos de prueba. Se reg
 
 Versión de SIDEM probada: commit `77f71b2`. Entorno: demo con Docker (AMB-01) y datos DAT-01.
 
-Las correcciones están en [`demo/correcciones/`](../demo/correcciones/), una por defecto. Se cierran cuando el retest las confirme ([`retest.md`](retest.md)).
+Las correcciones están en [`demo/correcciones/`](../demo/correcciones/), una por defecto. Se cerraron con el retest ([`retest.md`](retest.md)).
 
 **Retest del 16/11/2026** (Sebastián), con las imágenes `77f71b2-correcciones` y la base en UTC: las 19 pruebas automáticas pasan y `db.sql` se instala sin errores. Los 5 defectos quedan cerrados.
 
@@ -72,7 +72,7 @@ Las correcciones están en [`demo/correcciones/`](../demo/correcciones/), una po
 
 **Causa probable:** la columna `log_actividad.fecha` tiene como valor por defecto `CURRENT_TIMESTAMP AT TIME ZONE 'America/Bogota'`. Eso da una hora sin zona que PostgreSQL vuelve a interpretar con su propia zona. Con UTC queda 5 horas atrás y el conteo de intentos de los últimos 300 s siempre da 0.
 
-**Nota:** con la base en `America/Bogota` el bloqueo funciona y TC-09 pasa. El defecto aparece solo si la base de producción no está en esa zona, así que falta confirmarlo allí.
+**Nota:** con la base en `America/Bogota` el bloqueo funciona y TC-09 pasa. Con la corrección, la aplicación registra la fecha en UTC y el bloqueo ya no depende de la zona horaria de la base (ver el retest).
 
 **Evidencia:** `evidencias/pytest/ejecucion_2026-11-08.txt` (corrida con la base corregida) y los registros de `log_actividad` de la primera corrida, con fecha 14:08 cuando en UTC eran las 19:08.
 

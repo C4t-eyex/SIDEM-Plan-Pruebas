@@ -35,6 +35,8 @@ Ejecutado el 12/11/2026 por Marcos Duque, con apoyo del asistente de IA en el na
 Ejecutado el 12/11/2026 por Marcos Duque, con apoyo del asistente de IA en el navegador. Evidencias: `evidencias/TC-02_2026-11-12_Marcos_paso1-consulta-sin-cursos.png` y `_paso3-sindep-ve-todo.png`.
 
 > La prueba automática ya mostró que los pasos 1 y 3 no dan lo esperado (HAL-02 y HAL-04 en `avances.md`). La captura de pantalla sirve como evidencia visual del defecto.
+>
+> El paso 2 lo cubre la prueba automática `test_consulta_no_puede_guardar`, que pasa en las tres corridas. En el retest del 16/11 los pasos 1 y 3 dan lo esperado (`evidencias/TC-02_2026-11-16_retest_Sebastian_*`).
 
 ### TC-03 - Semáforo en los valores límite · Nicolás
 

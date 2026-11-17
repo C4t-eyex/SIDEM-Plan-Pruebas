@@ -1,8 +1,8 @@
 # Retest de los defectos corregidos
 
-Guía para repetir las pruebas sobre SIDEM con las correcciones de DEF-01 a DEF-05. Lo ejecuta **Sebastián**; con el resultado, **Julián** actualiza el informe de cierre.
+Guía para repetir las pruebas sobre SIDEM con las correcciones de DEF-01 a DEF-05. Lo ejecuta **Sebastián**; con el resultado se actualiza el informe de cierre.
 
-> **Hecho el 16/11/2026 por Sebastián:** 19 de 19 pruebas pasan y los 5 defectos quedan cerrados. Detalle en [`defectos.md`](defectos.md) y en `evidencias/pytest/ejecucion_2026-11-16_retest_Sebastian.txt`. Falta que Julián comente los issues #1 a #5 y actualice el informe de cierre.
+> **Hecho el 16/11/2026 por Sebastián:** 19 de 19 pruebas pasan y los 5 defectos quedan cerrados. Detalle en [`defectos.md`](defectos.md) y en `evidencias/pytest/ejecucion_2026-11-16_retest_Sebastian.txt`. Los issues #1 a #5 quedaron cerrados con el resultado y el informe de cierre está en su versión final (1.0).
 
 ## Qué cambió
 
@@ -62,7 +62,7 @@ Guía para repetir las pruebas sobre SIDEM con las correcciones de DEF-01 a DEF-
 | Sebastián | [`defectos.md`](defectos.md) | Estado de cada defecto: "Cerrado (retest DD/11)" si pasa, o "Reabierto" con lo que se vio. |
 | Sebastián | Issues #1 a #5 en GitHub | Comentario con el resultado; cerrar el issue si pasa. |
 | Sebastián | [`avances.md`](avances.md) | Una fila con la corrida. |
-| Julián | [`informe-de-cierre.md`](informe-de-cierre.md) | Sección de retest, estado final de los defectos y criterios de finalización. |
+| Marcos y Nicolás | [`informe-de-cierre.md`](informe-de-cierre.md) | Sección de retest, estado final de los defectos y criterios de finalización. |
 
 ## Verificación previa
 
