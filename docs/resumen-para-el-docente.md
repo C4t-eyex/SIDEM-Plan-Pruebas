@@ -27,27 +27,26 @@ Las pruebas se enfocan en lo que más riesgo tiene: quién puede ver y modificar
 
 | Fase | Contenido | Estado |
 |---|---|---|
-| 1 | Plan de pruebas y organización de documentos | Listo para revisión (v0.3) |
-| 2 | Demo de SIDEM con Docker y datos ficticios | Lista |
-| 3 | Ejecución de las pruebas, defectos y evidencias | En curso: automáticas ejecutadas, manuales pendientes |
-| 4 | Informe de cierre y exposición | Pendiente |
+| 1 | Plan de pruebas y organización de documentos | Listo (v0.6, con las respuestas del docente) |
+| 2 | Demo de SIDEM con Docker y datos ficticios | Lista, con imágenes para el retest |
+| 3 | Ejecución de las pruebas, defectos y evidencias | Lista: los 9 casos ejecutados, 5 defectos corregidos y cerrados con el retest |
+| 4 | Informe de cierre y exposición | En curso |
 
-**Primera ejecución automática (08/11/2026):** 19 pruebas sobre 7 casos. 16 pasan y 3 fallan. Los fallos corresponden a defectos de SIDEM, no a errores de la prueba.
+**Primera ronda (08 y 12/11/2026):** 19 pruebas automáticas sobre 7 casos; 16 pasan y 3 fallan por defectos de SIDEM, no por errores de la prueba. Los 9 casos se ejecutaron también a mano, con capturas en [`evidencias/`](../evidencias/README.md).
 
-**Defectos registrados:** 5 (1 alto, 2 medios y 2 bajos). El más importante es que un líder de departamento sin departamento asignado puede ver las métricas de toda la institución. Se registró todo lo que no coincide con lo esperado en el plan, aunque en algún caso pueda ser una decisión de diseño de SIDEM.
+**Defectos registrados:** 5 (1 alto, 2 medios y 2 bajos). El más importante es que un líder de departamento sin departamento asignado podía ver las métricas de toda la institución.
+
+**Correcciones y retest (16/11/2026):** cada defecto tiene su corrección en [`demo/correcciones/`](../demo/correcciones/), con una prueba automática. En el retest, con la base en UTC, pasan las 19 pruebas y los 5 defectos quedan cerrados ([`retest.md`](retest.md)).
 
 **Cambios al plan por lo que se encontró:** al revisar el sistema real, dos casos del Taller 5 no coincidían con su funcionamiento (TC-01 y TC-03) y se ajustaron. El historial está en la sección 1.4 del plan.
 
 ## 4. Qué falta y quién lo hace
 
-| Integrante | Casos | Pendiente |
-|---|---|---|
-| Marcos | TC-01, TC-02 | Ejecución manual en el navegador y mantener la demo. |
-| Sebastián | TC-07, TC-04 | Ejecución manual de TC-04 y mantener las pruebas automáticas. |
-| Nicolás | TC-03, TC-08 | Ejecución manual y revisión de los datos de prueba. |
-| Julián | TC-05, TC-09, TC-06 | Ejecución manual de TC-05 y TC-06, y redactar el informe de cierre. |
-
-Las hojas para la ejecución manual están en [`ejecucion-manual.md`](ejecucion-manual.md). Los 5 defectos ya tienen corrección; el retest lo hace Sebastián con la guía [`retest.md`](retest.md) y después Julián cierra el informe.
+| Integrante | Pendiente |
+|---|---|
+| Julián | Comentar los issues #1 a #5, actualizar el informe de cierre con el retest y armar sus diapositivas. |
+| Marcos | Láminas de defectos y casos con el antes y después, unir las 4 presentaciones y organizar el ensayo. |
+| Todos | Ensayo de la exposición del 17/11 ([`exposicion/README.md`](../exposicion/README.md)). |
 
 ## 5. Lo que confirmó el docente (16/11)
 

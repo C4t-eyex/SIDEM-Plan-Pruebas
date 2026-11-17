@@ -19,7 +19,7 @@ La historia sigue el orden del trabajo: qué se planeó → cómo se probó → 
 | 2 | Matriz de riesgos | Marcos | `Marcos_plan_y_riesgos.pptx` 3 | 2 min | Los 4 riesgos altos (R01 a R04) se volvieron casos P1. Ninguno llega a crítico. Menciona TC-16 y TC-17. |
 | 3 | Valores límite (TC-03, TC-08) | Nicolás | `Nicolas_valores_limite.pptx` 1-2 | 3 min | Los errores están en los bordes: 80 %, 77 %, 50 %, 47 %. Los 6 cursos y los totales salieron bien. Menciona TC-12 y TC-13. |
 | 4 | Pruebas automáticas | Sebastián | `Sebastian_pruebas_automaticas.pptx` 1-2 | 4 min | pytest contra la API. Primera ronda: 16 de 19, y los 3 fallos eran defectos de SIDEM. Menciona TC-10 y TC-11. |
-| 5 | Defectos y correcciones (antes / después) | Marcos | Láminas nuevas + video | 8 min | **Todos** los defectos encontrados (DEF-01 a DEF-05), cada uno con qué hacía SIDEM antes de corregirlo y qué hace después. Video de DEF-01 y DEF-02. |
+| 5 | Defectos y correcciones (antes / después) | Marcos | `Marcos_defectos_y_correcciones.pptx` 1-7 | 8 min | **Todos** los defectos encontrados (DEF-01 a DEF-05), cada uno con qué hacía SIDEM antes de corregirlo y qué hace después. Video de DEF-01 y DEF-02. |
 | 6 | Retest y cierre | Julián | `Julian_cierre.pptx` (falta) | 4 min | Retest: 19 de 19. Estado final de los defectos, criterios de finalización cumplidos y lecciones aprendidas. Menciona TC-14 y TC-15. |
 | 7 | Preguntas | Todos | - | 2-5 min | - |
 
@@ -34,7 +34,7 @@ En la carpeta compartida del equipo (no va al repositorio por el peso):
 | `DEF-02_antes_sesion_cerrada_reutilizable.gif` | La cookie copiada sigue sirviendo después de cerrar sesión (200). |
 | `DEF-02_despues_sesion_cerrada_no_se_reutiliza.gif` | La cookie copiada da 401 "Sesión expirada". |
 
-Se insertan en la lámina 5 en pares (antes a la izquierda, después a la derecha) o uno tras otro. Los GIF se reproducen solos en PowerPoint.
+Ya están dentro de `Marcos_defectos_y_correcciones.pptx` (antes a la izquierda, después a la derecha). Los GIF se mueven solos en modo presentación; en la vista de edición o en PDF solo se ve el primer cuadro.
 
 ## Contenido de la lámina 5 (defectos y correcciones)
 
@@ -57,7 +57,6 @@ Mensaje para decir: las correcciones están como parches sobre la versión proba
 | Pendiente | Quién | Depende de |
 |---|---|---|
 | Diapositivas del cierre (`Julian_cierre.pptx`) | Julián | - (el retest ya está: 19 de 19, defectos cerrados) |
-| Lámina 5 de defectos y correcciones con los GIF | Marcos | - |
 | Unir las 4 presentaciones en `Exposicion_SIDEM.pptx` con portada, agenda y cierre | Marcos | Todas las anteriores |
 | Ensayo completo cronometrado | Todos | Presentación unida |
 
