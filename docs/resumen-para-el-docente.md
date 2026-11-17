@@ -43,6 +43,7 @@ Las pruebas se enfocan en lo que más riesgo tiene: quién puede ver y modificar
 ## 4. Cierre
 
 - **Informe de cierre v1.0** ([`informe-de-cierre.md`](informe-de-cierre.md)): los 9 casos ejecutados y pasando después del retest, 0 defectos abiertos y todos los criterios de finalización del plan cumplidos. Lo completaron Marcos, como encargado de organizar la exposición, y Nicolás.
+- **Informe final en LaTeX** ([`entrega/Informe_final_SIDEM.pdf`](../entrega/Informe_final_SIDEM.pdf)): reúne el plan, la ejecución, los defectos con su antes y después, las correcciones, el retest, el informe de cierre y los anexos.
 - **Issues #1 a #5** cerrados en GitHub con el resultado del retest.
 - **Presentación unida** para el 17/11 ([`exposicion/README.md`](../exposicion/README.md)), con el antes y después de cada defecto y las láminas de retest y cierre.
 
