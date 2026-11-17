@@ -23,6 +23,10 @@ La historia sigue el orden del trabajo: qué se planeó → cómo se probó → 
 | 6 | Retest y cierre | Julián | `Julian_cierre.pptx` (falta) | 4 min | Retest: 19 de 19. Estado final de los defectos, criterios de finalización cumplidos y lecciones aprendidas. Menciona TC-14 y TC-15. |
 | 7 | Preguntas | Todos | - | 2-5 min | - |
 
+## Presentación unida
+
+[`Exposicion_SIDEM.pptx`](Exposicion_SIDEM.pptx) (18 láminas) ya tiene portada, agenda, las láminas de Marcos, Nicolás y Sebastián, las de defectos y correcciones, una lámina provisional para Julián y el cierre. Cada parte conserva su diseño y sus notas. Si alguien cambia su archivo individual, hay que volver a pegar esas láminas en la unida.
+
 ## Material del video
 
 En la carpeta compartida del equipo (no va al repositorio por el peso):
@@ -57,7 +61,7 @@ Mensaje para decir: las correcciones están como parches sobre la versión proba
 | Pendiente | Quién | Depende de |
 |---|---|---|
 | Diapositivas del cierre (`Julian_cierre.pptx`) | Julián | - (el retest ya está: 19 de 19, defectos cerrados) |
-| Unir las 4 presentaciones en `Exposicion_SIDEM.pptx` con portada, agenda y cierre | Marcos | Todas las anteriores |
+| Reemplazar la lámina provisional "Retest y cierre" (17) de `Exposicion_SIDEM.pptx` por las de Julián | Marcos | Diapositivas de Julián |
 | Ensayo completo cronometrado | Todos | Presentación unida |
 
 ## Consejos para el ensayo
