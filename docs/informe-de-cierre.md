@@ -21,7 +21,7 @@
 | Versión | Fecha | Quién | Cambio |
 |---|---|---|---|
 | 0.1 | 12/11/2026 | Julián Ramírez Molina | Primera versión con la ejecución registrada hasta el 12/11. |
-| 1.0 | 17/11/2026 | Marcos Duque Jaramillo y Nicolás Cataño Durango | Versión final: ejecución manual completa, retest del 16/11, defectos cerrados, criterios de finalización y lecciones aprendidas. Marcos, como encargado de organizar la exposición, consolidó con Nicolás el cierre del informe y las láminas de cierre. |
+| 1.0 | 17/11/2026 | Marcos Duque Jaramillo y Nicolás Cataño Durango | Versión final: ejecución manual completa, retest del 16/11, defectos cerrados, criterios de finalización y lecciones aprendidas. Marcos, como encargado de organizar la exposición, consolidó con Nicolás el cierre del informe. |
 
 **Fuentes usadas:** `docs/ejecucion-manual.md`, `docs/defectos.md`, `docs/retest.md`, `docs/avances.md`, `evidencias/README.md` y las salidas de pytest de `evidencias/pytest/` (08/11, 12/11 y retest del 16/11).
 
@@ -236,7 +236,7 @@ También quedan fuera de este ciclo, por decisión del plan: la integración con
 
 | Integrante | Aporte registrado en el repositorio |
 |---|---|
-| Marcos Duque Jaramillo | Líder de pruebas, entorno de demostración (Docker, imágenes y Drive del equipo) y correcciones de DEF-01 a DEF-05. Casos TC-01 y TC-02. Organización de la exposición; versión 1.0 de este informe y láminas de cierre, junto con Nicolás. |
+| Marcos Duque Jaramillo | Líder de pruebas, entorno de demostración (Docker, imágenes y Drive del equipo) y correcciones de DEF-01 a DEF-05. Casos TC-01 y TC-02. Organización de la exposición; versión 1.0 de este informe, junto con Nicolás. |
 | Sebastián Díaz Jiménez | Pruebas automáticas con pytest, corrida del 12/11 y retest del 16/11. Casos TC-07 y TC-04. |
-| Nicolás Cataño Durango | Datos de prueba DAT-01 y su verificación. Casos TC-03 y TC-08. Versión 1.0 de este informe y láminas de cierre, junto con Marcos. |
-| Julián Ramírez Molina | Ejecución manual de TC-05 y TC-06, revisión de TC-09 y primera versión de este informe (v0.1). |
+| Nicolás Cataño Durango | Datos de prueba DAT-01 y su verificación. Casos TC-03 y TC-08. Versión 1.0 de este informe, junto con Marcos. |
+| Julián Ramírez Molina | Ejecución manual de TC-05 y TC-06, revisión de TC-09, primera versión de este informe (v0.1) y la parte de retest y cierre de la exposición. |

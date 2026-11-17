@@ -36,9 +36,10 @@ def escapar(t: str) -> str:
 def codigo(t: str) -> str:
     """Código en línea que puede partirse en / _ - . = para no salirse de las tablas."""
     salida = ""
-    for c in t:
+    for i, c in enumerate(t):
         salida += escapar(c)
-        if c in "/_-.=,:":
+        # No partir después del último carácter (ej. "ERROR:") ni entre puntos seguidos (ej. "0001-...")
+        if c in "/_-.=,:" and i < len(t) - 1 and t[i + 1] != ".":
             salida += r"\allowbreak{}"
     return r"\code{" + salida + "}"
 
@@ -74,6 +75,7 @@ def escapar_con_marcas(t: str) -> str:
     """Escapa el texto respetando los marcadores \x00n\x00 y convierte ** y *."""
     partes = re.split(r"(\x00\d+\x00)", t)
     salida = "".join(p if re.fullmatch(r"\x00\d+\x00", p) else escapar(p) for p in partes)
+    salida = re.sub(r"\b(\d{5}-\d)\b", r"\\mbox{\1}", salida)  # no partir "29119-3"
     salida = re.sub(r"\*\*(.+?)\*\*", r"\\textbf{\1}", salida)
     salida = re.sub(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])", r"\\emph{\1}", salida)
     return salida
@@ -104,21 +106,52 @@ def tabla(lineas: list[str]) -> str:
     filas = [celdas(l) for l in lineas if not re.match(r"^\|\s*:?-{2,}", l.strip())]
     n = max(len(f) for f in filas)
     filas = [f + [""] * (n - len(f)) for f in filas]
-    # Ancho de cada columna según el largo de su texto (entre 0,45 y 3 veces el promedio)
-    # Se toma el mayor entre el largo promedio y la palabra más larga, para que no se partan fechas ni códigos
-    largos = [max(6, min(90, max(sum(len(f[i]) for f in filas) / len(filas),
-                                 1.6 * max(len(w) for f in filas for w in (f[i].replace("`", "").split() or [""])))))
-              for i in range(n)]
-    total = sum(largos)
-    pesos = [max(0.45, min(3.0, n * l / total)) for l in largos]
-    ajuste = n / sum(pesos)
-    pesos = [p * ajuste for p in pesos]
-    spec = "".join(r">{\hsize=%.3f\hsize\raggedright\arraybackslash}X" % p for p in pesos)
     tam = r"\small" if n <= 4 else (r"\footnotesize" if n <= 6 else r"\scriptsize")
+    # Anchos en pulgadas: cada columna recibe al menos lo que ocupa su palabra más larga (o el título en
+    # negrita), para que no se partan "DEF-01" ni se salgan los encabezados; el resto del ancho se reparte
+    # según el largo promedio del texto de cada columna.
+    ancho_letra = {r"\small": 10, r"\footnotesize": 9, r"\scriptsize": 8}[tam] * 0.56 / 72
+    total, relleno = 6.46, 12 / 72  # ancho del texto (A4 con márgenes de 2,3 cm) y separación entre columnas
+
+    def palabras(celda: str) -> list[str]:
+        trozos = []
+        for i_parte, parte in enumerate(celda.split("`")):
+            # Dentro de código se parte en / _ = , : (los nombres con . o - se cuentan enteros); fuera, en espacios
+            trozos += re.split(r"[/_=,:]", parte) if i_parte % 2 else parte.split()
+        return trozos or [""]
+
+    minimos, deseados = [], []
+    for i in range(n):
+        largo_max = max((min(len(p), 16) + 1) * (1.12 if k == 0 else 1.0)
+                        for k, f in enumerate(filas) for p in palabras(f[i]))
+        minimos.append(largo_max * ancho_letra + relleno)
+        promedio = sum(len(f[i].replace("`", "")) for f in filas[1:]) / max(1, len(filas) - 1)
+        deseados.append(min(promedio, 60) * ancho_letra + relleno)
+    if sum(minimos) >= total:
+        anchos = [m * total / sum(minimos) for m in minimos]
+    else:
+        holgura = [max(d - m, 0.05) for d, m in zip(deseados, minimos)]
+        sobra = total - sum(minimos)
+        anchos = [m + sobra * h / sum(holgura) for m, h in zip(minimos, holgura)]
+    promedio_x = (total - n * relleno) / n
+    pesos = [(a - relleno) / promedio_x for a in anchos]
+    spec = "".join(r">{\hsize=%.3f\hsize\raggedright\arraybackslash}X" % p for p in pesos)
     cab = " & ".join(r"\textbf{" + en_linea(c) + "}" for c in filas[0]) + r" \\"
     cuerpo = "\n".join(" & ".join(en_linea(c) for c in f) + r" \\ \hline" for f in filas[1:])
-    return (f"{{{tam}\n\\begin{{xltabular}}{{\\linewidth}}{{{spec}}}\n"
-            "\\hline\\rowcolor{cabecera}\n" + cab + " \\hline\n\\endhead\n" + cuerpo + "\n\\end{xltabular}}\n")
+    # Altura estimada (en puntos): renglones de la celda más alta de cada fila
+    puntos = {r"\small": 10, r"\footnotesize": 9, r"\scriptsize": 8}[tam] * 1.2 * 1.35
+    alto = sum(puntos * max(1, max(-(-len(c.replace("`", "")) * ancho_letra // max(a - relleno, 0.2))
+                                    for c, a in zip(f, anchos))) + 4 for f in filas)
+    if alto < 170:
+        # Tabla corta (menos de ~6 cm): no se parte entre páginas y se queda junto al texto que la presenta
+        # La primera línea (%ALTO=...) la usa markdown() para que el párrafo que presenta la tabla reserve su altura
+        return (f"%ALTO={int(alto)}\n\\par\\noindent\\begin{{minipage}}{{\\linewidth}}{tam}\n\\begin{{tabularx}}{{\\linewidth}}{{{spec}}}\n"
+                "\\hline\\rowcolor{cabecera}\n" + cab + " \\hline\n" + cuerpo + "\n\\end{tabularx}\\end{minipage}\\par\n")
+    # Tabla larga: puede partirse. \Needspace hace el salto ANTES de que empiece la tabla si al pie no caben
+    # el encabezado y un par de filas (así el encabezado no queda solo ni se repite)
+    encabezado = "\\hline\\rowcolor{cabecera}\n" + cab + " \\hline\n"
+    return (f"\\par\\Needspace{{8\\baselineskip}}{{{tam}\n\\begin{{xltabular}}{{\\linewidth}}{{{spec}}}\n"
+            + encabezado + "\\endfirsthead\n" + encabezado + "\\endhead\n" + cuerpo + "\n\\end{xltabular}}\n")
 
 
 # ── Bloques ─────────────────────────────────────────────────────────────────
@@ -154,7 +187,9 @@ def markdown(texto: str, nivel_base: int = 0, saltar_h1: bool = True) -> str:
             cmd = comandos[min(nivel - 1 + nivel_base, len(comandos) - 1)]  # ## -> sección, ### -> subsección
             titulo = en_linea(m.group(2))
             corto = re.sub(r"\\(code|textbf|emph)\{", "{", titulo)
-            out.append(f"\\{cmd}*{{{titulo}}}\\addcontentsline{{toc}}{{{cmd}}}{{{corto}}}")
+            # \Needspace evita que el título quede solo al final de la página
+            espacio = "" if cmd == "chapter" else "\\Needspace{7\\baselineskip}"
+            out.append(f"{espacio}\\{cmd}*{{{titulo}}}\\addcontentsline{{toc}}{{{cmd}}}{{{corto}}}")
             i += 1
             continue
         # Tabla
@@ -163,7 +198,19 @@ def markdown(texto: str, nivel_base: int = 0, saltar_h1: bool = True) -> str:
             while i < len(lineas) and lineas[i].strip().startswith("|"):
                 bloque.append(lineas[i])
                 i += 1
-            out.append(tabla(bloque))
+            tex = tabla(bloque)
+            m_alto = re.match(r"%ALTO=(\d+)", tex)
+            # Lo que presenta la tabla (un título y/o un párrafo "...:") reserva el alto de la tabla corta,
+            # o unos renglones si es larga, para no quedar solo al pie de la página
+            # (la tabla larga pide además 8 renglones propios con \Needspace, por eso la reserva es mayor)
+            reserva = int(m_alto.group(1)) + 45 if m_alto else 150
+            for atras in (1, 2):
+                if len(out) >= atras and out[-atras].startswith("\\Needspace{"):
+                    resto = re.sub(r"^\\Needspace\{[^}]*\}", "", out[-atras])
+                    out[-atras] = f"\\Needspace{{{reserva + 40 * (atras - 1)}pt}}" + resto
+                else:
+                    break
+            out.append(tex)
             continue
         # Cita
         if s.startswith(">"):
@@ -200,7 +247,10 @@ def markdown(texto: str, nivel_base: int = 0, saltar_h1: bool = True) -> str:
                 break
             bloque.append(t)
             i += 1
-        out.append(en_linea(" ".join(bloque)) + "\n")
+        parrafo = en_linea(" ".join(bloque))
+        # Un párrafo que presenta lo que sigue ("Riesgos del producto:") no se queda solo al pie de página
+        termina_en_dos_puntos = bloque[-1].rstrip("*_ ").endswith(":")  # también "**Finalización:**"
+        out.append(("\\Needspace{6\\baselineskip}" if termina_en_dos_puntos else "") + parrafo + "\n")
     return "\n\n".join(out)
 
 
@@ -263,6 +313,8 @@ PREAMBULO = r"""\documentclass[11pt,a4paper,oneside]{report}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{caption}
+\usepackage{needspace}
+\usepackage{ragged2e}
 \usepackage{listings}
 \usepackage[most]{tcolorbox}
 \usepackage[hidelinks]{hyperref}
@@ -302,10 +354,13 @@ PREAMBULO = r"""\documentclass[11pt,a4paper,oneside]{report}
 \setlist[enumerate]{leftmargin=1.6em,itemsep=2pt,topsep=3pt}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{5pt}
+% Texto alineado a la izquierda (con guiones): evita los huecos que deja el justificado con rutas largas
+\AtBeginDocument{\RaggedRight\setlength{\parskip}{5pt}}
 \renewcommand{\arraystretch}{1.35}
 \captionsetup{font={small,sf},labelfont={bf,color=azul}}
 
-\newcommand{\code}[1]{{\ttfamily\color{tinta}#1}}
+% \leavevmode evita que \color abra una línea vacía al inicio de una celda de tabla
+\newcommand{\code}[1]{\leavevmode{\ttfamily\color{tinta}#1}}
 \newtcolorbox{nota}{enhanced,breakable,colback=fondo,colframe=azul,boxrule=0pt,leftrule=2.5pt,arc=0pt,
   left=8pt,right=8pt,top=4pt,bottom=4pt,before skip=6pt,after skip=6pt}
 \lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,columns=fullflexible,keepspaces=true,
@@ -341,7 +396,7 @@ PORTADA = r"""
 
 INTRO = r"""
 \chapter*{Introducción}\addcontentsline{toc}{chapter}{Introducción}
-Este informe reúne el trabajo final del curso: un plan de pruebas según la norma ISO/IEC/IEEE 29119-3, adaptado (\emph{tailoring}) a un ciclo de 9 días, y su ejecución sobre SIDEM, el sistema de seguimiento a docentes en Moodle. Se probó la versión \code{77f71b2} en una demo con Docker y datos ficticios, sin usar la base de producción.
+Este informe reúne el trabajo final del curso: un plan de pruebas según la norma ISO/IEC/IEEE \mbox{29119-3}, adaptado (\emph{tailoring}) a un ciclo de 9 días, y su ejecución sobre SIDEM, el sistema de seguimiento a docentes en Moodle. Se probó la versión \code{77f71b2} en una demo con Docker y datos ficticios, sin usar la base de producción.
 
 \begin{nota}
 \textbf{Resultado.} Los 9 casos planeados (TC-01 a TC-09) se ejecutaron. La primera ronda de pruebas automáticas dio 16 de 19 y encontró, junto con la ejecución manual y el montaje de la demo, 5 defectos (1 alto, 2 medios y 2 bajos). Los 5 se corrigieron con parches sobre la versión probada y en el retest del 16/11/2026 pasan las 19 pruebas. Se cumplen todos los criterios de finalización del plan.

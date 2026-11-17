@@ -338,7 +338,7 @@ El trabajo se reparte **por riesgo y módulo**: cada integrante es dueño de sus
 | Nicolás Cataño Durango | Datos de prueba (DAT-01) | R04, R06 - TC-03, TC-08 | TC-12, TC-13 |
 | Julián Ramírez Molina | Informe de cierre | R07, R08, R09 - TC-05, TC-09, TC-06 | TC-14, TC-15 |
 
-> *Reparto confirmado en la iteración 1. En la iteración 3, Marcos, como encargado de organizar la exposición, completó con Nicolás el informe de cierre (v1.0) y las láminas de cierre.*
+> *Reparto confirmado en la iteración 1. En la iteración 3, Marcos, como encargado de organizar la exposición, completó con Nicolás el informe de cierre (v1.0).*
 
 ---
 

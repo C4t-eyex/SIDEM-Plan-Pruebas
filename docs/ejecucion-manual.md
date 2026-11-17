@@ -118,6 +118,6 @@ Es automático (`test_tc09_bloqueo_login.py`). Julián revisa la salida en `evid
 | 3 | Presionar "Atrás" en el navegador. | Redirige al login, no muestra datos. | "Atrás" volvió al Dashboard, que redirigió de inmediato a `/login`. No se vio ningún dato. | Pasa |
 | 4 | Recargar la página en la que quedó. | Sigue en el login. | Tras recargar (F5) siguió en `/login`. | Pasa |
 
-> Capturas: `TC-06_2026-11-12_Julian_paso1-con-sesion.png`, `paso2-login-tras-salir.png`, `paso3-atras.png` y `paso4-recarga.png`. En la consola del navegador aparecieron respuestas 403 al pedir datos sin sesión. Este caso solo revisa lo que hace el navegador; el defecto DEF-02 (la cookie copiada antes de cerrar sesión sigue sirviendo) sigue abierto y no cambia este resultado.
+> Capturas: `TC-06_2026-11-12_Julian_paso1-con-sesion.png`, `paso2-login-tras-salir.png`, `paso3-atras.png` y `paso4-recarga.png`. En la consola del navegador aparecieron respuestas 403 al pedir datos sin sesión. Este caso solo revisa lo que hace el navegador; el defecto DEF-02 (la cookie copiada antes de cerrar sesión seguía sirviendo) no cambia este resultado; se corrigió después y quedó cerrado en el retest del 16/11.
 
 > La prueba automática complementaria encontró que la cookie copiada antes del cierre sigue sirviendo (HAL-03). Este caso manual revisa solo el comportamiento del navegador.

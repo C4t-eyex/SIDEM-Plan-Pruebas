@@ -14,6 +14,8 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{caption}
+\usepackage{needspace}
+\usepackage{ragged2e}
 \usepackage{listings}
 \usepackage[most]{tcolorbox}
 \usepackage[hidelinks]{hyperref}
@@ -53,10 +55,13 @@
 \setlist[enumerate]{leftmargin=1.6em,itemsep=2pt,topsep=3pt}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{5pt}
+% Texto alineado a la izquierda (con guiones): evita los huecos que deja el justificado con rutas largas
+\AtBeginDocument{\RaggedRight\setlength{\parskip}{5pt}}
 \renewcommand{\arraystretch}{1.35}
 \captionsetup{font={small,sf},labelfont={bf,color=azul}}
 
-\newcommand{\code}[1]{{\ttfamily\color{tinta}#1}}
+% \leavevmode evita que \color abra una línea vacía al inicio de una celda de tabla
+\newcommand{\code}[1]{\leavevmode{\ttfamily\color{tinta}#1}}
 \newtcolorbox{nota}{enhanced,breakable,colback=fondo,colframe=azul,boxrule=0pt,leftrule=2.5pt,arc=0pt,
   left=8pt,right=8pt,top=4pt,bottom=4pt,before skip=6pt,after skip=6pt}
 \lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,columns=fullflexible,keepspaces=true,
@@ -96,7 +101,7 @@
 
 
 \chapter*{Introducción}\addcontentsline{toc}{chapter}{Introducción}
-Este informe reúne el trabajo final del curso: un plan de pruebas según la norma ISO/IEC/IEEE 29119-3, adaptado (\emph{tailoring}) a un ciclo de 9 días, y su ejecución sobre SIDEM, el sistema de seguimiento a docentes en Moodle. Se probó la versión \code{77f71b2} en una demo con Docker y datos ficticios, sin usar la base de producción.
+Este informe reúne el trabajo final del curso: un plan de pruebas según la norma ISO/IEC/IEEE \mbox{29119-3}, adaptado (\emph{tailoring}) a un ciclo de 9 días, y su ejecución sobre SIDEM, el sistema de seguimiento a docentes en Moodle. Se probó la versión \code{77f71b2} en una demo con Docker y datos ficticios, sin usar la base de producción.
 
 \begin{nota}
 \textbf{Resultado.} Los 9 casos planeados (TC-01 a TC-09) se ejecutaron. La primera ronda de pruebas automáticas dio 16 de 19 y encontró, junto con la ejecución manual y el montaje de la demo, 5 defectos (1 alto, 2 medios y 2 bajos). Los 5 se corrigieron con parches sobre la versión probada y en el retest del 16/11/2026 pasan las 19 pruebas. Se cumplen todos los criterios de finalización del plan.
@@ -120,33 +125,36 @@ Todo el material, incluidas las capturas, las salidas de pytest y los parches, e
 \chapter*{Plan de pruebas}\addcontentsline{toc}{chapter}{Plan de pruebas}
 
 \begin{nota}
-Basado en la norma ISO/IEC/IEEE 29119-3 (Documentación de pruebas), adaptada a un ciclo corto de 9 días (09/11/2026 al 17/11/2026). \textbf{Estado:} versión 1.0, final - ciclo ejecutado y cerrado (ver \code{informe-\allowbreak{}de-\allowbreak{}cierre.\allowbreak{}md}).
+Basado en la norma ISO/IEC/IEEE \mbox{29119-3} (Documentación de pruebas), adaptada a un ciclo corto de 9 días (09/11/2026 al 17/11/2026). \textbf{Estado:} versión 1.0, final - ciclo ejecutado y cerrado (ver \code{informe-\allowbreak{}de-\allowbreak{}cierre.\allowbreak{}md}).
 
 \end{nota}
 
-\section*{1. Información específica del documento}\addcontentsline{toc}{section}{1. Información específica del documento}
+\Needspace{7\baselineskip}\section*{1. Información específica del documento}\addcontentsline{toc}{section}{1. Información específica del documento}
 
-\subsection*{1.1 Identificador único del documento}\addcontentsline{toc}{subsection}{1.1 Identificador único del documento}
+\Needspace{7\baselineskip}\subsection*{1.1 Identificador único del documento}\addcontentsline{toc}{subsection}{1.1 Identificador único del documento}
 
 \code{SIDEM-\allowbreak{}PP-\allowbreak{}2026-\allowbreak{}01} (Plan de Pruebas, versión 1.0)
 
 
-\subsection*{1.2 Organización emisora y autores}\addcontentsline{toc}{subsection}{1.2 Organización emisora y autores}
+\Needspace{7\baselineskip}\subsection*{1.2 Organización emisora y autores}\addcontentsline{toc}{subsection}{1.2 Organización emisora y autores}
 
 \begin{itemize}
 \item \textbf{Organización:} Equipo SIDEM - curso Pruebas de Software, 2026-2.
 \item \textbf{Autores:} Marcos Duque Jaramillo, Sebastián Díaz Jiménez, Nicolás Cataño Durango, Julián Ramírez Molina.
 \end{itemize}
 
-\subsection*{1.3 Autoridad de aprobación}\addcontentsline{toc}{subsection}{1.3 Autoridad de aprobación}
+\Needspace{7\baselineskip}\subsection*{1.3 Autoridad de aprobación}\addcontentsline{toc}{subsection}{1.3 Autoridad de aprobación}
 
 Roberto José Calderón Bermejo, docente del curso de Pruebas de Software.
 
 
-\subsection*{1.4 Historial de cambios y control de versiones}\addcontentsline{toc}{subsection}{1.4 Historial de cambios y control de versiones}
+\Needspace{150pt}\subsection*{1.4 Historial de cambios y control de versiones}\addcontentsline{toc}{subsection}{1.4 Historial de cambios y control de versiones}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.428\hsize\raggedright\arraybackslash}X>{\hsize=0.475\hsize\raggedright\arraybackslash}X>{\hsize=0.428\hsize\raggedright\arraybackslash}X>{\hsize=2.669\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.503\hsize\raggedright\arraybackslash}X>{\hsize=0.612\hsize\raggedright\arraybackslash}X>{\hsize=0.542\hsize\raggedright\arraybackslash}X>{\hsize=2.343\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Versión} & \textbf{Fecha} & \textbf{Autor} & \textbf{Cambio} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Versión} & \textbf{Fecha} & \textbf{Autor} & \textbf{Cambio} \\ \hline
 \endhead
@@ -163,9 +171,9 @@ Roberto José Calderón Bermejo, docente del curso de Pruebas de Software.
 El control de versiones del documento se lleva en este repositorio (historial de commits de Git).
 
 
-\section*{2. Introducción y declaración de adaptación (Tailoring)}\addcontentsline{toc}{section}{2. Introducción y declaración de adaptación (Tailoring)}
+\Needspace{7\baselineskip}\section*{2. Introducción y declaración de adaptación (Tailoring)}\addcontentsline{toc}{section}{2. Introducción y declaración de adaptación (Tailoring)}
 
-\subsection*{2.1 Alcance del documento}\addcontentsline{toc}{subsection}{2.1 Alcance del documento}
+\Needspace{7\baselineskip}\subsection*{2.1 Alcance del documento}\addcontentsline{toc}{subsection}{2.1 Alcance del documento}
 
 Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recursos y en qué tiempo. Cubre las pruebas funcionales, de control de acceso por roles y de confiabilidad de las métricas del \textbf{seguimiento a docentes}.
 
@@ -173,15 +181,18 @@ Este plan define qué se va a probar de SIDEM, por qué, cómo, con qué recurso
 \textbf{Sistema bajo prueba.} SIDEM (Sistema de Seguimiento de Docentes en Moodle) es una aplicación web en Python (FastAPI) con base de datos PostgreSQL. Permite a los revisores evaluar criterios de acompañamiento docente por curso y por revisión del semestre. Además, muestra a los líderes académicos un semáforo de cumplimiento y un panel de métricas.
 
 
-\subsection*{2.2 Referencias documentales}\addcontentsline{toc}{subsection}{2.2 Referencias documentales}
+\Needspace{150pt}\subsection*{2.2 Referencias documentales}\addcontentsline{toc}{subsection}{2.2 Referencias documentales}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.402\hsize\raggedright\arraybackslash}X>{\hsize=1.598\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.198\hsize\raggedright\arraybackslash}X>{\hsize=1.802\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{ID} & \textbf{Documento} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{ID} & \textbf{Documento} \\ \hline
 \endhead
-REF-01 & ISO/IEC/IEEE 29119-3:2021 - Software testing: Test documentation. \\ \hline
-REF-02 & ISO/IEC/IEEE 29119-4 - Software testing: Test techniques. \\ \hline
+REF-01 & ISO/IEC/IEEE \mbox{29119-3}:2021 - Software testing: Test documentation. \\ \hline
+REF-02 & ISO/IEC/IEEE \mbox{29119-4} - Software testing: Test techniques. \\ \hline
 REF-03 & Actividad 1: Alcance y metodología (\code{antecedentes/\allowbreak{}01-\allowbreak{}actividad1-\allowbreak{}alcance.\allowbreak{}md}). \\ \hline
 REF-04 & Actividad 2: Objeto de prueba y condiciones (\code{antecedentes/\allowbreak{}02-\allowbreak{}actividad2-\allowbreak{}objeto-\allowbreak{}condiciones.\allowbreak{}md}). \\ \hline
 REF-05 & Matriz de riesgos SIDEM (\code{antecedentes/\allowbreak{}03-\allowbreak{}matriz-\allowbreak{}de-\allowbreak{}riesgos.\allowbreak{}md}). \\ \hline
@@ -191,9 +202,9 @@ REF-08 & Repositorio de SIDEM, en la versión fijada para pruebas (ver 3.1). \\ 
 \end{xltabular}}
 
 
-\subsection*{2.3 Conformidad y adaptación (Tailoring)}\addcontentsline{toc}{subsection}{2.3 Conformidad y adaptación (Tailoring)}
+\Needspace{7\baselineskip}\subsection*{2.3 Conformidad y adaptación (Tailoring)}\addcontentsline{toc}{subsection}{2.3 Conformidad y adaptación (Tailoring)}
 
-\textbf{Declaración.} El proyecto aplica la norma ISO/IEC/IEEE 29119-3 con \textbf{conformidad adaptada (tailored conformance)}, no con conformidad completa.
+\textbf{Declaración.} El proyecto aplica la norma ISO/IEC/IEEE \mbox{29119-3} con \textbf{conformidad adaptada (tailored conformance)}, no con conformidad completa.
 
 
 \textbf{Justificación.} SIDEM es un sistema académico interno de \textbf{criticidad media}. Una falla no pone en riesgo vidas ni dinero, pero afecta las decisiones académicas y la confidencialidad de la información de los docentes. Además, el proyecto tiene una restricción fuerte: \textbf{9 días de duración} (exposición el 17/11/2026) con un equipo de 4 estudiantes a tiempo parcial.
@@ -202,11 +213,14 @@ REF-08 & Repositorio de SIDEM, en la versión fijada para pruebas (ver 3.1). \\ 
 \textbf{Qué se conserva.} Se mantiene completo todo lo que da trazabilidad: el plan, el análisis de riesgos, la estrategia, las condiciones, los casos, los procedimientos, los datos, el entorno, los reportes de defectos y el informe de cierre.
 
 
-\textbf{Qué se excluye o se simplifica, y qué riesgo se asume:}
+\Needspace{150pt}\textbf{Qué se excluye o se simplifica, y qué riesgo se asume:}
 
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=1.047\hsize\raggedright\arraybackslash}X>{\hsize=0.479\hsize\raggedright\arraybackslash}X>{\hsize=1.412\hsize\raggedright\arraybackslash}X>{\hsize=1.061\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=1.155\hsize\raggedright\arraybackslash}X>{\hsize=0.765\hsize\raggedright\arraybackslash}X>{\hsize=1.105\hsize\raggedright\arraybackslash}X>{\hsize=0.975\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Elemento de la norma} & \textbf{Decisión} & \textbf{Justificación} & \textbf{Riesgo asumido} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Elemento de la norma} & \textbf{Decisión} & \textbf{Justificación} & \textbf{Riesgo asumido} \\ \hline
 \endhead
@@ -219,10 +233,13 @@ Integración con Moodle y seguimiento a estudiantes & Excluidos & No hay una ins
 \end{xltabular}}
 
 
-\subsection*{2.4 Glosario}\addcontentsline{toc}{subsection}{2.4 Glosario}
+\Needspace{150pt}\subsection*{2.4 Glosario}\addcontentsline{toc}{subsection}{2.4 Glosario}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.437\hsize\raggedright\arraybackslash}X>{\hsize=1.563\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.333\hsize\raggedright\arraybackslash}X>{\hsize=1.667\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Término} & \textbf{Definición sencilla} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Término} & \textbf{Definición sencilla} \\ \hline
 \endhead
@@ -237,41 +254,41 @@ Tailoring & Adaptación justificada de la norma a las condiciones del proyecto. 
 \end{xltabular}}
 
 
-\section*{3. Contexto de las pruebas}\addcontentsline{toc}{section}{3. Contexto de las pruebas}
+\Needspace{230pt}\section*{3. Contexto de las pruebas}\addcontentsline{toc}{section}{3. Contexto de las pruebas}
 
-\subsection*{3.1 Elementos de prueba (Test items)}\addcontentsline{toc}{subsection}{3.1 Elementos de prueba (Test items)}
+\Needspace{190pt}\subsection*{3.1 Elementos de prueba (Test items)}\addcontentsline{toc}{subsection}{3.1 Elementos de prueba (Test items)}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.414\hsize\raggedright\arraybackslash}X>{\hsize=1.586\hsize\raggedright\arraybackslash}X}
+%ALTO=145
+\par\noindent\begin{minipage}{\linewidth}\small
+\begin{tabularx}{\linewidth}{>{\hsize=0.391\hsize\raggedright\arraybackslash}X>{\hsize=1.609\hsize\raggedright\arraybackslash}X}
 \hline\rowcolor{cabecera}
 \textbf{Elemento} & \textbf{Detalle} \\ \hline
-\endhead
 Sistema & SIDEM - API FastAPI + interfaz web (plantillas HTML). \\ \hline
-Versión bajo prueba & Commit \code{77f71b2} de la rama \code{main} del repositorio de SIDEM. Se congela durante el ciclo (mitiga RP3). El retest usa ese mismo commit más los parches \code{0001} a \code{0005} de \code{demo/\allowbreak{}correcciones/\allowbreak{}} (imágenes \code{77f71b2-\allowbreak{}correcciones}). \\ \hline
+Versión bajo prueba & Commit \code{77f71b2} de la rama \code{main} del repositorio de SIDEM. Se congela durante el ciclo (mitiga RP3). El retest usa ese mismo commit más los parches \code{0001} a \code{0005} de \code{demo/\allowbreak{}correcciones/} (imágenes \code{77f71b2-\allowbreak{}correcciones}). \\ \hline
 Instancia de prueba & Copia de demostración con \textbf{datos ficticios}, levantada con Docker (ver 5.4). No se usa la base de producción. \\ \hline
-\end{xltabular}}
+\end{tabularx}\end{minipage}\par
 
 
-\subsection*{3.2 Alcance y exclusiones de las pruebas}\addcontentsline{toc}{subsection}{3.2 Alcance y exclusiones de las pruebas}
+\Needspace{242pt}\subsection*{3.2 Alcance y exclusiones de las pruebas}\addcontentsline{toc}{subsection}{3.2 Alcance y exclusiones de las pruebas}
 
-\textbf{Funcionalidades en alcance} (definidas en la Actividad 2):
+\Needspace{202pt}\textbf{Funcionalidades en alcance} (definidas en la Actividad 2):
 
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.438\hsize\raggedright\arraybackslash}X>{\hsize=1.321\hsize\raggedright\arraybackslash}X>{\hsize=1.241\hsize\raggedright\arraybackslash}X}
+%ALTO=157
+\par\noindent\begin{minipage}{\linewidth}\small
+\begin{tabularx}{\linewidth}{>{\hsize=0.234\hsize\raggedright\arraybackslash}X>{\hsize=1.576\hsize\raggedright\arraybackslash}X>{\hsize=1.190\hsize\raggedright\arraybackslash}X}
 \hline\rowcolor{cabecera}
 \textbf{ID} & \textbf{Funcionalidad} & \textbf{Actor principal} \\ \hline
-\endhead
 F01 & Inicio de sesión & Todos los usuarios \\ \hline
 F02 & Gestión de usuarios y roles & Administrador \\ \hline
 F03 & Registro del seguimiento a docentes & Revisor \\ \hline
 F04 & Semáforo de cumplimiento & Líderes académicos \\ \hline
 F05 & Panel de métricas & Líderes académicos, administrador \\ \hline
 F06 & Exportación de informes & Revisor, líderes académicos \\ \hline
-\end{xltabular}}
+\end{tabularx}\end{minipage}\par
 
 
-\textbf{Exclusiones:}
+\Needspace{6\baselineskip}\textbf{Exclusiones:}
 
 
 \begin{itemize}
@@ -281,7 +298,7 @@ F06 & Exportación de informes & Revisor, líderes académicos \\ \hline
 \item Pruebas de rendimiento y carga (R10 aceptado).
 \end{itemize}
 
-\subsection*{3.3 Suposiciones y restricciones}\addcontentsline{toc}{subsection}{3.3 Suposiciones y restricciones}
+\Needspace{7\baselineskip}\subsection*{3.3 Suposiciones y restricciones}\addcontentsline{toc}{subsection}{3.3 Suposiciones y restricciones}
 
 \begin{itemize}
 \item \textbf{S1.} La versión fijada de SIDEM no cambia durante el ciclo. Si se corrige un defecto, se registra el nuevo commit y se hace regresión.
@@ -291,33 +308,36 @@ F06 & Exportación de informes & Revisor, líderes académicos \\ \hline
 \item \textbf{R3.} No se puede usar información real de docentes, por confidencialidad.
 \end{itemize}
 
-\subsection*{3.4 Partes interesadas}\addcontentsline{toc}{subsection}{3.4 Partes interesadas}
+\Needspace{214pt}\subsection*{3.4 Partes interesadas}\addcontentsline{toc}{subsection}{3.4 Partes interesadas}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.888\hsize\raggedright\arraybackslash}X>{\hsize=1.112\hsize\raggedright\arraybackslash}X}
+%ALTO=169
+\par\noindent\begin{minipage}{\linewidth}\small
+\begin{tabularx}{\linewidth}{>{\hsize=0.860\hsize\raggedright\arraybackslash}X>{\hsize=1.140\hsize\raggedright\arraybackslash}X}
 \hline\rowcolor{cabecera}
 \textbf{Parte interesada} & \textbf{Interés} \\ \hline
-\endhead
 Docente del curso (Roberto José Calderón Bermejo) & Evalúa el plan y su ejecución; aprueba el documento. \\ \hline
 Equipo de pruebas (4 integrantes) & Diseña, ejecuta y reporta las pruebas. \\ \hline
 Líderes académicos (usuarios de SIDEM) & Necesitan que las métricas y el semáforo sean confiables. \\ \hline
 Revisores (usuarios de SIDEM) & Necesitan que lo que registran se guarde bien. \\ \hline
 Desarrollador de SIDEM & Recibe los defectos y los corrige. \\ \hline
-\end{xltabular}}
+\end{tabularx}\end{minipage}\par
 
 
-\section*{4. Gestión de riesgos y matriz de exposición (RBT)}\addcontentsline{toc}{section}{4. Gestión de riesgos y matriz de exposición (RBT)}
+\Needspace{7\baselineskip}\section*{4. Gestión de riesgos y matriz de exposición (RBT)}\addcontentsline{toc}{section}{4. Gestión de riesgos y matriz de exposición (RBT)}
 
-\subsection*{4.1 Identificación de riesgos}\addcontentsline{toc}{subsection}{4.1 Identificación de riesgos}
+\Needspace{7\baselineskip}\subsection*{4.1 Identificación de riesgos}\addcontentsline{toc}{subsection}{4.1 Identificación de riesgos}
 
 \textbf{Escalas.} La probabilidad y el impacto van de 1 (bajo) a 3 (alto). Exposición = P × I.
 
 
-\textbf{Riesgos del producto:}
+\Needspace{150pt}\textbf{Riesgos del producto:}
 
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.411\hsize\raggedright\arraybackslash}X>{\hsize=2.262\hsize\raggedright\arraybackslash}X>{\hsize=1.675\hsize\raggedright\arraybackslash}X>{\hsize=0.829\hsize\raggedright\arraybackslash}X>{\hsize=0.411\hsize\raggedright\arraybackslash}X>{\hsize=0.411\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.325\hsize\raggedright\arraybackslash}X>{\hsize=2.216\hsize\raggedright\arraybackslash}X>{\hsize=1.854\hsize\raggedright\arraybackslash}X>{\hsize=1.224\hsize\raggedright\arraybackslash}X>{\hsize=0.190\hsize\raggedright\arraybackslash}X>{\hsize=0.190\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{ID} & \textbf{Riesgo} & \textbf{Causa / consecuencia} & \textbf{Funcionalidad} & \textbf{P} & \textbf{I} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{ID} & \textbf{Riesgo} & \textbf{Causa / consecuencia} & \textbf{Funcionalidad} & \textbf{P} & \textbf{I} \\ \hline
 \endhead
@@ -334,48 +354,48 @@ R10 & El sistema se vuelve lento con muchos cursos. & Consultas pesadas en el li
 \end{xltabular}}
 
 
-\textbf{Riesgos del proyecto:}
+\Needspace{125pt}\textbf{Riesgos del proyecto:}
 
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.429\hsize\raggedright\arraybackslash}X>{\hsize=2.712\hsize\raggedright\arraybackslash}X>{\hsize=0.429\hsize\raggedright\arraybackslash}X>{\hsize=0.429\hsize\raggedright\arraybackslash}X}
+%ALTO=80
+\par\noindent\begin{minipage}{\linewidth}\small
+\begin{tabularx}{\linewidth}{>{\hsize=0.255\hsize\raggedright\arraybackslash}X>{\hsize=3.424\hsize\raggedright\arraybackslash}X>{\hsize=0.161\hsize\raggedright\arraybackslash}X>{\hsize=0.161\hsize\raggedright\arraybackslash}X}
 \hline\rowcolor{cabecera}
 \textbf{ID} & \textbf{Riesgo} & \textbf{P} & \textbf{I} \\ \hline
-\endhead
 RP1 & No contar con datos de prueba suficientes o representativos. & 2 & 2 \\ \hline
 RP2 & Tiempo limitado del equipo para ejecutar todas las pruebas. & 2 & 2 \\ \hline
 RP3 & Cambios en el sistema durante el periodo de pruebas. & 1 & 2 \\ \hline
-\end{xltabular}}
+\end{tabularx}\end{minipage}\par
 
 
-\subsection*{4.2 Matriz de análisis de riesgos}\addcontentsline{toc}{subsection}{4.2 Matriz de análisis de riesgos}
+\Needspace{7\baselineskip}\subsection*{4.2 Matriz de análisis de riesgos}\addcontentsline{toc}{subsection}{4.2 Matriz de análisis de riesgos}
 
 \textbf{Niveles de exposición:} Crítico = 9 · Alto = 6 · Medio = 3-4 · Bajo = 1-2.
 
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=1.381\hsize\raggedright\arraybackslash}X>{\hsize=0.460\hsize\raggedright\arraybackslash}X>{\hsize=1.223\hsize\raggedright\arraybackslash}X>{\hsize=0.935\hsize\raggedright\arraybackslash}X}
+%ALTO=113
+\par\noindent\begin{minipage}{\linewidth}\small
+\begin{tabularx}{\linewidth}{>{\hsize=0.848\hsize\raggedright\arraybackslash}X>{\hsize=0.367\hsize\raggedright\arraybackslash}X>{\hsize=1.650\hsize\raggedright\arraybackslash}X>{\hsize=1.135\hsize\raggedright\arraybackslash}X}
 \hline\rowcolor{cabecera}
 \textbf{Probabilidad \textbackslash{} Impacto} & \textbf{1 Bajo} & \textbf{2 Medio} & \textbf{3 Alto} \\ \hline
-\endhead
 \textbf{3 Alta} &  &  &  \\ \hline
 \textbf{2 Media} &  & R05, R06, R07, RP1, RP2 \emph{(Medio, 4)} & R01, R02, R03, R04 \emph{(Alto, 6)} \\ \hline
 \textbf{1 Baja} &  & R09, R10, RP3 \emph{(Bajo, 2)} & R08 \emph{(Medio, 3)} \\ \hline
-\end{xltabular}}
+\end{tabularx}\end{minipage}\par
 
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.740\hsize\raggedright\arraybackslash}X>{\hsize=1.507\hsize\raggedright\arraybackslash}X>{\hsize=0.753\hsize\raggedright\arraybackslash}X}
+%ALTO=141
+\par\noindent\begin{minipage}{\linewidth}\small
+\begin{tabularx}{\linewidth}{>{\hsize=1.737\hsize\raggedright\arraybackslash}X>{\hsize=0.741\hsize\raggedright\arraybackslash}X>{\hsize=0.522\hsize\raggedright\arraybackslash}X}
 \hline\rowcolor{cabecera}
 \textbf{ID} & \textbf{Exposición} & \textbf{Nivel} \\ \hline
-\endhead
 R01, R02, R03, R04 & 6 & Alto \\ \hline
 R05, R06, R07 & 4 & Medio \\ \hline
 R08 & 3 & Medio \\ \hline
 R09, R10 & 2 & Bajo \\ \hline
 RP1, RP2 & 4 & Medio \\ \hline
 RP3 & 2 & Bajo \\ \hline
-\end{xltabular}}
+\end{tabularx}\end{minipage}\par
 
 
 \begin{nota}
@@ -383,10 +403,13 @@ Ningún riesgo llega a Crítico (9): el sistema es interno y una falla se puede 
 
 \end{nota}
 
-\subsection*{4.3 Tratamiento y mitigación}\addcontentsline{toc}{subsection}{4.3 Tratamiento y mitigación}
+\Needspace{150pt}\subsection*{4.3 Tratamiento y mitigación}\addcontentsline{toc}{subsection}{4.3 Tratamiento y mitigación}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.435\hsize\raggedright\arraybackslash}X>{\hsize=0.435\hsize\raggedright\arraybackslash}X>{\hsize=2.366\hsize\raggedright\arraybackslash}X>{\hsize=0.763\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.253\hsize\raggedright\arraybackslash}X>{\hsize=0.399\hsize\raggedright\arraybackslash}X>{\hsize=2.708\hsize\raggedright\arraybackslash}X>{\hsize=0.640\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{ID} & \textbf{Nivel} & \textbf{Tratamiento} & \textbf{Prioridad} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{ID} & \textbf{Nivel} & \textbf{Tratamiento} & \textbf{Prioridad} \\ \hline
 \endhead
@@ -406,12 +429,15 @@ RP3 & Bajo & Congelar la versión (commit \code{77f71b2}) y registrar cualquier 
 \end{xltabular}}
 
 
-\section*{5. Estrategia de pruebas y derivación de casos}\addcontentsline{toc}{section}{5. Estrategia de pruebas y derivación de casos}
+\Needspace{190pt}\section*{5. Estrategia de pruebas y derivación de casos}\addcontentsline{toc}{section}{5. Estrategia de pruebas y derivación de casos}
 
-\subsection*{5.1 Derivación de condiciones de prueba}\addcontentsline{toc}{subsection}{5.1 Derivación de condiciones de prueba}
+\Needspace{150pt}\subsection*{5.1 Derivación de condiciones de prueba}\addcontentsline{toc}{subsection}{5.1 Derivación de condiciones de prueba}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.519\hsize\raggedright\arraybackslash}X>{\hsize=2.044\hsize\raggedright\arraybackslash}X>{\hsize=0.436\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.462\hsize\raggedright\arraybackslash}X>{\hsize=2.208\hsize\raggedright\arraybackslash}X>{\hsize=0.330\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Condición} & \textbf{Regla verificable} & \textbf{Riesgo} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Condición} & \textbf{Regla verificable} & \textbf{Riesgo} \\ \hline
 \endhead
@@ -427,10 +453,13 @@ CP-09 & Una sesión cerrada no se puede reutilizar. & R09 \\ \hline
 \end{xltabular}}
 
 
-\subsection*{5.2 Técnicas de diseño de pruebas (ISO/IEC/IEEE 29119-4)}\addcontentsline{toc}{subsection}{5.2 Técnicas de diseño de pruebas (ISO/IEC/IEEE 29119-4)}
+\Needspace{150pt}\subsection*{5.2 Técnicas de diseño de pruebas (ISO/IEC/IEEE \mbox{29119-4})}\addcontentsline{toc}{subsection}{5.2 Técnicas de diseño de pruebas (ISO/IEC/IEEE \mbox{29119-4})}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.653\hsize\raggedright\arraybackslash}X>{\hsize=0.445\hsize\raggedright\arraybackslash}X>{\hsize=1.901\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.779\hsize\raggedright\arraybackslash}X>{\hsize=0.454\hsize\raggedright\arraybackslash}X>{\hsize=1.767\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Técnica} & \textbf{Se aplica a} & \textbf{Por qué} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Técnica} & \textbf{Se aplica a} & \textbf{Por qué} \\ \hline
 \endhead
@@ -445,10 +474,13 @@ Lista de chequeo & CP-09 & El riesgo es bajo y no justifica casos detallados. \\
 \textbf{Tipo de ejecución:} cada caso se ejecuta de forma \textbf{manual} (interfaz, con capturas como evidencia) y, cuando aplica, \textbf{automática} (pytest contra la API de la copia de demostración).
 
 
-\subsection*{5.3 Generación de casos de prueba y trazabilidad}\addcontentsline{toc}{subsection}{5.3 Generación de casos de prueba y trazabilidad}
+\Needspace{150pt}\subsection*{5.3 Generación de casos de prueba y trazabilidad}\addcontentsline{toc}{subsection}{5.3 Generación de casos de prueba y trazabilidad}
 
-{\scriptsize
-\begin{xltabular}{\linewidth}{>{\hsize=0.470\hsize\raggedright\arraybackslash}X>{\hsize=3.132\hsize\raggedright\arraybackslash}X>{\hsize=0.659\hsize\raggedright\arraybackslash}X>{\hsize=0.470\hsize\raggedright\arraybackslash}X>{\hsize=0.879\hsize\raggedright\arraybackslash}X>{\hsize=0.659\hsize\raggedright\arraybackslash}X>{\hsize=0.732\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\scriptsize
+\begin{xltabular}{\linewidth}{>{\hsize=0.506\hsize\raggedright\arraybackslash}X>{\hsize=1.835\hsize\raggedright\arraybackslash}X>{\hsize=0.934\hsize\raggedright\arraybackslash}X>{\hsize=0.658\hsize\raggedright\arraybackslash}X>{\hsize=1.172\hsize\raggedright\arraybackslash}X>{\hsize=0.934\hsize\raggedright\arraybackslash}X>{\hsize=0.960\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Caso} & \textbf{Descripción} & \textbf{Condición} & \textbf{Riesgo} & \textbf{Técnica} & \textbf{Prioridad} & \textbf{Ejecución} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Caso} & \textbf{Descripción} & \textbf{Condición} & \textbf{Riesgo} & \textbf{Técnica} & \textbf{Prioridad} & \textbf{Ejecución} \\ \hline
 \endhead
@@ -468,7 +500,7 @@ TC-06 & Tras cerrar sesión, "Atrás" del navegador redirige al login. & CP-09 &
 TC-01 a TC-06 vienen del Taller 5. TC-07 a TC-09 se agregan para cubrir R03, R06 y R08, que en el Taller 5 no tenían caso.
 
 
-Al montar la demo se revisó cómo funciona SIDEM y hubo que ajustar dos casos del Taller 5:
+\Needspace{6\baselineskip}Al montar la demo se revisó cómo funciona SIDEM y hubo que ajustar dos casos del Taller 5:
 
 
 \begin{itemize}
@@ -483,7 +515,7 @@ Al montar la demo se revisó cómo funciona SIDEM y hubo que ajustar dos casos d
 \end{itemize}
 \end{nota}
 
-\textbf{Procedimientos:}
+\Needspace{6\baselineskip}\textbf{Procedimientos:}
 
 
 \begin{itemize}
@@ -498,8 +530,11 @@ Cada procedimiento empieza con la base de datos restaurada (DAT-01) y termina ce
 \textbf{Casos identificados no ejecutados:} cada integrante propone dos casos adicionales sobre sus riesgos. Quedan registrados en el plan, pero no se ejecutan en esta ronda por el tiempo disponible (RP2): la estrategia basada en riesgos ejecuta primero TC-01 a TC-09. Pueden ejecutarse en una ronda posterior.
 
 
-{\scriptsize
-\begin{xltabular}{\linewidth}{>{\hsize=0.429\hsize\raggedright\arraybackslash}X>{\hsize=0.484\hsize\raggedright\arraybackslash}X>{\hsize=2.324\hsize\raggedright\arraybackslash}X>{\hsize=2.008\hsize\raggedright\arraybackslash}X>{\hsize=0.429\hsize\raggedright\arraybackslash}X>{\hsize=0.580\hsize\raggedright\arraybackslash}X>{\hsize=0.746\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\scriptsize
+\begin{xltabular}{\linewidth}{>{\hsize=0.496\hsize\raggedright\arraybackslash}X>{\hsize=1.016\hsize\raggedright\arraybackslash}X>{\hsize=1.519\hsize\raggedright\arraybackslash}X>{\hsize=1.122\hsize\raggedright\arraybackslash}X>{\hsize=0.647\hsize\raggedright\arraybackslash}X>{\hsize=1.091\hsize\raggedright\arraybackslash}X>{\hsize=1.109\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Caso} & \textbf{Integrante} & \textbf{Descripción} & \textbf{Resultado esperado} & \textbf{Riesgo} & \textbf{Técnica} & \textbf{Estado} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Caso} & \textbf{Integrante} & \textbf{Descripción} & \textbf{Resultado esperado} & \textbf{Riesgo} & \textbf{Técnica} & \textbf{Estado} \\ \hline
 \endhead
@@ -508,15 +543,15 @@ TC-11 & Sebastián & Guardar una observación en el límite de longitud, con til
 TC-12 & Nicolás & Curso sin criterios evaluados (0 de 0) o con criterios "No aplica". & No hay error de división por cero ni sale verde por defecto; se muestra "sin datos" o el color definido. & R04 & Clase de equivalencia inválida & Identificado - no ejecutado \\ \hline
 TC-13 & Nicolás & Curso con dos docentes o repetido en la revisión; cambiar el filtro de periodo. & El panel cuenta el curso una sola vez y los totales cambian según el filtro. & R06 & Clases de equivalencia & Identificado - no ejecutado \\ \hline
 TC-14 & Julián & Sesión abierta en dos navegadores; cambiar la contraseña en uno. & La sesión del otro navegador deja de funcionar y pide login. & R09 & Transición de estados & Identificado - no ejecutado \\ \hline
-TC-15 & Julián & Exportar un curso cuya observación empieza por \code{=\allowbreak{}} o \code{+} (ej. \code{=\allowbreak{}HYPERLINK(.\allowbreak{}.\allowbreak{}.\allowbreak{})}) y lleva tildes. & En el Excel aparece como texto, no como fórmula; tildes y ñ correctas. & R07 & Clases de equivalencia & Identificado - no ejecutado \\ \hline
+TC-15 & Julián & Exportar un curso cuya observación empieza por \code{=} o \code{+} (ej. \code{=\allowbreak{}HYPERLINK(...\allowbreak{})}) y lleva tildes. & En el Excel aparece como texto, no como fórmula; tildes y ñ correctas. & R07 & Clases de equivalencia & Identificado - no ejecutado \\ \hline
 TC-16 & Marcos & El líder de Sistemas Digitales cambia el ID en la URL o en la API para abrir un curso de Producción. & Respuesta 403 o 404, sin datos de Producción. & R01, R02 & Tabla de decisión & Identificado - no ejecutado \\ \hline
 TC-17 & Marcos & Un revisor intenta crear un usuario o subirse el rol a admin, desde la pantalla o con petición directa. & La acción se rechaza y el rol no cambia. & R01 & Tabla de decisión & Identificado - no ejecutado \\ \hline
 \end{xltabular}}
 
 
-\subsection*{5.4 Requisitos de entorno y datos de prueba}\addcontentsline{toc}{subsection}{5.4 Requisitos de entorno y datos de prueba}
+\Needspace{7\baselineskip}\subsection*{5.4 Requisitos de entorno y datos de prueba}\addcontentsline{toc}{subsection}{5.4 Requisitos de entorno y datos de prueba}
 
-\textbf{Entorno AMB-01:}
+\Needspace{6\baselineskip}\textbf{Entorno AMB-01:}
 
 
 \begin{itemize}
@@ -526,7 +561,7 @@ TC-17 & Marcos & Un revisor intenta crear un usuario o subirse el rol a admin, d
 \item Python 3 + pytest para las pruebas automáticas.
 \end{itemize}
 
-\textbf{Datos DAT-01 (ficticios, en \code{demo/\allowbreak{}seed\_\allowbreak{}demo.\allowbreak{}py}):}
+\Needspace{6\baselineskip}\textbf{Datos DAT-01 (ficticios, en \code{demo/\allowbreak{}seed\_\allowbreak{}demo.\allowbreak{}py}):}
 
 
 \begin{itemize}
@@ -538,9 +573,9 @@ TC-17 & Marcos & Un revisor intenta crear un usuario o subirse el rol a admin, d
 \item Reinicio: \code{docker compose down -\allowbreak{}v} y \code{docker compose up} dejan la base en su estado inicial.
 \end{itemize}
 
-\subsection*{5.5 Criterios de suspensión y finalización}\addcontentsline{toc}{subsection}{5.5 Criterios de suspensión y finalización}
+\Needspace{7\baselineskip}\subsection*{5.5 Criterios de suspensión y finalización}\addcontentsline{toc}{subsection}{5.5 Criterios de suspensión y finalización}
 
-\textbf{Suspensión:}
+\Needspace{6\baselineskip}\textbf{Suspensión:}
 
 
 \begin{itemize}
@@ -551,25 +586,28 @@ TC-17 & Marcos & Un revisor intenta crear un usuario o subirse el rol a admin, d
 \textbf{Reanudación:} se corrige la causa, se registra el commit nuevo y se repite el procedimiento afectado.
 
 
-\textbf{Finalización:}
+\Needspace{154pt}\textbf{Finalización:}
 
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.431\hsize\raggedright\arraybackslash}X>{\hsize=1.569\hsize\raggedright\arraybackslash}X}
+%ALTO=109
+\par\noindent\begin{minipage}{\linewidth}\small
+\begin{tabularx}{\linewidth}{>{\hsize=0.609\hsize\raggedright\arraybackslash}X>{\hsize=1.391\hsize\raggedright\arraybackslash}X}
 \hline\rowcolor{cabecera}
 \textbf{Módulos} & \textbf{Criterio} \\ \hline
-\endhead
 Críticos (F02, F03, F04) & 100 \% de los casos P1 ejecutados; 100 \% de las combinaciones de la tabla de decisión y de los valores límite; ningún defecto crítico o alto abierto. \\ \hline
 Secundarios (F01, F05, F06) & 100 \% de los casos diseñados ejecutados; ningún defecto crítico abierto; máximo 2 defectos menores abiertos. \\ \hline
-\end{xltabular}}
+\end{tabularx}\end{minipage}\par
 
 
-\section*{6. Actividades de prueba y estimaciones}\addcontentsline{toc}{section}{6. Actividades de prueba y estimaciones}
+\Needspace{190pt}\section*{6. Actividades de prueba y estimaciones}\addcontentsline{toc}{section}{6. Actividades de prueba y estimaciones}
 
-\subsection*{6.1 Desglose de tareas y 6.2 Estimación de esfuerzo}\addcontentsline{toc}{subsection}{6.1 Desglose de tareas y 6.2 Estimación de esfuerzo}
+\Needspace{150pt}\subsection*{6.1 Desglose de tareas y 6.2 Estimación de esfuerzo}\addcontentsline{toc}{subsection}{6.1 Desglose de tareas y 6.2 Estimación de esfuerzo}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.424\hsize\raggedright\arraybackslash}X>{\hsize=1.830\hsize\raggedright\arraybackslash}X>{\hsize=0.745\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.122\hsize\raggedright\arraybackslash}X>{\hsize=2.373\hsize\raggedright\arraybackslash}X>{\hsize=0.505\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{\#} & \textbf{Actividad} & \textbf{Horas} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{\#} & \textbf{Actividad} & \textbf{Horas} \\ \hline
 \endhead
@@ -584,15 +622,18 @@ Secundarios (F01, F05, F06) & 100 \% de los casos diseñados ejecutados; ningún
 \end{xltabular}}
 
 
-\section*{7. Personal}\addcontentsline{toc}{section}{7. Personal}
+\Needspace{7\baselineskip}\section*{7. Personal}\addcontentsline{toc}{section}{7. Personal}
 
-\subsection*{7.1 Roles y responsabilidades de prueba}\addcontentsline{toc}{subsection}{7.1 Roles y responsabilidades de prueba}
+\Needspace{7\baselineskip}\subsection*{7.1 Roles y responsabilidades de prueba}\addcontentsline{toc}{subsection}{7.1 Roles y responsabilidades de prueba}
 
 El trabajo se reparte \textbf{por riesgo y módulo}: cada integrante es dueño de sus casos, los ejecuta, guarda la evidencia y reporta los defectos.
 
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.870\hsize\raggedright\arraybackslash}X>{\hsize=1.058\hsize\raggedright\arraybackslash}X>{\hsize=1.139\hsize\raggedright\arraybackslash}X>{\hsize=0.933\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.959\hsize\raggedright\arraybackslash}X>{\hsize=1.160\hsize\raggedright\arraybackslash}X>{\hsize=1.018\hsize\raggedright\arraybackslash}X>{\hsize=0.862\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Integrante} & \textbf{Rol adicional} & \textbf{Riesgos / casos a cargo} & \textbf{Casos identificados (no ejecutados)} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Integrante} & \textbf{Rol adicional} & \textbf{Riesgos / casos a cargo} & \textbf{Casos identificados (no ejecutados)} \\ \hline
 \endhead
@@ -604,16 +645,19 @@ Julián Ramírez Molina & Informe de cierre & R07, R08, R09 - TC-05, TC-09, TC-0
 
 
 \begin{nota}
-\emph{Reparto confirmado en la iteración 1. En la iteración 3, Marcos, como encargado de organizar la exposición, completó con Nicolás el informe de cierre (v1.0) y las láminas de cierre.}
+\emph{Reparto confirmado en la iteración 1. En la iteración 3, Marcos, como encargado de organizar la exposición, completó con Nicolás el informe de cierre (v1.0).}
 
 \end{nota}
 
-\section*{8. Cronograma}\addcontentsline{toc}{section}{8. Cronograma}
+\Needspace{190pt}\section*{8. Cronograma}\addcontentsline{toc}{section}{8. Cronograma}
 
-\subsection*{8.1 Hitos y fechas de ejecución (ciclo de 9 días)}\addcontentsline{toc}{subsection}{8.1 Hitos y fechas de ejecución (ciclo de 9 días)}
+\Needspace{150pt}\subsection*{8.1 Hitos y fechas de ejecución (ciclo de 9 días)}\addcontentsline{toc}{subsection}{8.1 Hitos y fechas de ejecución (ciclo de 9 días)}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.489\hsize\raggedright\arraybackslash}X>{\hsize=0.439\hsize\raggedright\arraybackslash}X>{\hsize=2.175\hsize\raggedright\arraybackslash}X>{\hsize=0.897\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.616\hsize\raggedright\arraybackslash}X>{\hsize=0.491\hsize\raggedright\arraybackslash}X>{\hsize=1.746\hsize\raggedright\arraybackslash}X>{\hsize=1.148\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Iteración} & \textbf{Fechas} & \textbf{Actividades} & \textbf{Hito} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Iteración} & \textbf{Fechas} & \textbf{Actividades} & \textbf{Hito} \\ \hline
 \endhead
@@ -632,7 +676,7 @@ Julián Ramírez Molina & Informe de cierre & R07, R08, R09 - TC-05, TC-09, TC-0
 Guía para que cada integrante ejecute en el navegador los casos que le corresponden (sección 7.1 del plan). Las pruebas automáticas ya cubren la parte de la API; aquí se revisa lo que ve el usuario en pantalla.
 
 
-\textbf{Antes de empezar cada procedimiento:}
+\Needspace{6\baselineskip}\textbf{Antes de empezar cada procedimiento:}
 
 
 \begin{enumerate}
@@ -641,15 +685,18 @@ Guía para que cada integrante ejecute en el navegador los casos que le correspo
 \item Contraseña de todos los usuarios: \code{Demo-\allowbreak{}SIDEM-\allowbreak{}2026}.
 \end{enumerate}
 
-\textbf{Al terminar cada caso:} llenar la columna "Obtenido", marcar "Pasa" o "Falla" y guardar la captura en \code{evidencias/\allowbreak{}} con el nombre \code{TC-\allowbreak{}XX\_\allowbreak{}AAAA-\allowbreak{}MM-\allowbreak{}DD\_\allowbreak{}<integrante>.\allowbreak{}png}. Si falla, registrar el defecto en \code{docs/\allowbreak{}defectos.\allowbreak{}md} (y como issue en GitHub, con la plantilla).
+\textbf{Al terminar cada caso:} llenar la columna "Obtenido", marcar "Pasa" o "Falla" y guardar la captura en \code{evidencias/} con el nombre \code{TC-\allowbreak{}XX\_\allowbreak{}AAAA-\allowbreak{}MM-\allowbreak{}DD\_\allowbreak{}<integrante>.\allowbreak{}png}. Si falla, registrar el defecto en \code{docs/\allowbreak{}defectos.\allowbreak{}md} (y como issue en GitHub, con la plantilla).
 
 
-\section*{PROC-01 (P1)}\addcontentsline{toc}{section}{PROC-01 (P1)}
+\Needspace{190pt}\section*{PROC-01 (P1)}\addcontentsline{toc}{section}{PROC-01 (P1)}
 
-\subsection*{TC-01 - Alcance por departamento · Marcos}\addcontentsline{toc}{subsection}{TC-01 - Alcance por departamento · Marcos}
+\Needspace{150pt}\subsection*{TC-01 - Alcance por departamento · Marcos}\addcontentsline{toc}{subsection}{TC-01 - Alcance por departamento · Marcos}
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.406\hsize\raggedright\arraybackslash}X>{\hsize=1.196\hsize\raggedright\arraybackslash}X>{\hsize=0.888\hsize\raggedright\arraybackslash}X>{\hsize=2.103\hsize\raggedright\arraybackslash}X>{\hsize=0.406\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.150\hsize\raggedright\arraybackslash}X>{\hsize=1.671\hsize\raggedright\arraybackslash}X>{\hsize=1.272\hsize\raggedright\arraybackslash}X>{\hsize=1.479\hsize\raggedright\arraybackslash}X>{\hsize=0.428\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{\#} & \textbf{Paso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{\#} & \textbf{Paso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
 \endhead
@@ -663,10 +710,13 @@ Guía para que cada integrante ejecute en el navegador los casos que le correspo
 Ejecutado el 12/11/2026 por Marcos Duque, con apoyo del asistente de IA en el navegador. La base no se reinició con \code{down -\allowbreak{}v} antes de la ejecución. Evidencias: \code{evidencias/\allowbreak{}TC-\allowbreak{}01\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Marcos\_\allowbreak{}paso1-\allowbreak{}solo-\allowbreak{}SD.\allowbreak{}png} a \code{\_\allowbreak{}paso4-\allowbreak{}logistica-\allowbreak{}admin.\allowbreak{}png}.
 
 
-\subsection*{TC-02 - Permisos por rol · Marcos}\addcontentsline{toc}{subsection}{TC-02 - Permisos por rol · Marcos}
+\Needspace{150pt}\subsection*{TC-02 - Permisos por rol · Marcos}\addcontentsline{toc}{subsection}{TC-02 - Permisos por rol · Marcos}
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.421\hsize\raggedright\arraybackslash}X>{\hsize=1.142\hsize\raggedright\arraybackslash}X>{\hsize=0.745\hsize\raggedright\arraybackslash}X>{\hsize=2.272\hsize\raggedright\arraybackslash}X>{\hsize=0.421\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.149\hsize\raggedright\arraybackslash}X>{\hsize=1.604\hsize\raggedright\arraybackslash}X>{\hsize=1.029\hsize\raggedright\arraybackslash}X>{\hsize=1.586\hsize\raggedright\arraybackslash}X>{\hsize=0.632\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{\#} & \textbf{Paso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{\#} & \textbf{Paso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
 \endhead
@@ -687,13 +737,16 @@ El paso 2 lo cubre la prueba automática \code{test\_\allowbreak{}consulta\_\all
 
 \end{nota}
 
-\subsection*{TC-03 - Semáforo en los valores límite · Nicolás}\addcontentsline{toc}{subsection}{TC-03 - Semáforo en los valores límite · Nicolás}
+\Needspace{7\baselineskip}\subsection*{TC-03 - Semáforo en los valores límite · Nicolás}\addcontentsline{toc}{subsection}{TC-03 - Semáforo en los valores límite · Nicolás}
 
 Entrar como \code{lider@sidem.\allowbreak{}test}, abrir \textbf{Métricas}, periodo actual, revisión 1.
 
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.470\hsize\raggedright\arraybackslash}X>{\hsize=1.504\hsize\raggedright\arraybackslash}X>{\hsize=1.253\hsize\raggedright\arraybackslash}X>{\hsize=1.146\hsize\raggedright\arraybackslash}X>{\hsize=0.627\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.244\hsize\raggedright\arraybackslash}X>{\hsize=1.755\hsize\raggedright\arraybackslash}X>{\hsize=1.042\hsize\raggedright\arraybackslash}X>{\hsize=1.435\hsize\raggedright\arraybackslash}X>{\hsize=0.523\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{\#} & \textbf{Curso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{\#} & \textbf{Curso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
 \endhead
@@ -710,10 +763,13 @@ Entrar como \code{lider@sidem.\allowbreak{}test}, abrir \textbf{Métricas}, peri
 Ejecutado el 12/11/2026 por Nicolás Cataño, con apoyo del asistente de IA en el navegador. Periodo 2026-2, revisión 1 - semana 2. Evidencia: \code{evidencias/\allowbreak{}TC-\allowbreak{}03\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Nicolas.\allowbreak{}png}.
 
 
-\subsection*{TC-07 - El registro queda en el curso y la revisión correctos · Sebastián}\addcontentsline{toc}{subsection}{TC-07 - El registro queda en el curso y la revisión correctos · Sebastián}
+\Needspace{150pt}\subsection*{TC-07 - El registro queda en el curso y la revisión correctos · Sebastián}\addcontentsline{toc}{subsection}{TC-07 - El registro queda en el curso y la revisión correctos · Sebastián}
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.407\hsize\raggedright\arraybackslash}X>{\hsize=1.168\hsize\raggedright\arraybackslash}X>{\hsize=0.855\hsize\raggedright\arraybackslash}X>{\hsize=2.163\hsize\raggedright\arraybackslash}X>{\hsize=0.407\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.149\hsize\raggedright\arraybackslash}X>{\hsize=1.610\hsize\raggedright\arraybackslash}X>{\hsize=1.194\hsize\raggedright\arraybackslash}X>{\hsize=1.620\hsize\raggedright\arraybackslash}X>{\hsize=0.427\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{\#} & \textbf{Paso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{\#} & \textbf{Paso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
 \endhead
@@ -729,12 +785,15 @@ Notas de la ejecución (12/11/2026, base recién reiniciada): al reabrir Program
 
 \end{nota}
 
-\section*{PROC-02 (P2)}\addcontentsline{toc}{section}{PROC-02 (P2)}
+\Needspace{190pt}\section*{PROC-02 (P2)}\addcontentsline{toc}{section}{PROC-02 (P2)}
 
-\subsection*{TC-04 - Lo guardado se conserva al recargar · Sebastián}\addcontentsline{toc}{subsection}{TC-04 - Lo guardado se conserva al recargar · Sebastián}
+\Needspace{150pt}\subsection*{TC-04 - Lo guardado se conserva al recargar · Sebastián}\addcontentsline{toc}{subsection}{TC-04 - Lo guardado se conserva al recargar · Sebastián}
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.409\hsize\raggedright\arraybackslash}X>{\hsize=1.172\hsize\raggedright\arraybackslash}X>{\hsize=0.654\hsize\raggedright\arraybackslash}X>{\hsize=2.355\hsize\raggedright\arraybackslash}X>{\hsize=0.409\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.151\hsize\raggedright\arraybackslash}X>{\hsize=1.655\hsize\raggedright\arraybackslash}X>{\hsize=1.021\hsize\raggedright\arraybackslash}X>{\hsize=1.743\hsize\raggedright\arraybackslash}X>{\hsize=0.429\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{\#} & \textbf{Paso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{\#} & \textbf{Paso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
 \endhead
@@ -750,10 +809,13 @@ Notas de la ejecución (12/11/2026, base recién reiniciada antes de PROC-02): l
 
 \end{nota}
 
-\subsection*{TC-08 - Totales del panel · Nicolás}\addcontentsline{toc}{subsection}{TC-08 - Totales del panel · Nicolás}
+\Needspace{150pt}\subsection*{TC-08 - Totales del panel · Nicolás}\addcontentsline{toc}{subsection}{TC-08 - Totales del panel · Nicolás}
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.406\hsize\raggedright\arraybackslash}X>{\hsize=1.360\hsize\raggedright\arraybackslash}X>{\hsize=0.755\hsize\raggedright\arraybackslash}X>{\hsize=2.074\hsize\raggedright\arraybackslash}X>{\hsize=0.406\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.150\hsize\raggedright\arraybackslash}X>{\hsize=1.711\hsize\raggedright\arraybackslash}X>{\hsize=1.140\hsize\raggedright\arraybackslash}X>{\hsize=1.570\hsize\raggedright\arraybackslash}X>{\hsize=0.429\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{\#} & \textbf{Paso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{\#} & \textbf{Paso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
 \endhead
@@ -766,10 +828,13 @@ Notas de la ejecución (12/11/2026, base recién reiniciada antes de PROC-02): l
 Ejecutado el 12/11/2026 por Nicolás Cataño, con apoyo del asistente de IA en el navegador. La demo se levantó con \code{docker compose up -\allowbreak{}d} sin \code{down -\allowbreak{}v}, así que la base no se reinició antes de la ejecución; los datos de la revisión 1 coincidían con los de \code{demo/\allowbreak{}seed\_\allowbreak{}demo.\allowbreak{}py}. Evidencias: \code{evidencias/\allowbreak{}TC-\allowbreak{}08\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Nicolas\_\allowbreak{}todos.\allowbreak{}png}, \code{\_\allowbreak{}SD.\allowbreak{}png} y \code{\_\allowbreak{}PR.\allowbreak{}png}.
 
 
-\subsection*{TC-05 - El Excel coincide con la pantalla · Julián}\addcontentsline{toc}{subsection}{TC-05 - El Excel coincide con la pantalla · Julián}
+\Needspace{150pt}\subsection*{TC-05 - El Excel coincide con la pantalla · Julián}\addcontentsline{toc}{subsection}{TC-05 - El Excel coincide con la pantalla · Julián}
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.410\hsize\raggedright\arraybackslash}X>{\hsize=1.268\hsize\raggedright\arraybackslash}X>{\hsize=0.503\hsize\raggedright\arraybackslash}X>{\hsize=2.409\hsize\raggedright\arraybackslash}X>{\hsize=0.410\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.153\hsize\raggedright\arraybackslash}X>{\hsize=1.847\hsize\raggedright\arraybackslash}X>{\hsize=0.848\hsize\raggedright\arraybackslash}X>{\hsize=1.719\hsize\raggedright\arraybackslash}X>{\hsize=0.432\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{\#} & \textbf{Paso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{\#} & \textbf{Paso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
 \endhead
@@ -781,21 +846,24 @@ Ejecutado el 12/11/2026 por Nicolás Cataño, con apoyo del asistente de IA en e
 
 
 \begin{nota}
-Notas de la ejecución: al abrir Seguimiento por primera vez la pantalla quedó en la revisión 2 y tuve que elegir la revisión 1 a mano antes de comparar. Capturas: \code{TC-\allowbreak{}05\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Julian\_\allowbreak{}pantalla-\allowbreak{}SD.\allowbreak{}png}, \code{TC-\allowbreak{}05\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Julian\_\allowbreak{}dialogo-\allowbreak{}SD.\allowbreak{}png} y \code{TC-\allowbreak{}05\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Julian\_\allowbreak{}pantalla-\allowbreak{}PR.\allowbreak{}png}. El navegador integrado no deja guardar la descarga del botón, así que los dos .xlsx se bajaron con la misma sesión y la misma petición que usa el botón (\code{/\allowbreak{}exportar-\allowbreak{}excel/\allowbreak{}?periodo=\allowbreak{}2026-\allowbreak{}2\&departamento=\allowbreak{}.\allowbreak{}.\allowbreak{}.\allowbreak{}}).
+Notas de la ejecución: al abrir Seguimiento por primera vez la pantalla quedó en la revisión 2 y tuve que elegir la revisión 1 a mano antes de comparar. Capturas: \code{TC-\allowbreak{}05\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Julian\_\allowbreak{}pantalla-\allowbreak{}SD.\allowbreak{}png}, \code{TC-\allowbreak{}05\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Julian\_\allowbreak{}dialogo-\allowbreak{}SD.\allowbreak{}png} y \code{TC-\allowbreak{}05\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Julian\_\allowbreak{}pantalla-\allowbreak{}PR.\allowbreak{}png}. El navegador integrado no deja guardar la descarga del botón, así que los dos .xlsx se bajaron con la misma sesión y la misma petición que usa el botón (\code{/\allowbreak{}exportar-\allowbreak{}excel/\allowbreak{}?periodo=\allowbreak{}2026-\allowbreak{}2\&departamento=...}).
 
 \end{nota}
 
-\subsection*{TC-09 - Bloqueo por intentos fallidos · Julián}\addcontentsline{toc}{subsection}{TC-09 - Bloqueo por intentos fallidos · Julián}
+\Needspace{7\baselineskip}\subsection*{TC-09 - Bloqueo por intentos fallidos · Julián}\addcontentsline{toc}{subsection}{TC-09 - Bloqueo por intentos fallidos · Julián}
 
-Es automático (\code{test\_\allowbreak{}tc09\_\allowbreak{}bloqueo\_\allowbreak{}login.\allowbreak{}py}). Julián revisa la salida en \code{evidencias/\allowbreak{}pytest/\allowbreak{}} y confirma que muestra los 5 rechazos, el bloqueo y el desbloqueo.
+Es automático (\code{test\_\allowbreak{}tc09\_\allowbreak{}bloqueo\_\allowbreak{}login.\allowbreak{}py}). Julián revisa la salida en \code{evidencias/\allowbreak{}pytest/} y confirma que muestra los 5 rechazos, el bloqueo y el desbloqueo.
 
 
-\section*{PROC-03 (P3)}\addcontentsline{toc}{section}{PROC-03 (P3)}
+\Needspace{190pt}\section*{PROC-03 (P3)}\addcontentsline{toc}{section}{PROC-03 (P3)}
 
-\subsection*{TC-06 - Sesión cerrada · Julián}\addcontentsline{toc}{subsection}{TC-06 - Sesión cerrada · Julián}
+\Needspace{150pt}\subsection*{TC-06 - Sesión cerrada · Julián}\addcontentsline{toc}{subsection}{TC-06 - Sesión cerrada · Julián}
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.419\hsize\raggedright\arraybackslash}X>{\hsize=1.083\hsize\raggedright\arraybackslash}X>{\hsize=0.648\hsize\raggedright\arraybackslash}X>{\hsize=2.430\hsize\raggedright\arraybackslash}X>{\hsize=0.419\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.156\hsize\raggedright\arraybackslash}X>{\hsize=1.476\hsize\raggedright\arraybackslash}X>{\hsize=0.875\hsize\raggedright\arraybackslash}X>{\hsize=2.058\hsize\raggedright\arraybackslash}X>{\hsize=0.435\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{\#} & \textbf{Paso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{\#} & \textbf{Paso} & \textbf{Esperado} & \textbf{Obtenido} & \textbf{Pasa / Falla} \\ \hline
 \endhead
@@ -807,7 +875,7 @@ Es automático (\code{test\_\allowbreak{}tc09\_\allowbreak{}bloqueo\_\allowbreak
 
 
 \begin{nota}
-Capturas: \code{TC-\allowbreak{}06\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Julian\_\allowbreak{}paso1-\allowbreak{}con-\allowbreak{}sesion.\allowbreak{}png}, \code{paso2-\allowbreak{}login-\allowbreak{}tras-\allowbreak{}salir.\allowbreak{}png}, \code{paso3-\allowbreak{}atras.\allowbreak{}png} y \code{paso4-\allowbreak{}recarga.\allowbreak{}png}. En la consola del navegador aparecieron respuestas 403 al pedir datos sin sesión. Este caso solo revisa lo que hace el navegador; el defecto DEF-02 (la cookie copiada antes de cerrar sesión sigue sirviendo) sigue abierto y no cambia este resultado.
+Capturas: \code{TC-\allowbreak{}06\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Julian\_\allowbreak{}paso1-\allowbreak{}con-\allowbreak{}sesion.\allowbreak{}png}, \code{paso2-\allowbreak{}login-\allowbreak{}tras-\allowbreak{}salir.\allowbreak{}png}, \code{paso3-\allowbreak{}atras.\allowbreak{}png} y \code{paso4-\allowbreak{}recarga.\allowbreak{}png}. En la consola del navegador aparecieron respuestas 403 al pedir datos sin sesión. Este caso solo revisa lo que hace el navegador; el defecto DEF-02 (la cookie copiada antes de cerrar sesión seguía sirviendo) no cambia este resultado; se corrigió después y quedó cerrado en el retest del 16/11.
 
 \end{nota}
 
@@ -818,10 +886,10 @@ La prueba automática complementaria encontró que la cookie copiada antes del c
 
 \chapter*{Pruebas automáticas}\addcontentsline{toc}{chapter}{Pruebas automáticas}
 
-Pruebas con pytest que se ejecutan contra la demo de SIDEM (\code{demo/\allowbreak{}}) por HTTP, igual que el navegador: inician sesión con los usuarios ficticios y consultan la API.
+Pruebas con pytest que se ejecutan contra la demo de SIDEM (\code{demo/}) por HTTP, igual que el navegador: inician sesión con los usuarios ficticios y consultan la API.
 
 
-\section*{Cómo correrlas}\addcontentsline{toc}{section}{Cómo correrlas}
+\Needspace{7\baselineskip}\section*{Cómo correrlas}\addcontentsline{toc}{section}{Cómo correrlas}
 
 \begin{lstlisting}
 # 1. Demo arriba y en su estado inicial (desde demo/)
@@ -841,10 +909,13 @@ python -m pytest -m "not lento"
 TC-09 bloquea durante 5 minutos la IP de quien lo corre, así que va de último. Para repetirlo hay que esperar ese tiempo o reiniciar la demo.
 
 
-\section*{Qué cubre cada archivo}\addcontentsline{toc}{section}{Qué cubre cada archivo}
+\Needspace{150pt}\section*{Qué cubre cada archivo}\addcontentsline{toc}{section}{Qué cubre cada archivo}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=1.213\hsize\raggedright\arraybackslash}X>{\hsize=0.478\hsize\raggedright\arraybackslash}X>{\hsize=0.427\hsize\raggedright\arraybackslash}X>{\hsize=1.882\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=1.110\hsize\raggedright\arraybackslash}X>{\hsize=0.765\hsize\raggedright\arraybackslash}X>{\hsize=0.434\hsize\raggedright\arraybackslash}X>{\hsize=1.691\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Archivo} & \textbf{Caso} & \textbf{Riesgo} & \textbf{Qué revisa} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Archivo} & \textbf{Caso} & \textbf{Riesgo} & \textbf{Qué revisa} \\ \hline
 \endhead
@@ -861,20 +932,23 @@ TC-09 bloquea durante 5 minutos la IP de quien lo corre, así que va de último.
 TC-04, TC-08 y la parte de pantalla de los demás casos son manuales (\code{docs/\allowbreak{}ejecucion-\allowbreak{}manual.\allowbreak{}md}).
 
 
-\section*{Resultados}\addcontentsline{toc}{section}{Resultados}
+\Needspace{7\baselineskip}\section*{Resultados}\addcontentsline{toc}{section}{Resultados}
 
-La salida de cada corrida se guarda en \code{evidencias/\allowbreak{}pytest/\allowbreak{}} (texto y XML). Para el retest de los defectos corregidos, ver \code{docs/\allowbreak{}retest.\allowbreak{}md}. El resumen y los hallazgos quedan en \code{docs/\allowbreak{}avances.\allowbreak{}md} y \code{docs/\allowbreak{}defectos.\allowbreak{}md}.
+La salida de cada corrida se guarda en \code{evidencias/\allowbreak{}pytest/} (texto y XML). Para el retest de los defectos corregidos, ver \code{docs/\allowbreak{}retest.\allowbreak{}md}. El resumen y los hallazgos quedan en \code{docs/\allowbreak{}avances.\allowbreak{}md} y \code{docs/\allowbreak{}defectos.\allowbreak{}md}.
 
 
 \chapter*{Evidencias}\addcontentsline{toc}{chapter}{Evidencias}
 
-Convención de nombres: \code{TC-\allowbreak{}XX\_\allowbreak{}AAAA-\allowbreak{}MM-\allowbreak{}DD\_\allowbreak{}<integrante>.\allowbreak{}png}. Si un caso tiene varias capturas, se agrega al final el paso o la vista (\code{\_\allowbreak{}paso1-\allowbreak{}.\allowbreak{}.\allowbreak{}.\allowbreak{}}, \code{\_\allowbreak{}SD}, \code{\_\allowbreak{}PR}). Los reportes de pytest se guardan en \code{evidencias/\allowbreak{}pytest/\allowbreak{}}.
+Convención de nombres: \code{TC-\allowbreak{}XX\_\allowbreak{}AAAA-\allowbreak{}MM-\allowbreak{}DD\_\allowbreak{}<integrante>.\allowbreak{}png}. Si un caso tiene varias capturas, se agrega al final el paso o la vista (\code{\_\allowbreak{}paso1-...}, \code{\_\allowbreak{}SD}, \code{\_\allowbreak{}PR}). Los reportes de pytest se guardan en \code{evidencias/\allowbreak{}pytest/}.
 
 
-\section*{Índice por caso}\addcontentsline{toc}{section}{Índice por caso}
+\Needspace{150pt}\section*{Índice por caso}\addcontentsline{toc}{section}{Índice por caso}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.429\hsize\raggedright\arraybackslash}X>{\hsize=0.476\hsize\raggedright\arraybackslash}X>{\hsize=0.476\hsize\raggedright\arraybackslash}X>{\hsize=2.620\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.343\hsize\raggedright\arraybackslash}X>{\hsize=0.612\hsize\raggedright\arraybackslash}X>{\hsize=0.716\hsize\raggedright\arraybackslash}X>{\hsize=2.329\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Caso} & \textbf{Quién} & \textbf{Resultado manual} & \textbf{Archivos} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Caso} & \textbf{Quién} & \textbf{Resultado manual} & \textbf{Archivos} \\ \hline
 \endhead
@@ -890,30 +964,33 @@ TC-09 & Julián (revisión) & Pasa en pytest & \code{pytest/\allowbreak{}ejecuci
 \end{xltabular}}
 
 
-\section*{Corridas de pytest}\addcontentsline{toc}{section}{Corridas de pytest}
+\Needspace{190pt}\section*{Corridas de pytest}\addcontentsline{toc}{section}{Corridas de pytest}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=1.591\hsize\raggedright\arraybackslash}X>{\hsize=0.430\hsize\raggedright\arraybackslash}X>{\hsize=0.979\hsize\raggedright\arraybackslash}X}
+%ALTO=145
+\par\noindent\begin{minipage}{\linewidth}\small
+\begin{tabularx}{\linewidth}{>{\hsize=1.166\hsize\raggedright\arraybackslash}X>{\hsize=0.403\hsize\raggedright\arraybackslash}X>{\hsize=1.431\hsize\raggedright\arraybackslash}X}
 \hline\rowcolor{cabecera}
 \textbf{Archivo} & \textbf{Quién} & \textbf{Resultado} \\ \hline
-\endhead
 \code{pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}08.\allowbreak{}txt} y \code{.\allowbreak{}xml} & Equipo & 19 pruebas: 16 pasan, 3 fallan (DEF-01, DEF-02, DEF-04) \\ \hline
 \code{pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Sebastian.\allowbreak{}txt} y \code{.\allowbreak{}xml} & Sebastián & 19 pruebas: 16 pasan, 3 fallan (los mismos) \\ \hline
 \code{pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian.\allowbreak{}txt} y \code{.\allowbreak{}xml} & Sebastián & Retest con \code{77f71b2-\allowbreak{}correcciones} y la base en UTC: 19 pruebas, 19 pasan, 0 fallan \\ \hline
-\end{xltabular}}
+\end{tabularx}\end{minipage}\par
 
 
-\section*{Retest (16/11/2026)}\addcontentsline{toc}{section}{Retest (16/11/2026)}
+\Needspace{150pt}\section*{Retest (16/11/2026)}\addcontentsline{toc}{section}{Retest (16/11/2026)}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.420\hsize\raggedright\arraybackslash}X>{\hsize=0.935\hsize\raggedright\arraybackslash}X>{\hsize=1.645\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.361\hsize\raggedright\arraybackslash}X>{\hsize=1.283\hsize\raggedright\arraybackslash}X>{\hsize=1.356\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Defecto} & \textbf{Qué se revisó} & \textbf{Archivos} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Defecto} & \textbf{Qué se revisó} & \textbf{Archivos} \\ \hline
 \endhead
 DEF-01 & \code{lider.\allowbreak{}sindep@sidem.\allowbreak{}test} en Métricas, revisión 1: 0 cursos y "Sin datos". & \code{TC-\allowbreak{}02\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian\_\allowbreak{}sindep-\allowbreak{}inicio.\allowbreak{}png} (usuario conectado), \code{\_\allowbreak{}sindep-\allowbreak{}sin-\allowbreak{}datos.\allowbreak{}png} \\ \hline
 DEF-04 & \code{consulta@sidem.\allowbreak{}test} (alcance "Todos") en Seguimiento, revisión 1: ve los 6 cursos. & \code{TC-\allowbreak{}02\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian\_\allowbreak{}consulta-\allowbreak{}inicio.\allowbreak{}png} (usuario conectado), \code{\_\allowbreak{}consulta-\allowbreak{}ve-\allowbreak{}6-\allowbreak{}cursos.\allowbreak{}png} \\ \hline
 DEF-01 a DEF-04 & Suite completa de pytest. & \code{pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian.\allowbreak{}txt} y \code{.\allowbreak{}xml} \\ \hline
-DEF-05 & Log de la base al crearla: 0 líneas \code{ERROR:\allowbreak{}}. & \code{DEF-\allowbreak{}05\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian\_\allowbreak{}log-\allowbreak{}base.\allowbreak{}txt} \\ \hline
+DEF-05 & Log de la base al crearla: 0 líneas \code{ERROR:}. & \code{DEF-\allowbreak{}05\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian\_\allowbreak{}log-\allowbreak{}base.\allowbreak{}txt} \\ \hline
 \end{xltabular}}
 
 
@@ -928,14 +1005,17 @@ Defectos encontrados al montar la demo y al ejecutar los casos de prueba. Se reg
 Versión de SIDEM probada: commit \code{77f71b2}. Entorno: demo con Docker (AMB-01) y datos DAT-01.
 
 
-Las correcciones están en \code{demo/\allowbreak{}correcciones/\allowbreak{}}, una por defecto. Se cerraron con el retest (\code{retest.\allowbreak{}md}).
+Las correcciones están en \code{demo/\allowbreak{}correcciones/}, una por defecto. Se cerraron con el retest (\code{retest.\allowbreak{}md}).
 
 
 \textbf{Retest del 16/11/2026} (Sebastián), con las imágenes \code{77f71b2-\allowbreak{}correcciones} y la base en UTC: las 19 pruebas automáticas pasan y \code{db.\allowbreak{}sql} se instala sin errores. Los 5 defectos quedan cerrados.
 
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.467\hsize\raggedright\arraybackslash}X>{\hsize=0.447\hsize\raggedright\arraybackslash}X>{\hsize=0.467\hsize\raggedright\arraybackslash}X>{\hsize=0.700\hsize\raggedright\arraybackslash}X>{\hsize=2.980\hsize\raggedright\arraybackslash}X>{\hsize=0.940\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.559\hsize\raggedright\arraybackslash}X>{\hsize=0.482\hsize\raggedright\arraybackslash}X>{\hsize=0.624\hsize\raggedright\arraybackslash}X>{\hsize=0.882\hsize\raggedright\arraybackslash}X>{\hsize=2.426\hsize\raggedright\arraybackslash}X>{\hsize=1.026\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{ID} & \textbf{Caso} & \textbf{Riesgo} & \textbf{Severidad} & \textbf{Resumen} & \textbf{Estado} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{ID} & \textbf{Caso} & \textbf{Riesgo} & \textbf{Severidad} & \textbf{Resumen} & \textbf{Estado} \\ \hline
 \endhead
@@ -947,14 +1027,14 @@ DEF-05 & - & - & Baja & \code{sql/\allowbreak{}db.\allowbreak{}sql} falla al ins
 \end{xltabular}}
 
 
-\section*{DEF-01 - Líder sin departamento ve todas las métricas}\addcontentsline{toc}{section}{DEF-01 - Líder sin departamento ve todas las métricas}
+\Needspace{7\baselineskip}\section*{DEF-01 - Líder sin departamento ve todas las métricas}\addcontentsline{toc}{section}{DEF-01 - Líder sin departamento ve todas las métricas}
 
 \begin{itemize}
 \item \textbf{Caso:} TC-02 · \textbf{Riesgo:} R02 · \textbf{Severidad:} Alta
 \item \textbf{Detectado:} 08/11/2026, corrida automática (\code{test\_\allowbreak{}tc02\_\allowbreak{}permisos\_\allowbreak{}rol.\allowbreak{}py:\allowbreak{}:\allowbreak{}test\_\allowbreak{}lider\_\allowbreak{}sin\_\allowbreak{}departamento\_\allowbreak{}no\_\allowbreak{}ve\_\allowbreak{}metricas}).
 \end{itemize}
 
-\textbf{Pasos:}
+\Needspace{6\baselineskip}\textbf{Pasos:}
 
 
 \begin{enumerate}
@@ -968,7 +1048,7 @@ DEF-05 & - & - & Baja & \code{sql/\allowbreak{}db.\allowbreak{}sql} falla al ins
 \textbf{Nota del equipo:} en SIDEM este comportamiento se parece al del líder académico, que sí puede ver todo. Aun así se registra como defecto porque contradice la condición CP-02: un usuario sin departamento no debería ver cursos.
 
 
-\textbf{Causa probable:} \code{get\_\allowbreak{}departamentos\_\allowbreak{}permitidos()} devuelve una lista vacía, y en \code{services/\allowbreak{}dashboard\_\allowbreak{}service.\allowbreak{}py} la condición \code{if dept\_\allowbreak{}lista:\allowbreak{}} trata la lista vacía como "sin filtro". La pantalla de Seguimiento sí lo bloquea bien.
+\textbf{Causa probable:} \code{get\_\allowbreak{}departamentos\_\allowbreak{}permitidos()} devuelve una lista vacía, y en \code{services/\allowbreak{}dashboard\_\allowbreak{}service.\allowbreak{}py} la condición \code{if dept\_\allowbreak{}lista:} trata la lista vacía como "sin filtro". La pantalla de Seguimiento sí lo bloquea bien.
 
 
 \textbf{Evidencia:} \code{evidencias/\allowbreak{}pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}08.\allowbreak{}txt}.
@@ -977,14 +1057,14 @@ DEF-05 & - & - & Baja & \code{sql/\allowbreak{}db.\allowbreak{}sql} falla al ins
 \textbf{Retest (16/11/2026):} \code{test\_\allowbreak{}lider\_\allowbreak{}sin\_\allowbreak{}departamento\_\allowbreak{}no\_\allowbreak{}ve\_\allowbreak{}metricas} pasa. En \textbf{Métricas}, revisión 1, \code{lider.\allowbreak{}sindep@sidem.\allowbreak{}test} ve 0 cursos y el mensaje "Sin datos para los filtros seleccionados". Evidencia: \code{evidencias/\allowbreak{}pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian.\allowbreak{}txt}, \code{evidencias/\allowbreak{}TC-\allowbreak{}02\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian\_\allowbreak{}sindep-\allowbreak{}inicio.\allowbreak{}png} y \code{\_\allowbreak{}sindep-\allowbreak{}sin-\allowbreak{}datos.\allowbreak{}png}. \textbf{Cerrado.}
 
 
-\section*{DEF-02 - La sesión cerrada se puede reutilizar}\addcontentsline{toc}{section}{DEF-02 - La sesión cerrada se puede reutilizar}
+\Needspace{7\baselineskip}\section*{DEF-02 - La sesión cerrada se puede reutilizar}\addcontentsline{toc}{section}{DEF-02 - La sesión cerrada se puede reutilizar}
 
 \begin{itemize}
 \item \textbf{Caso:} TC-06 (complemento automático) · \textbf{Riesgo:} R09 · \textbf{Severidad:} Media
 \item \textbf{Detectado:} 08/11/2026, corrida automática (\code{test\_\allowbreak{}tc06\_\allowbreak{}sesion\_\allowbreak{}cerrada.\allowbreak{}py}).
 \end{itemize}
 
-\textbf{Pasos:}
+\Needspace{6\baselineskip}\textbf{Pasos:}
 
 
 \begin{enumerate}
@@ -1005,14 +1085,14 @@ DEF-05 & - & - & Baja & \code{sql/\allowbreak{}db.\allowbreak{}sql} falla al ins
 \textbf{Retest (16/11/2026):} con el contador de sesión \code{token\_\allowbreak{}version}, \code{test\_\allowbreak{}sesion\_\allowbreak{}cerrada\_\allowbreak{}no\_\allowbreak{}se\_\allowbreak{}reutiliza} pasa: después de cerrar sesión, la cookie copiada antes da 401. La prueba hace el login y el logout en milisegundos, que era el caso que podía fallar con la primera versión del parche (comparaba la hora redondeada al segundo). Evidencia: \code{evidencias/\allowbreak{}pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian.\allowbreak{}txt}. \textbf{Cerrado.}
 
 
-\section*{DEF-03 - El bloqueo de login depende de la zona horaria de la base}\addcontentsline{toc}{section}{DEF-03 - El bloqueo de login depende de la zona horaria de la base}
+\Needspace{7\baselineskip}\section*{DEF-03 - El bloqueo de login depende de la zona horaria de la base}\addcontentsline{toc}{section}{DEF-03 - El bloqueo de login depende de la zona horaria de la base}
 
 \begin{itemize}
 \item \textbf{Caso:} TC-09 · \textbf{Riesgo:} R08 · \textbf{Severidad:} Media
 \item \textbf{Detectado:} 08/11/2026, primera corrida de \code{test\_\allowbreak{}tc09\_\allowbreak{}bloqueo\_\allowbreak{}login.\allowbreak{}py}, con la base de la demo en UTC.
 \end{itemize}
 
-\textbf{Pasos:}
+\Needspace{6\baselineskip}\textbf{Pasos:}
 
 
 \begin{enumerate}
@@ -1036,14 +1116,14 @@ DEF-05 & - & - & Baja & \code{sql/\allowbreak{}db.\allowbreak{}sql} falla al ins
 \textbf{Retest (16/11/2026):} con la base en UTC (\code{show timezone} responde \code{UTC}), \code{test\_\allowbreak{}bloqueo\_\allowbreak{}y\_\allowbreak{}desbloqueo} pasa: los 5 intentos fallidos dan 401, el 6.º con la clave correcta da 429 y después de 300 s vuelve a entrar. Evidencia: \code{evidencias/\allowbreak{}pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian.\allowbreak{}txt}. \textbf{Cerrado.}
 
 
-\section*{DEF-04 - Rol personalizado con permiso de ver no ve cursos}\addcontentsline{toc}{section}{DEF-04 - Rol personalizado con permiso de ver no ve cursos}
+\Needspace{7\baselineskip}\section*{DEF-04 - Rol personalizado con permiso de ver no ve cursos}\addcontentsline{toc}{section}{DEF-04 - Rol personalizado con permiso de ver no ve cursos}
 
 \begin{itemize}
 \item \textbf{Caso:} TC-02 · \textbf{Riesgo:} R01 · \textbf{Severidad:} Baja
 \item \textbf{Detectado:} 08/11/2026, corrida automática (\code{test\_\allowbreak{}tc02\_\allowbreak{}permisos\_\allowbreak{}rol.\allowbreak{}py:\allowbreak{}:\allowbreak{}test\_\allowbreak{}consulta\_\allowbreak{}puede\_\allowbreak{}ver\_\allowbreak{}el\_\allowbreak{}seguimiento}).
 \end{itemize}
 
-\textbf{Pasos:}
+\Needspace{6\baselineskip}\textbf{Pasos:}
 
 
 \begin{enumerate}
@@ -1063,14 +1143,14 @@ DEF-05 & - & - & Baja & \code{sql/\allowbreak{}db.\allowbreak{}sql} falla al ins
 \textbf{Retest (16/11/2026):} con el alcance explícito, \code{consulta@sidem.\allowbreak{}test} tiene "Todos" y en \textbf{Seguimiento}, revisión 1, ve los 6 cursos. \code{test\_\allowbreak{}consulta\_\allowbreak{}puede\_\allowbreak{}ver\_\allowbreak{}el\_\allowbreak{}seguimiento} y \code{test\_\allowbreak{}consulta\_\allowbreak{}no\_\allowbreak{}puede\_\allowbreak{}guardar} pasan, así que sigue sin poder guardar. Evidencia: \code{evidencias/\allowbreak{}pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian.\allowbreak{}txt}, \code{evidencias/\allowbreak{}TC-\allowbreak{}02\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian\_\allowbreak{}consulta-\allowbreak{}inicio.\allowbreak{}png} y \code{\_\allowbreak{}consulta-\allowbreak{}ve-\allowbreak{}6-\allowbreak{}cursos.\allowbreak{}png}. \textbf{Cerrado.}
 
 
-\section*{DEF-05 - El esquema oficial falla en una base nueva}\addcontentsline{toc}{section}{DEF-05 - El esquema oficial falla en una base nueva}
+\Needspace{7\baselineskip}\section*{DEF-05 - El esquema oficial falla en una base nueva}\addcontentsline{toc}{section}{DEF-05 - El esquema oficial falla en una base nueva}
 
 \begin{itemize}
 \item \textbf{Caso:} ninguno (apareció al montar la demo) · \textbf{Severidad:} Baja
 \item \textbf{Detectado:} 08/11/2026, al crear la base de la demo.
 \end{itemize}
 
-\textbf{Pasos:}
+\Needspace{6\baselineskip}\textbf{Pasos:}
 
 
 \begin{enumerate}
@@ -1087,7 +1167,7 @@ DEF-05 & - & - & Baja & \code{sql/\allowbreak{}db.\allowbreak{}sql} falla al ins
 \textbf{Nota:} el módulo de estudiantes está fuera del alcance, pero el error afecta a cualquiera que instale SIDEM desde cero. La demo lo rodea cargando el archivo sin detenerse y completando con \code{verificar\_\allowbreak{}schema.\allowbreak{}py -\allowbreak{}-\allowbreak{}aplicar}.
 
 
-\textbf{Retest (16/11/2026):} al crear la base de la demo, el log de \code{sidem-\allowbreak{}demo-\allowbreak{}db} tiene 0 líneas \code{ERROR:\allowbreak{}}. Además, \code{db.\allowbreak{}sql} se cargó en una base vacía aparte con \code{ON\_\allowbreak{}ERROR\_\allowbreak{}STOP=\allowbreak{}1} (se detiene en el primer error): terminó con código 0 y creó las 23 tablas. Esa base se borró después. Evidencia: \code{evidencias/\allowbreak{}DEF-\allowbreak{}05\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian\_\allowbreak{}log-\allowbreak{}base.\allowbreak{}txt}. \textbf{Cerrado.}
+\textbf{Retest (16/11/2026):} al crear la base de la demo, el log de \code{sidem-\allowbreak{}demo-\allowbreak{}db} tiene 0 líneas \code{ERROR:}. Además, \code{db.\allowbreak{}sql} se cargó en una base vacía aparte con \code{ON\_\allowbreak{}ERROR\_\allowbreak{}STOP=\allowbreak{}1} (se detiene en el primer error): terminó con código 0 y creó las 23 tablas. Esa base se borró después. Evidencia: \code{evidencias/\allowbreak{}DEF-\allowbreak{}05\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian\_\allowbreak{}log-\allowbreak{}base.\allowbreak{}txt}. \textbf{Cerrado.}
 
 
 \section*{Evidencia visual: antes y después}\addcontentsline{toc}{section}{Evidencia visual: antes y después}
@@ -1111,19 +1191,22 @@ Capturas de la demo con la versión \code{77f71b2} (antes) y con las correccione
 
 \chapter*{Correcciones}\addcontentsline{toc}{chapter}{Correcciones}
 
-Cada archivo \code{.\allowbreak{}patch} corrige un defecto de \code{docs/\allowbreak{}defectos.\allowbreak{}md} sobre la versión de SIDEM que se probó (\code{77f71b2}). Los cambios se ven completos en cada archivo: qué líneas se quitan (\code{-\allowbreak{}}) y cuáles se agregan (\code{+}), junto con la prueba automática que demuestra la corrección.
+Cada archivo \code{.\allowbreak{}patch} corrige un defecto de \code{docs/\allowbreak{}defectos.\allowbreak{}md} sobre la versión de SIDEM que se probó (\code{77f71b2}). Los cambios se ven completos en cada archivo: qué líneas se quitan (\code{-}) y cuáles se agregan (\code{+}), junto con la prueba automática que demuestra la corrección.
 
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.406\hsize\raggedright\arraybackslash}X>{\hsize=0.406\hsize\raggedright\arraybackslash}X>{\hsize=1.594\hsize\raggedright\arraybackslash}X>{\hsize=1.594\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.493\hsize\raggedright\arraybackslash}X>{\hsize=0.491\hsize\raggedright\arraybackslash}X>{\hsize=1.566\hsize\raggedright\arraybackslash}X>{\hsize=1.450\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Parche} & \textbf{Defecto} & \textbf{Qué se cambió} & \textbf{Prueba nueva} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Parche} & \textbf{Defecto} & \textbf{Qué se cambió} & \textbf{Prueba nueva} \\ \hline
 \endhead
-\code{0001-\allowbreak{}.\allowbreak{}.\allowbreak{}.\allowbreak{}} & DEF-01 (alta) & En \code{services/\allowbreak{}dashboard\_\allowbreak{}service.\allowbreak{}py}, \code{if dept\_\allowbreak{}lista:\allowbreak{}} pasa a \code{if dept\_\allowbreak{}lista is not None:\allowbreak{}}. La lista vacía significa "ningún departamento", no "todos". & \code{test\_\allowbreak{}lista\_\allowbreak{}vacia\_\allowbreak{}de\_\allowbreak{}departamentos\_\allowbreak{}no\_\allowbreak{}ve\_\allowbreak{}ningun\_\allowbreak{}curso} \\ \hline
-\code{0002-\allowbreak{}.\allowbreak{}.\allowbreak{}.\allowbreak{}} & DEF-04 (y DEF-01) & Alcance explícito, como acordó el equipo en los issues \#1 y \#4. El líder de departamento y los roles personalizados se limitan por el departamento asignado: con \textbf{"Todos"} ven todos, con departamentos solo esos y sin ninguno asignado no ven ningún curso. Al crear o editar el usuario el departamento es obligatorio para esos roles, y el formulario de usuarios ofrece la opción "Todos". & \code{test\_\allowbreak{}rol\_\allowbreak{}personalizado\_\allowbreak{}ve\_\allowbreak{}departamentos\_\allowbreak{}segun\_\allowbreak{}asignacion}, \code{test\_\allowbreak{}crear\_\allowbreak{}rol\_\allowbreak{}personalizado\_\allowbreak{}exige\_\allowbreak{}departamento\_\allowbreak{}o\_\allowbreak{}todos}, \code{test\_\allowbreak{}actualizar\_\allowbreak{}a\_\allowbreak{}rol\_\allowbreak{}personalizado\_\allowbreak{}sin\_\allowbreak{}departamento\_\allowbreak{}se\_\allowbreak{}rechaza} \\ \hline
-\code{0003-\allowbreak{}.\allowbreak{}.\allowbreak{}.\allowbreak{}} & DEF-02 & Contador de sesión \code{token\_\allowbreak{}version} en \code{usuarios}, como propuso Sebastián en el issue \#2. Va en cada token y \code{logout()} lo incrementa, así el token copiado deja de servir aunque el login y el logout pasen en el mismo segundo (el caso de TC-06). Cierra todas las sesiones del usuario. \code{db.\allowbreak{}sql} agrega la columna. & \code{TestLogout} en \code{test\_\allowbreak{}auth.\allowbreak{}py}, incluido \code{test\_\allowbreak{}token\_\allowbreak{}copiado\_\allowbreak{}no\_\allowbreak{}sirve\_\allowbreak{}aunque\_\allowbreak{}logout\_\allowbreak{}sea\_\allowbreak{}en\_\allowbreak{}el\_\allowbreak{}mismo\_\allowbreak{}segundo} \\ \hline
-\code{0004-\allowbreak{}.\allowbreak{}.\allowbreak{}.\allowbreak{}} & DEF-03 & La fecha de \code{log\_\allowbreak{}actividad} la pone la aplicación en UTC, no la base. \code{db.\allowbreak{}sql} sin \code{AT TIME ZONE}. & \code{test\_\allowbreak{}log\_\allowbreak{}service.\allowbreak{}py} \\ \hline
-\code{0005-\allowbreak{}.\allowbreak{}.\allowbreak{}.\allowbreak{}} & DEF-05 & En \code{db.\allowbreak{}sql}, el backfill de \code{estado\_\allowbreak{}seguimiento} solo corre si la columna vieja existe. & Se instaló \code{db.\allowbreak{}sql} en un PostgreSQL vacío: antes fallaba en la línea 597, ahora termina sin errores. \\ \hline
+\code{0001-...} & DEF-01 (alta) & En \code{services/\allowbreak{}dashboard\_\allowbreak{}service.\allowbreak{}py}, \code{if dept\_\allowbreak{}lista:} pasa a \code{if dept\_\allowbreak{}lista is not None:}. La lista vacía significa "ningún departamento", no "todos". & \code{test\_\allowbreak{}lista\_\allowbreak{}vacia\_\allowbreak{}de\_\allowbreak{}departamentos\_\allowbreak{}no\_\allowbreak{}ve\_\allowbreak{}ningun\_\allowbreak{}curso} \\ \hline
+\code{0002-...} & DEF-04 (y DEF-01) & Alcance explícito, como acordó el equipo en los issues \#1 y \#4. El líder de departamento y los roles personalizados se limitan por el departamento asignado: con \textbf{"Todos"} ven todos, con departamentos solo esos y sin ninguno asignado no ven ningún curso. Al crear o editar el usuario el departamento es obligatorio para esos roles, y el formulario de usuarios ofrece la opción "Todos". & \code{test\_\allowbreak{}rol\_\allowbreak{}personalizado\_\allowbreak{}ve\_\allowbreak{}departamentos\_\allowbreak{}segun\_\allowbreak{}asignacion}, \code{test\_\allowbreak{}crear\_\allowbreak{}rol\_\allowbreak{}personalizado\_\allowbreak{}exige\_\allowbreak{}departamento\_\allowbreak{}o\_\allowbreak{}todos}, \code{test\_\allowbreak{}actualizar\_\allowbreak{}a\_\allowbreak{}rol\_\allowbreak{}personalizado\_\allowbreak{}sin\_\allowbreak{}departamento\_\allowbreak{}se\_\allowbreak{}rechaza} \\ \hline
+\code{0003-...} & DEF-02 & Contador de sesión \code{token\_\allowbreak{}version} en \code{usuarios}, como propuso Sebastián en el issue \#2. Va en cada token y \code{logout()} lo incrementa, así el token copiado deja de servir aunque el login y el logout pasen en el mismo segundo (el caso de TC-06). Cierra todas las sesiones del usuario. \code{db.\allowbreak{}sql} agrega la columna. & \code{TestLogout} en \code{test\_\allowbreak{}auth.\allowbreak{}py}, incluido \code{test\_\allowbreak{}token\_\allowbreak{}copiado\_\allowbreak{}no\_\allowbreak{}sirve\_\allowbreak{}aunque\_\allowbreak{}logout\_\allowbreak{}sea\_\allowbreak{}en\_\allowbreak{}el\_\allowbreak{}mismo\_\allowbreak{}segundo} \\ \hline
+\code{0004-...} & DEF-03 & La fecha de \code{log\_\allowbreak{}actividad} la pone la aplicación en UTC, no la base. \code{db.\allowbreak{}sql} sin \code{AT TIME ZONE}. & \code{test\_\allowbreak{}log\_\allowbreak{}service.\allowbreak{}py} \\ \hline
+\code{0005-...} & DEF-05 & En \code{db.\allowbreak{}sql}, el backfill de \code{estado\_\allowbreak{}seguimiento} solo corre si la columna vieja existe. & Se instaló \code{db.\allowbreak{}sql} en un PostgreSQL vacío: antes fallaba en la línea 597, ahora termina sin errores. \\ \hline
 \end{xltabular}}
 
 
@@ -1133,9 +1216,9 @@ Con los 5 parches aplicados pasan las 650 pruebas automáticas de SIDEM.
 En la demo, \code{seed\_\allowbreak{}demo.\allowbreak{}py} le asigna "Todos" a \code{consulta@sidem.\allowbreak{}test}, para que TC-02 pruebe un rol personalizado que debe ver el seguimiento completo. \code{lider.\allowbreak{}sindep@sidem.\allowbreak{}test} sigue sin departamento para probar que no ve nada. El seed solo crea los usuarios que faltan, así que hay que partir de una base nueva.
 
 
-\section*{Cómo se usan}\addcontentsline{toc}{section}{Cómo se usan}
+\Needspace{7\baselineskip}\section*{Cómo se usan}\addcontentsline{toc}{section}{Cómo se usan}
 
-Los aplica el líder al reconstruir las imágenes de la demo (ver \code{demo/\allowbreak{}README.\allowbreak{}md}):
+\Needspace{6\baselineskip}Los aplica el líder al reconstruir las imágenes de la demo (ver \code{demo/\allowbreak{}README.\allowbreak{}md}):
 
 
 \begin{lstlisting}
@@ -1152,16 +1235,19 @@ Guía para repetir las pruebas sobre SIDEM con las correcciones de DEF-01 a DEF-
 
 \end{nota}
 
-\section*{Qué cambió}\addcontentsline{toc}{section}{Qué cambió}
+\Needspace{7\baselineskip}\section*{Qué cambió}\addcontentsline{toc}{section}{Qué cambió}
 
 \begin{itemize}
-\item \textbf{Versión probada:} commit \code{77f71b2} más los parches \code{0001} a \code{0005} de \code{demo/\allowbreak{}correcciones/\allowbreak{}}. Las imágenes de Docker se llaman \code{sidem-\allowbreak{}demo-\allowbreak{}app:\allowbreak{}77f71b2-\allowbreak{}correcciones} y \code{sidem-\allowbreak{}demo-\allowbreak{}db:\allowbreak{}77f71b2-\allowbreak{}correcciones}.
+\item \textbf{Versión probada:} commit \code{77f71b2} más los parches \code{0001} a \code{0005} de \code{demo/\allowbreak{}correcciones/}. Las imágenes de Docker se llaman \code{sidem-\allowbreak{}demo-\allowbreak{}app:\allowbreak{}77f71b2-\allowbreak{}correcciones} y \code{sidem-\allowbreak{}demo-\allowbreak{}db:\allowbreak{}77f71b2-\allowbreak{}correcciones}.
 \item \textbf{Base de datos en UTC.} En la primera ronda estaba en \code{America/\allowbreak{}Bogota} para que TC-09 pasara. Ahora queda en UTC para comprobar que DEF-03 está corregido.
 \item \textbf{Usuario \code{consulta@sidem.\allowbreak{}test}} con alcance "Todos" (DEF-04). \code{lider.\allowbreak{}sindep@sidem.\allowbreak{}test} sigue sin departamento (DEF-01).
 \end{itemize}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.426\hsize\raggedright\arraybackslash}X>{\hsize=1.664\hsize\raggedright\arraybackslash}X>{\hsize=0.910\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.370\hsize\raggedright\arraybackslash}X>{\hsize=1.318\hsize\raggedright\arraybackslash}X>{\hsize=1.312\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Defecto} & \textbf{Caso que lo comprueba} & \textbf{Resultado esperado en el retest} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Defecto} & \textbf{Caso que lo comprueba} & \textbf{Resultado esperado en el retest} \\ \hline
 \endhead
@@ -1173,7 +1259,7 @@ DEF-05 & Log de la base al crearla & \code{db.\allowbreak{}sql} termina sin lín
 \end{xltabular}}
 
 
-\section*{Pasos}\addcontentsline{toc}{section}{Pasos}
+\Needspace{7\baselineskip}\section*{Pasos}\addcontentsline{toc}{section}{Pasos}
 
 \begin{enumerate}
 \item \textbf{Descargar las imágenes.} Baja \code{sidem-\allowbreak{}demo-\allowbreak{}imagenes-\allowbreak{}77f71b2-\allowbreak{}correcciones.\allowbreak{}tar.\allowbreak{}gz} (unos 264 MB) de la \href{https://drive.google.com/drive/folders/1i7nXTlf7k8DhToZPXx2Hm70bDSp-vvhp?usp=drive_link}{carpeta de Drive del equipo} (ya está subido) y cárgalo:
@@ -1187,7 +1273,7 @@ Debe terminar con \code{Loaded image:\allowbreak{} sidem-\allowbreak{}demo-\allo
 
 
 \begin{enumerate}[start=2]
-\item \textbf{Actualizar el repositorio y levantar la demo desde cero} (desde \code{demo/\allowbreak{}}). El \code{down -\allowbreak{}v} borra la base de la demo anterior; es necesario porque el seed solo crea los usuarios que faltan.
+\item \textbf{Actualizar el repositorio y levantar la demo desde cero} (desde \code{demo/}). El \code{down -\allowbreak{}v} borra la base de la demo anterior; es necesario porque el seed solo crea los usuarios que faltan.
 \end{enumerate}
 
 \begin{lstlisting}
@@ -1208,7 +1294,7 @@ Si quieres revisar la zona horaria: \code{docker exec sidem-\allowbreak{}demo-\a
 
 
 \begin{enumerate}[start=4]
-\item \textbf{Correr las pruebas automáticas} (desde \code{pruebas-\allowbreak{}automaticas/\allowbreak{}}, unos 7 minutos):
+\item \textbf{Correr las pruebas automáticas} (desde \code{pruebas-\allowbreak{}automaticas/}, unos 7 minutos):
 \end{enumerate}
 
 \begin{lstlisting}
@@ -1222,14 +1308,17 @@ Resultado esperado: \textbf{19 pasan, 0 fallan}. En la primera ronda fallaban 3 
 \item \textbf{Repetir a mano lo que quieras mostrar} (opcional), con la hoja de \code{ejecucion-\allowbreak{}manual.\allowbreak{}md}. Por ejemplo, \code{lider.\allowbreak{}sindep@sidem.\allowbreak{}test} en Métricas debe ver "Sin datos".
 \end{enumerate}
 
-\section*{Qué registrar después}\addcontentsline{toc}{section}{Qué registrar después}
+\Needspace{150pt}\section*{Qué registrar después}\addcontentsline{toc}{section}{Qué registrar después}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.432\hsize\raggedright\arraybackslash}X>{\hsize=1.531\hsize\raggedright\arraybackslash}X>{\hsize=1.037\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.409\hsize\raggedright\arraybackslash}X>{\hsize=0.936\hsize\raggedright\arraybackslash}X>{\hsize=1.656\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Quién} & \textbf{Dónde} & \textbf{Qué} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Quién} & \textbf{Dónde} & \textbf{Qué} \\ \hline
 \endhead
-Sebastián & \code{evidencias/\allowbreak{}pytest/\allowbreak{}} & Los archivos \code{.\allowbreak{}txt} y \code{.\allowbreak{}xml} del paso 4. \\ \hline
+Sebastián & \code{evidencias/\allowbreak{}pytest/} & Los archivos \code{.\allowbreak{}txt} y \code{.\allowbreak{}xml} del paso 4. \\ \hline
 Sebastián & \code{defectos.\allowbreak{}md} & Estado de cada defecto: "Cerrado (retest DD/11)" si pasa, o "Reabierto" con lo que se vio. \\ \hline
 Sebastián & Issues \#1 a \#5 en GitHub & Comentario con el resultado; cerrar el issue si pasa. \\ \hline
 Sebastián & \code{avances.\allowbreak{}md} & Una fila con la corrida. \\ \hline
@@ -1237,7 +1326,7 @@ Marcos y Nicolás & \code{informe-\allowbreak{}de-\allowbreak{}cierre.\allowbrea
 \end{xltabular}}
 
 
-\section*{Verificación previa}\addcontentsline{toc}{section}{Verificación previa}
+\Needspace{7\baselineskip}\section*{Verificación previa}\addcontentsline{toc}{section}{Verificación previa}
 
 El 16/11/2026 Marcos armó las imágenes y las probó en una base nueva: \code{db.\allowbreak{}sql} cargó sin errores, la base quedó en UTC y las 19 pruebas pasaron. Esa corrida no reemplaza el retest; sirve para saber que la imagen está bien antes de entregarla.
 
@@ -1248,14 +1337,17 @@ El 16/11/2026 Marcos armó las imágenes y las probó en una base nueva: \code{d
 \chapter*{Informe de cierre}\addcontentsline{toc}{chapter}{Informe de cierre}
 
 \begin{nota}
-Basado en la norma ISO/IEC/IEEE 29119-3 (\emph{Test Completion Report}). Es el documento final de la entrega (confirmado con el docente el 16/11, pregunta 8 de \code{preguntas-\allowbreak{}para-\allowbreak{}el-\allowbreak{}profe.\allowbreak{}md}). \textbf{Estado:} versión 1.0, final. Incluye la primera ronda de ejecución (08 y 12/11/2026) y el retest de las correcciones (16/11/2026).
+Basado en la norma ISO/IEC/IEEE \mbox{29119-3} (\emph{Test Completion Report}). Es el documento final de la entrega (confirmado con el docente el 16/11, pregunta 8 de \code{preguntas-\allowbreak{}para-\allowbreak{}el-\allowbreak{}profe.\allowbreak{}md}). \textbf{Estado:} versión 1.0, final. Incluye la primera ronda de ejecución (08 y 12/11/2026) y el retest de las correcciones (16/11/2026).
 
 \end{nota}
 
-\section*{1. Información del documento}\addcontentsline{toc}{section}{1. Información del documento}
+\Needspace{150pt}\section*{1. Información del documento}\addcontentsline{toc}{section}{1. Información del documento}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.684\hsize\raggedright\arraybackslash}X>{\hsize=1.316\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.390\hsize\raggedright\arraybackslash}X>{\hsize=1.610\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Campo} & \textbf{Valor} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Campo} & \textbf{Valor} \\ \hline
 \endhead
@@ -1268,45 +1360,51 @@ Aprobación & Roberto José Calderón Bermejo, docente del curso \\ \hline
 \end{xltabular}}
 
 
-\textbf{Historial del informe:}
+\Needspace{150pt}\textbf{Historial del informe:}
 
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.435\hsize\raggedright\arraybackslash}X>{\hsize=0.438\hsize\raggedright\arraybackslash}X>{\hsize=0.666\hsize\raggedright\arraybackslash}X>{\hsize=2.461\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.496\hsize\raggedright\arraybackslash}X>{\hsize=0.606\hsize\raggedright\arraybackslash}X>{\hsize=1.099\hsize\raggedright\arraybackslash}X>{\hsize=1.799\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Versión} & \textbf{Fecha} & \textbf{Quién} & \textbf{Cambio} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Versión} & \textbf{Fecha} & \textbf{Quién} & \textbf{Cambio} \\ \hline
 \endhead
 0.1 & 12/11/2026 & Julián Ramírez Molina & Primera versión con la ejecución registrada hasta el 12/11. \\ \hline
-1.0 & 17/11/2026 & Marcos Duque Jaramillo y Nicolás Cataño Durango & Versión final: ejecución manual completa, retest del 16/11, defectos cerrados, criterios de finalización y lecciones aprendidas. Marcos, como encargado de organizar la exposición, consolidó con Nicolás el cierre del informe y las láminas de cierre. \\ \hline
+1.0 & 17/11/2026 & Marcos Duque Jaramillo y Nicolás Cataño Durango & Versión final: ejecución manual completa, retest del 16/11, defectos cerrados, criterios de finalización y lecciones aprendidas. Marcos, como encargado de organizar la exposición, consolidó con Nicolás el cierre del informe. \\ \hline
 \end{xltabular}}
 
 
-\textbf{Fuentes usadas:} \code{docs/\allowbreak{}ejecucion-\allowbreak{}manual.\allowbreak{}md}, \code{docs/\allowbreak{}defectos.\allowbreak{}md}, \code{docs/\allowbreak{}retest.\allowbreak{}md}, \code{docs/\allowbreak{}avances.\allowbreak{}md}, \code{evidencias/\allowbreak{}README.\allowbreak{}md} y las salidas de pytest de \code{evidencias/\allowbreak{}pytest/\allowbreak{}} (08/11, 12/11 y retest del 16/11).
+\textbf{Fuentes usadas:} \code{docs/\allowbreak{}ejecucion-\allowbreak{}manual.\allowbreak{}md}, \code{docs/\allowbreak{}defectos.\allowbreak{}md}, \code{docs/\allowbreak{}retest.\allowbreak{}md}, \code{docs/\allowbreak{}avances.\allowbreak{}md}, \code{evidencias/\allowbreak{}README.\allowbreak{}md} y las salidas de pytest de \code{evidencias/\allowbreak{}pytest/} (08/11, 12/11 y retest del 16/11).
 
 
-\section*{2. Resumen}\addcontentsline{toc}{section}{2. Resumen}
+\Needspace{7\baselineskip}\section*{2. Resumen}\addcontentsline{toc}{section}{2. Resumen}
 
 Se probó SIDEM (FastAPI + PostgreSQL), versión commit \code{77f71b2}, en una copia de demostración con Docker y datos ficticios (entorno AMB-01, datos DAT-01). No se usó Moodle ni la base de producción.
 
 
-\textbf{Primera ronda (08 y 12/11/2026).} Las pruebas automáticas con pytest se corrieron dos veces con la demo recién reiniciada, en computadores distintos, con el mismo resultado: 19 pruebas, 16 pasan y 3 fallan. El 12/11 el equipo ejecutó a mano los 8 casos con parte manual (TC-01 a TC-08), con capturas en \code{evidencias/\allowbreak{}}. Se registraron 5 defectos (DEF-01 a DEF-05): 1 alto, 2 medios y 2 bajos.
+\textbf{Primera ronda (08 y 12/11/2026).} Las pruebas automáticas con pytest se corrieron dos veces con la demo recién reiniciada, en computadores distintos, con el mismo resultado: 19 pruebas, 16 pasan y 3 fallan. El 12/11 el equipo ejecutó a mano los 8 casos con parte manual (TC-01 a TC-08), con capturas en \code{evidencias/}. Se registraron 5 defectos (DEF-01 a DEF-05): 1 alto, 2 medios y 2 bajos.
 
 
-\textbf{Correcciones y retest (16/11/2026).} Cada defecto se corrigió con un parche sobre \code{77f71b2} (\code{demo/\allowbreak{}correcciones/\allowbreak{}}, parches \code{0001} a \code{0005}), cada uno con su prueba automática. En el retest, con las imágenes \code{77f71b2-\allowbreak{}correcciones} y la base en UTC, pasan las 19 pruebas y \code{db.\allowbreak{}sql} se instala sin errores. Los 5 defectos quedan cerrados.
+\textbf{Correcciones y retest (16/11/2026).} Cada defecto se corrigió con un parche sobre \code{77f71b2} (\code{demo/\allowbreak{}correcciones/}, parches \code{0001} a \code{0005}), cada uno con su prueba automática. En el retest, con las imágenes \code{77f71b2-\allowbreak{}correcciones} y la base en UTC, pasan las 19 pruebas y \code{db.\allowbreak{}sql} se instala sin errores. Los 5 defectos quedan cerrados.
 
 
 \textbf{Resultado final:} los 9 casos planeados (TC-01 a TC-09) están ejecutados y pasan, no queda ningún defecto abierto y se cumplen todos los criterios de finalización del plan (sección 7).
 
 
-\section*{3. Lo que se ejecutó}\addcontentsline{toc}{section}{3. Lo que se ejecutó}
+\Needspace{7\baselineskip}\section*{3. Lo que se ejecutó}\addcontentsline{toc}{section}{3. Lo que se ejecutó}
 
-\subsection*{3.1 Resultado por caso}\addcontentsline{toc}{subsection}{3.1 Resultado por caso}
+\Needspace{7\baselineskip}\subsection*{3.1 Resultado por caso}\addcontentsline{toc}{subsection}{3.1 Resultado por caso}
 
 "Auto" es pytest contra la demo. "Manual" es la ejecución en el navegador con la hoja de \code{ejecucion-\allowbreak{}manual.\allowbreak{}md} (12/11/2026). "Primera ronda" es el resultado con \code{77f71b2} sin cambios y "Retest" con las correcciones.
 
 
-{\scriptsize
-\begin{xltabular}{\linewidth}{>{\hsize=0.528\hsize\raggedright\arraybackslash}X>{\hsize=0.951\hsize\raggedright\arraybackslash}X>{\hsize=1.057\hsize\raggedright\arraybackslash}X>{\hsize=1.585\hsize\raggedright\arraybackslash}X>{\hsize=1.275\hsize\raggedright\arraybackslash}X>{\hsize=0.740\hsize\raggedright\arraybackslash}X>{\hsize=1.123\hsize\raggedright\arraybackslash}X>{\hsize=0.740\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\scriptsize
+\begin{xltabular}{\linewidth}{>{\hsize=0.591\hsize\raggedright\arraybackslash}X>{\hsize=1.096\hsize\raggedright\arraybackslash}X>{\hsize=1.098\hsize\raggedright\arraybackslash}X>{\hsize=1.315\hsize\raggedright\arraybackslash}X>{\hsize=1.176\hsize\raggedright\arraybackslash}X>{\hsize=0.879\hsize\raggedright\arraybackslash}X>{\hsize=0.966\hsize\raggedright\arraybackslash}X>{\hsize=0.879\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Caso} & \textbf{Prioridad} & \textbf{Tipo planeado} & \textbf{Auto (primera ronda)} & \textbf{Manual} & \textbf{Primera ronda} & \textbf{Retest (16/11)} & \textbf{Defecto} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Caso} & \textbf{Prioridad} & \textbf{Tipo planeado} & \textbf{Auto (primera ronda)} & \textbf{Manual} & \textbf{Primera ronda} & \textbf{Retest (16/11)} & \textbf{Defecto} \\ \hline
 \endhead
@@ -1322,11 +1420,14 @@ TC-06 & P3 & Manual & 0 de 1 pasan (complemento automático) & 4 de 4 pasos pasa
 \end{xltabular}}
 
 
-Quién ejecutó:
+\Needspace{150pt}Quién ejecutó:
 
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.427\hsize\raggedright\arraybackslash}X>{\hsize=0.427\hsize\raggedright\arraybackslash}X>{\hsize=2.146\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.485\hsize\raggedright\arraybackslash}X>{\hsize=0.546\hsize\raggedright\arraybackslash}X>{\hsize=1.969\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Caso} & \textbf{Responsable} & \textbf{Ejecución registrada} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Caso} & \textbf{Responsable} & \textbf{Ejecución registrada} \\ \hline
 \endhead
@@ -1337,7 +1438,7 @@ TC-05, TC-06, TC-09 & Julián & Manual de TC-05 y TC-06 el 12/11 (\code{evidenci
 \end{xltabular}}
 
 
-\subsection*{3.2 Notas sobre los casos}\addcontentsline{toc}{subsection}{3.2 Notas sobre los casos}
+\Needspace{7\baselineskip}\subsection*{3.2 Notas sobre los casos}\addcontentsline{toc}{subsection}{3.2 Notas sobre los casos}
 
 \begin{itemize}
 \item \textbf{TC-01.} El líder de Sistemas Digitales solo ve su departamento, no puede forzar el de Producción y no puede modificar el seguimiento. Los criterios de Logística siguen sin cambios al revisarlos como administrador.
@@ -1349,64 +1450,70 @@ TC-05, TC-06, TC-09 & Julián & Manual de TC-05 y TC-06 el 12/11 (\code{evidenci
 \item \textbf{TC-09.} En la primera ronda el bloqueo solo funcionó con la base en \code{America/\allowbreak{}Bogota} (DEF-03). En el retest, con la base en UTC, los 5 intentos fallidos dan 401, el 6.º con la clave correcta da 429 y pasados los 300 s vuelve a entrar.
 \end{itemize}
 
-\subsection*{3.3 Trazabilidad}\addcontentsline{toc}{subsection}{3.3 Trazabilidad}
+\Needspace{150pt}\subsection*{3.3 Trazabilidad}\addcontentsline{toc}{subsection}{3.3 Trazabilidad}
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.445\hsize\raggedright\arraybackslash}X>{\hsize=0.627\hsize\raggedright\arraybackslash}X>{\hsize=0.445\hsize\raggedright\arraybackslash}X>{\hsize=2.856\hsize\raggedright\arraybackslash}X>{\hsize=0.627\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.531\hsize\raggedright\arraybackslash}X>{\hsize=0.740\hsize\raggedright\arraybackslash}X>{\hsize=0.479\hsize\raggedright\arraybackslash}X>{\hsize=2.586\hsize\raggedright\arraybackslash}X>{\hsize=0.665\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Riesgo} & \textbf{Condición} & \textbf{Caso} & \textbf{Evidencia} & \textbf{Defecto} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Riesgo} & \textbf{Condición} & \textbf{Caso} & \textbf{Evidencia} & \textbf{Defecto} \\ \hline
 \endhead
-R01 & CP-01, CP-02 & TC-01, TC-02 & \code{evidencias/\allowbreak{}TC-\allowbreak{}01\_\allowbreak{}*}, \code{evidencias/\allowbreak{}TC-\allowbreak{}02\_\allowbreak{}*}, \code{evidencias/\allowbreak{}pytest/\allowbreak{}} & DEF-04 (cerrado) \\ \hline
-R02 & CP-02 & TC-02 & \code{evidencias/\allowbreak{}TC-\allowbreak{}02\_\allowbreak{}*}, \code{evidencias/\allowbreak{}pytest/\allowbreak{}} & DEF-01 (cerrado) \\ \hline
-R03 & CP-03 & TC-07 & \code{evidencias/\allowbreak{}TC-\allowbreak{}07\_\allowbreak{}*}, \code{evidencias/\allowbreak{}pytest/\allowbreak{}} & - \\ \hline
-R04 & CP-04 & TC-03 & \code{evidencias/\allowbreak{}TC-\allowbreak{}03\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Nicolas.\allowbreak{}png}, \code{evidencias/\allowbreak{}pytest/\allowbreak{}} & - \\ \hline
+R01 & CP-01, CP-02 & TC-01, TC-02 & \code{evidencias/\allowbreak{}TC-\allowbreak{}01\_\allowbreak{}*}, \code{evidencias/\allowbreak{}TC-\allowbreak{}02\_\allowbreak{}*}, \code{evidencias/\allowbreak{}pytest/} & DEF-04 (cerrado) \\ \hline
+R02 & CP-02 & TC-02 & \code{evidencias/\allowbreak{}TC-\allowbreak{}02\_\allowbreak{}*}, \code{evidencias/\allowbreak{}pytest/} & DEF-01 (cerrado) \\ \hline
+R03 & CP-03 & TC-07 & \code{evidencias/\allowbreak{}TC-\allowbreak{}07\_\allowbreak{}*}, \code{evidencias/\allowbreak{}pytest/} & - \\ \hline
+R04 & CP-04 & TC-03 & \code{evidencias/\allowbreak{}TC-\allowbreak{}03\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Nicolas.\allowbreak{}png}, \code{evidencias/\allowbreak{}pytest/} & - \\ \hline
 R05 & CP-05 & TC-04 & \code{evidencias/\allowbreak{}TC-\allowbreak{}04\_\allowbreak{}*} & - \\ \hline
 R06 & CP-06 & TC-08 & \code{evidencias/\allowbreak{}TC-\allowbreak{}08\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Nicolas\_\allowbreak{}*.\allowbreak{}png} & - \\ \hline
-R07 & CP-07 & TC-05 & \code{evidencias/\allowbreak{}TC-\allowbreak{}05\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Julian\_\allowbreak{}*}, \code{evidencias/\allowbreak{}pytest/\allowbreak{}} & - \\ \hline
-R08 & CP-08 & TC-09 & \code{evidencias/\allowbreak{}pytest/\allowbreak{}} & DEF-03 (cerrado) \\ \hline
-R09 & CP-09 & TC-06 & \code{evidencias/\allowbreak{}TC-\allowbreak{}06\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Julian\_\allowbreak{}*}, \code{evidencias/\allowbreak{}pytest/\allowbreak{}} & DEF-02 (cerrado) \\ \hline
+R07 & CP-07 & TC-05 & \code{evidencias/\allowbreak{}TC-\allowbreak{}05\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Julian\_\allowbreak{}*}, \code{evidencias/\allowbreak{}pytest/} & - \\ \hline
+R08 & CP-08 & TC-09 & \code{evidencias/\allowbreak{}pytest/} & DEF-03 (cerrado) \\ \hline
+R09 & CP-09 & TC-06 & \code{evidencias/\allowbreak{}TC-\allowbreak{}06\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Julian\_\allowbreak{}*}, \code{evidencias/\allowbreak{}pytest/} & DEF-02 (cerrado) \\ \hline
 \end{xltabular}}
 
 
-\section*{4. Métricas}\addcontentsline{toc}{section}{4. Métricas}
+\Needspace{218pt}\section*{4. Métricas}\addcontentsline{toc}{section}{4. Métricas}
 
-\subsection*{4.1 Casos}\addcontentsline{toc}{subsection}{4.1 Casos}
+\Needspace{178pt}\subsection*{4.1 Casos}\addcontentsline{toc}{subsection}{4.1 Casos}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=1.294\hsize\raggedright\arraybackslash}X>{\hsize=0.853\hsize\raggedright\arraybackslash}X>{\hsize=0.853\hsize\raggedright\arraybackslash}X}
+%ALTO=133
+\par\noindent\begin{minipage}{\linewidth}\small
+\begin{tabularx}{\linewidth}{>{\hsize=2.053\hsize\raggedright\arraybackslash}X>{\hsize=0.473\hsize\raggedright\arraybackslash}X>{\hsize=0.473\hsize\raggedright\arraybackslash}X}
 \hline\rowcolor{cabecera}
 \textbf{Métrica} & \textbf{Primera ronda} & \textbf{Después del retest} \\ \hline
-\endhead
 Casos planeados (TC-01 a TC-09) & 9 & 9 \\ \hline
 Casos ejecutados & 9 & 9 \\ \hline
 Casos que pasan & 7 & 9 \\ \hline
 Casos que fallan & 2 (TC-02 y TC-06) & 0 \\ \hline
-\end{xltabular}}
+\end{tabularx}\end{minipage}\par
 
 
 Los casos extra TC-10 a TC-17 quedaron identificados en el plan (v0.4) y no se ejecutan en este ciclo, como se acordó con el docente.
 
 
-\subsection*{4.2 Pruebas automáticas (pytest)}\addcontentsline{toc}{subsection}{4.2 Pruebas automáticas (pytest)}
+\Needspace{119pt}\subsection*{4.2 Pruebas automáticas (pytest)}\addcontentsline{toc}{subsection}{4.2 Pruebas automáticas (pytest)}
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=1.486\hsize\raggedright\arraybackslash}X>{\hsize=0.946\hsize\raggedright\arraybackslash}X>{\hsize=0.676\hsize\raggedright\arraybackslash}X>{\hsize=0.811\hsize\raggedright\arraybackslash}X>{\hsize=1.081\hsize\raggedright\arraybackslash}X}
+%ALTO=74
+\par\noindent\begin{minipage}{\linewidth}\footnotesize
+\begin{tabularx}{\linewidth}{>{\hsize=2.374\hsize\raggedright\arraybackslash}X>{\hsize=0.691\hsize\raggedright\arraybackslash}X>{\hsize=0.552\hsize\raggedright\arraybackslash}X>{\hsize=0.622\hsize\raggedright\arraybackslash}X>{\hsize=0.761\hsize\raggedright\arraybackslash}X}
 \hline\rowcolor{cabecera}
 \textbf{Corrida} & \textbf{Pruebas} & \textbf{Pasan} & \textbf{Fallan} & \textbf{Duración} \\ \hline
-\endhead
 08/11/2026 & 19 & 16 & 3 & 365,77 s \\ \hline
 12/11/2026 (Sebastián) & 19 & 16 & 3 & 367,94 s \\ \hline
 16/11/2026, retest (Sebastián) & 19 & 19 & 0 & 368,28 s \\ \hline
-\end{xltabular}}
+\end{tabularx}\end{minipage}\par
 
 
 En la primera ronda fallaban \code{test\_\allowbreak{}consulta\_\allowbreak{}puede\_\allowbreak{}ver\_\allowbreak{}el\_\allowbreak{}seguimiento} (DEF-04), \code{test\_\allowbreak{}lider\_\allowbreak{}sin\_\allowbreak{}departamento\_\allowbreak{}no\_\allowbreak{}ve\_\allowbreak{}metricas} (DEF-01) y \code{test\_\allowbreak{}sesion\_\allowbreak{}cerrada\_\allowbreak{}no\_\allowbreak{}se\_\allowbreak{}reutiliza} (DEF-02). En el retest pasan las tres.
 
 
-\subsection*{4.3 Pasos manuales}\addcontentsline{toc}{subsection}{4.3 Pasos manuales}
+\Needspace{150pt}\subsection*{4.3 Pasos manuales}\addcontentsline{toc}{subsection}{4.3 Pasos manuales}
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.781\hsize\raggedright\arraybackslash}X>{\hsize=0.781\hsize\raggedright\arraybackslash}X>{\hsize=0.781\hsize\raggedright\arraybackslash}X>{\hsize=1.250\hsize\raggedright\arraybackslash}X>{\hsize=1.406\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.894\hsize\raggedright\arraybackslash}X>{\hsize=0.939\hsize\raggedright\arraybackslash}X>{\hsize=0.939\hsize\raggedright\arraybackslash}X>{\hsize=1.081\hsize\raggedright\arraybackslash}X>{\hsize=1.148\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Caso} & \textbf{Pasos} & \textbf{Pasan} & \textbf{Fallan} & \textbf{Sin ejecutar a mano} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Caso} & \textbf{Pasos} & \textbf{Pasan} & \textbf{Fallan} & \textbf{Sin ejecutar a mano} \\ \hline
 \endhead
@@ -1424,28 +1531,31 @@ TC-08 & 3 & 3 & 0 & 0 \\ \hline
 Los dos pasos que fallaron en TC-02 se revisaron otra vez en el navegador en el retest (\code{evidencias/\allowbreak{}TC-\allowbreak{}02\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian\_\allowbreak{}*}) y dan lo esperado.
 
 
-\subsection*{4.4 Defectos por severidad}\addcontentsline{toc}{subsection}{4.4 Defectos por severidad}
+\Needspace{166pt}\subsection*{4.4 Defectos por severidad}\addcontentsline{toc}{subsection}{4.4 Defectos por severidad}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=1.000\hsize\raggedright\arraybackslash}X>{\hsize=1.222\hsize\raggedright\arraybackslash}X>{\hsize=0.889\hsize\raggedright\arraybackslash}X>{\hsize=0.889\hsize\raggedright\arraybackslash}X}
+%ALTO=121
+\par\noindent\begin{minipage}{\linewidth}\small
+\begin{tabularx}{\linewidth}{>{\hsize=1.000\hsize\raggedright\arraybackslash}X>{\hsize=1.120\hsize\raggedright\arraybackslash}X>{\hsize=0.940\hsize\raggedright\arraybackslash}X>{\hsize=0.940\hsize\raggedright\arraybackslash}X}
 \hline\rowcolor{cabecera}
 \textbf{Severidad} & \textbf{Encontrados} & \textbf{Cerrados} & \textbf{Abiertos} \\ \hline
-\endhead
 Crítica & 0 & 0 & 0 \\ \hline
 Alta & 1 (DEF-01) & 1 & 0 \\ \hline
 Media & 2 (DEF-02, DEF-03) & 2 & 0 \\ \hline
 Baja & 2 (DEF-04, DEF-05) & 2 & 0 \\ \hline
 \textbf{Total} & \textbf{5} & \textbf{5} & \textbf{0} \\ \hline
-\end{xltabular}}
+\end{tabularx}\end{minipage}\par
 
 
-\section*{5. Defectos}\addcontentsline{toc}{section}{5. Defectos}
+\Needspace{7\baselineskip}\section*{5. Defectos}\addcontentsline{toc}{section}{5. Defectos}
 
-Detalle en \code{docs/\allowbreak{}defectos.\allowbreak{}md}. Versión de SIDEM: commit \code{77f71b2}; correcciones en \code{demo/\allowbreak{}correcciones/\allowbreak{}}.
+Detalle en \code{docs/\allowbreak{}defectos.\allowbreak{}md}. Versión de SIDEM: commit \code{77f71b2}; correcciones en \code{demo/\allowbreak{}correcciones/}.
 
 
-{\scriptsize
-\begin{xltabular}{\linewidth}{>{\hsize=0.428\hsize\raggedright\arraybackslash}X>{\hsize=0.428\hsize\raggedright\arraybackslash}X>{\hsize=0.428\hsize\raggedright\arraybackslash}X>{\hsize=0.497\hsize\raggedright\arraybackslash}X>{\hsize=2.162\hsize\raggedright\arraybackslash}X>{\hsize=2.391\hsize\raggedright\arraybackslash}X>{\hsize=0.667\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\scriptsize
+\begin{xltabular}{\linewidth}{>{\hsize=0.587\hsize\raggedright\arraybackslash}X>{\hsize=0.505\hsize\raggedright\arraybackslash}X>{\hsize=0.656\hsize\raggedright\arraybackslash}X>{\hsize=0.932\hsize\raggedright\arraybackslash}X>{\hsize=1.771\hsize\raggedright\arraybackslash}X>{\hsize=1.702\hsize\raggedright\arraybackslash}X>{\hsize=0.847\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{ID} & \textbf{Caso} & \textbf{Riesgo} & \textbf{Severidad} & \textbf{Qué pasaba} & \textbf{Corrección} & \textbf{Estado} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{ID} & \textbf{Caso} & \textbf{Riesgo} & \textbf{Severidad} & \textbf{Qué pasaba} & \textbf{Corrección} & \textbf{Estado} \\ \hline
 \endhead
@@ -1457,13 +1567,16 @@ DEF-05 & - & - & Baja & \code{sql/\allowbreak{}db.\allowbreak{}sql} fallaba al i
 \end{xltabular}}
 
 
-\textbf{Retest (16/11/2026, Sebastián).} Se levantó la demo desde cero con las imágenes \code{77f71b2-\allowbreak{}correcciones} y la base en UTC (guía en \code{docs/\allowbreak{}retest.\allowbreak{}md}). Resultado: 19 de 19 pruebas pasan, 0 líneas \code{ERROR:\allowbreak{}} al crear la base y las capturas de DEF-01 y DEF-04 en el navegador dan lo esperado. Las 650 pruebas propias de SIDEM siguen pasando con los parches. Los issues \#1 a \#5 de GitHub quedan cerrados con el resultado.
+\textbf{Retest (16/11/2026, Sebastián).} Se levantó la demo desde cero con las imágenes \code{77f71b2-\allowbreak{}correcciones} y la base en UTC (guía en \code{docs/\allowbreak{}retest.\allowbreak{}md}). Resultado: 19 de 19 pruebas pasan, 0 líneas \code{ERROR:} al crear la base y las capturas de DEF-01 y DEF-04 en el navegador dan lo esperado. Las 650 pruebas propias de SIDEM siguen pasando con los parches. Los issues \#1 a \#5 de GitHub quedan cerrados con el resultado.
 
 
-\section*{6. Desviaciones del plan}\addcontentsline{toc}{section}{6. Desviaciones del plan}
+\Needspace{150pt}\section*{6. Desviaciones del plan}\addcontentsline{toc}{section}{6. Desviaciones del plan}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.410\hsize\raggedright\arraybackslash}X>{\hsize=2.377\hsize\raggedright\arraybackslash}X>{\hsize=0.410\hsize\raggedright\arraybackslash}X>{\hsize=0.803\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.181\hsize\raggedright\arraybackslash}X>{\hsize=2.272\hsize\raggedright\arraybackslash}X>{\hsize=0.558\hsize\raggedright\arraybackslash}X>{\hsize=0.989\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{\#} & \textbf{Qué cambió} & \textbf{Cuándo} & \textbf{Dónde está registrado} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{\#} & \textbf{Qué cambió} & \textbf{Cuándo} & \textbf{Dónde está registrado} \\ \hline
 \endhead
@@ -1478,19 +1591,22 @@ DEF-05 & - & - & Baja & \code{sql/\allowbreak{}db.\allowbreak{}sql} fallaba al i
 9 & En TC-05 los dos Excel se bajaron con la misma sesión y la misma petición que usa el botón, porque el navegador integrado no dejó guardar la descarga. & 12/11 & \code{ejecucion-\allowbreak{}manual.\allowbreak{}md} (TC-05) \\ \hline
 10 & TC-08 se ejecutó sin reiniciar la base con \code{docker compose down -\allowbreak{}v}, que el plan pide como estado inicial. Los datos coincidían con DAT-01. & 12/11 & \code{ejecucion-\allowbreak{}manual.\allowbreak{}md} (TC-08) \\ \hline
 11 & El paso 2 de TC-02 no se pudo ejecutar a mano (sin cursos visibles por DEF-04); lo cubre la prueba automática \code{test\_\allowbreak{}consulta\_\allowbreak{}no\_\allowbreak{}puede\_\allowbreak{}guardar}. & 12/11 & \code{ejecucion-\allowbreak{}manual.\allowbreak{}md} (TC-02) \\ \hline
-12 & Las correcciones se hicieron como parches sobre la versión congelada \code{77f71b2}, para que el retest probara exactamente lo mismo más las correcciones. & 13/11 a 16/11 & \code{demo/\allowbreak{}correcciones/\allowbreak{}}, plan 3.1 \\ \hline
+12 & Las correcciones se hicieron como parches sobre la versión congelada \code{77f71b2}, para que el retest probara exactamente lo mismo más las correcciones. & 13/11 a 16/11 & \code{demo/\allowbreak{}correcciones/}, plan 3.1 \\ \hline
 \end{xltabular}}
 
 
-\section*{7. Evaluación de los criterios de finalización}\addcontentsline{toc}{section}{7. Evaluación de los criterios de finalización}
+\Needspace{7\baselineskip}\section*{7. Evaluación de los criterios de finalización}\addcontentsline{toc}{section}{7. Evaluación de los criterios de finalización}
 
 Criterios de la sección 5.5 del plan, después del retest.
 
 
-\subsection*{7.1 Módulos críticos (F02, F03, F04)}\addcontentsline{toc}{subsection}{7.1 Módulos críticos (F02, F03, F04)}
+\Needspace{150pt}\subsection*{7.1 Módulos críticos (F02, F03, F04)}\addcontentsline{toc}{subsection}{7.1 Módulos críticos (F02, F03, F04)}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.925\hsize\raggedright\arraybackslash}X>{\hsize=0.422\hsize\raggedright\arraybackslash}X>{\hsize=1.653\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=1.213\hsize\raggedright\arraybackslash}X>{\hsize=0.330\hsize\raggedright\arraybackslash}X>{\hsize=1.457\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Criterio} & \textbf{Estado} & \textbf{Detalle} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Criterio} & \textbf{Estado} & \textbf{Detalle} \\ \hline
 \endhead
@@ -1500,26 +1616,29 @@ Ningún defecto crítico o alto abierto & Se cumple & DEF-01 (alta) quedó cerra
 \end{xltabular}}
 
 
-\subsection*{7.2 Módulos secundarios (F01, F05, F06)}\addcontentsline{toc}{subsection}{7.2 Módulos secundarios (F01, F05, F06)}
+\Needspace{174pt}\subsection*{7.2 Módulos secundarios (F01, F05, F06)}\addcontentsline{toc}{subsection}{7.2 Módulos secundarios (F01, F05, F06)}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=1.065\hsize\raggedright\arraybackslash}X>{\hsize=0.439\hsize\raggedright\arraybackslash}X>{\hsize=1.496\hsize\raggedright\arraybackslash}X}
+%ALTO=129
+\par\noindent\begin{minipage}{\linewidth}\small
+\begin{tabularx}{\linewidth}{>{\hsize=1.104\hsize\raggedright\arraybackslash}X>{\hsize=0.340\hsize\raggedright\arraybackslash}X>{\hsize=1.556\hsize\raggedright\arraybackslash}X}
 \hline\rowcolor{cabecera}
 \textbf{Criterio} & \textbf{Estado} & \textbf{Detalle} \\ \hline
-\endhead
 100 \% de los casos diseñados ejecutados & Se cumple & TC-05 (F06), TC-06 y TC-09 (F01) y TC-08 (F05) están ejecutados. \\ \hline
 Ningún defecto crítico abierto & Se cumple & No hubo defectos críticos. \\ \hline
 Máximo 2 defectos menores abiertos & Se cumple & 0 abiertos: DEF-02 y DEF-03 quedaron cerrados en el retest. \\ \hline
-\end{xltabular}}
+\end{tabularx}\end{minipage}\par
 
 
 \textbf{Conclusión.} Se cumplen todos los criterios de finalización. El ciclo de pruebas se da por terminado.
 
 
-\section*{8. Riesgos residuales}\addcontentsline{toc}{section}{8. Riesgos residuales}
+\Needspace{150pt}\section*{8. Riesgos residuales}\addcontentsline{toc}{section}{8. Riesgos residuales}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.400\hsize\raggedright\arraybackslash}X>{\hsize=1.600\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.219\hsize\raggedright\arraybackslash}X>{\hsize=1.781\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Riesgo} & \textbf{Situación} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Riesgo} & \textbf{Situación} \\ \hline
 \endhead
@@ -1529,7 +1648,7 @@ R03 & Cubierto en lo manual y en lo automático (TC-07). \\ \hline
 R04 & Cubierto en lo manual y en lo automático (TC-03). TC-12 (curso sin criterios evaluados) queda identificado. \\ \hline
 R05 & Cubierto en lo manual (TC-04). \\ \hline
 R06 & Cubierto en lo manual (TC-08), sin prueba automática. TC-13 (curso repetido o con dos docentes) queda identificado. \\ \hline
-R07 & Cubierto en lo manual y en lo automático (TC-05) con datos normales. TC-15 (observaciones que empiezan por \code{=\allowbreak{}} o \code{+} en el Excel) queda identificado. \\ \hline
+R07 & Cubierto en lo manual y en lo automático (TC-05) con datos normales. TC-15 (observaciones que empiezan por \code{=} o \code{+} en el Excel) queda identificado. \\ \hline
 R08 & Cubierto (TC-09). DEF-03 cerrado: el bloqueo ya no depende de la zona horaria de la base. \\ \hline
 R09 & Cubierto (TC-06). DEF-02 cerrado. TC-14 (cambio de contraseña con dos sesiones abiertas) queda identificado. \\ \hline
 R10 & Aceptado sin pruebas en el plan: no está entre los casos del equipo y no hay entorno de carga. \\ \hline
@@ -1539,7 +1658,7 @@ R10 & Aceptado sin pruebas en el plan: no está entre los casos del equipo y no 
 También quedan fuera de este ciclo, por decisión del plan: la integración con Moodle, el seguimiento a estudiantes y las pruebas de rendimiento. Las correcciones están probadas en la demo; llevarlas a producción le corresponde al equipo de SIDEM.
 
 
-\section*{9. Lecciones aprendidas}\addcontentsline{toc}{section}{9. Lecciones aprendidas}
+\Needspace{7\baselineskip}\section*{9. Lecciones aprendidas}\addcontentsline{toc}{section}{9. Lecciones aprendidas}
 
 \begin{itemize}
 \item \textbf{Las pruebas automáticas dieron resultados antes que las manuales.} La corrida de pytest del 08/11 ya mostró DEF-01, DEF-02 y DEF-04. Conviene automatizar primero lo que se puede y dejar la parte manual para lo que se ve en pantalla.
@@ -1551,17 +1670,20 @@ También quedan fuera de este ciclo, por decisión del plan: la integración con
 \item \textbf{Cada corrección con su prueba automática hizo que el retest fuera directo.} Las 3 pruebas que fallaban se convirtieron en la verificación de las correcciones.
 \end{itemize}
 
-\section*{10. Reconocimiento del equipo}\addcontentsline{toc}{section}{10. Reconocimiento del equipo}
+\Needspace{150pt}\section*{10. Reconocimiento del equipo}\addcontentsline{toc}{section}{10. Reconocimiento del equipo}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.430\hsize\raggedright\arraybackslash}X>{\hsize=1.570\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.539\hsize\raggedright\arraybackslash}X>{\hsize=1.461\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Integrante} & \textbf{Aporte registrado en el repositorio} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Integrante} & \textbf{Aporte registrado en el repositorio} \\ \hline
 \endhead
-Marcos Duque Jaramillo & Líder de pruebas, entorno de demostración (Docker, imágenes y Drive del equipo) y correcciones de DEF-01 a DEF-05. Casos TC-01 y TC-02. Organización de la exposición; versión 1.0 de este informe y láminas de cierre, junto con Nicolás. \\ \hline
+Marcos Duque Jaramillo & Líder de pruebas, entorno de demostración (Docker, imágenes y Drive del equipo) y correcciones de DEF-01 a DEF-05. Casos TC-01 y TC-02. Organización de la exposición; versión 1.0 de este informe, junto con Nicolás. \\ \hline
 Sebastián Díaz Jiménez & Pruebas automáticas con pytest, corrida del 12/11 y retest del 16/11. Casos TC-07 y TC-04. \\ \hline
-Nicolás Cataño Durango & Datos de prueba DAT-01 y su verificación. Casos TC-03 y TC-08. Versión 1.0 de este informe y láminas de cierre, junto con Marcos. \\ \hline
-Julián Ramírez Molina & Ejecución manual de TC-05 y TC-06, revisión de TC-09 y primera versión de este informe (v0.1). \\ \hline
+Nicolás Cataño Durango & Datos de prueba DAT-01 y su verificación. Casos TC-03 y TC-08. Versión 1.0 de este informe, junto con Marcos. \\ \hline
+Julián Ramírez Molina & Ejecución manual de TC-05 y TC-06, revisión de TC-09, primera versión de este informe (v0.1) y la parte de retest y cierre de la exposición. \\ \hline
 \end{xltabular}}
 
 
@@ -1573,18 +1695,21 @@ Julián Ramírez Molina & Ejecución manual de TC-05 y TC-06, revisión de TC-09
 Respuestas recibidas el 16/11/2026. Lo que cambió en los documentos por cada respuesta aparece en la columna "Qué hacemos".
 
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.414\hsize\raggedright\arraybackslash}X>{\hsize=0.900\hsize\raggedright\arraybackslash}X>{\hsize=1.343\hsize\raggedright\arraybackslash}X>{\hsize=1.343\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.167\hsize\raggedright\arraybackslash}X>{\hsize=1.292\hsize\raggedright\arraybackslash}X>{\hsize=1.204\hsize\raggedright\arraybackslash}X>{\hsize=1.336\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{\#} & \textbf{Pregunta} & \textbf{Respuesta del docente} & \textbf{Qué hacemos} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{\#} & \textbf{Pregunta} & \textbf{Respuesta del docente} & \textbf{Qué hacemos} \\ \hline
 \endhead
-1 & \textbf{Formato de entrega.} ¿Solo Markdown en el repositorio o también PDF? & El trabajo se va registrando en el repositorio con los commits. Al final se entrega el PDF del trabajo terminado; da igual si se hace en LaTeX o en Markdown. & Todo queda en el repositorio y al cerrar se regenera \code{entrega/\allowbreak{}Plan\_\allowbreak{}de\_\allowbreak{}Pruebas\_\allowbreak{}SIDEM.\allowbreak{}pdf} con \code{python entrega/\allowbreak{}generar\_\allowbreak{}pdf.\allowbreak{}py}. \\ \hline
+1 & \textbf{Formato de entrega.} ¿Solo Markdown en el repositorio o también PDF? & El trabajo se va registrando en el repositorio con los commits. Al final se entrega el PDF del trabajo terminado; da igual si se hace en LaTeX o en Markdown. & Todo queda en el repositorio. La entrega final es el informe en LaTeX \code{entrega/\allowbreak{}Informe\_\allowbreak{}final\_\allowbreak{}SIDEM.\allowbreak{}pdf}, que se genera desde los Markdown con \code{python entrega/\allowbreak{}generar\_\allowbreak{}informe.\allowbreak{}py}. \\ \hline
 2 & \textbf{Escala de riesgos.} ¿Sirve 1 a 3 o se espera 1 a 5? & Cualquiera de las dos sirve, tomando como referencia lo que recomienda la norma. & Se mantiene la escala de 1 a 3 (probabilidad × impacto). \\ \hline
 3 & \textbf{Niveles de exposición.} Ningún riesgo llega a Crítico. ¿Es aceptable? & Sí. Al probar un aplicativo escogido por el equipo puede que ninguno llegue a crítico. Lo importante es mostrar qué casos pueden perjudicar el aplicativo y qué se hizo para solucionarlo. & En la exposición y en el informe de cierre se destacan los riesgos altos (R01 a R04), los defectos encontrados y su corrección. \\ \hline
 4 & \textbf{Riesgo aceptado.} ¿Está bien dejar R10 (rendimiento) sin pruebas? & Sí. El rendimiento no se tomó como un caso a revisar. Eso no quiere decir que no sea importante; el foco está en los casos que trabaja el equipo. & R10 queda fuera del alcance porque no está entre los casos del equipo (plan 2.3 y 4.3). \\ \hline
 5 & \textbf{Tailoring.} ¿Basta la tabla de exclusiones o hay que citar cláusulas? & Se pueden citar cláusulas de la norma solo cuando apoyen la exposición. Si el texto es muy técnico, se organiza para que sea fácil de explicar. & Se citan cláusulas solo donde ayudan a explicar. La exposición del tailoring se hace en lenguaje sencillo. \\ \hline
 6 & \textbf{Documentos consolidados.} ¿Casos y procedimientos dentro del plan o aparte? & Cualquiera sirve, siempre que el orden sea claro: qué se encontró, qué se tomó y qué se hizo. No hay que ser muy técnicos. & Se mantienen dentro del plan, con ese orden. \\ \hline
-7 & \textbf{Ejecución.} ¿Bastan las evidencias o se pide un informe semanal? & Bastan las capturas y el reporte de pytest. Todo el proceso duró menos de 15 días, así que un avance semanal no aplica. & No se hace informe semanal. Evidencias en \code{evidencias/\allowbreak{}}. \\ \hline
+7 & \textbf{Ejecución.} ¿Bastan las evidencias o se pide un informe semanal? & Bastan las capturas y el reporte de pytest. Todo el proceso duró menos de 15 días, así que un avance semanal no aplica. & No se hace informe semanal. Evidencias en \code{evidencias/}. \\ \hline
 8 & \textbf{Informe de cierre.} ¿Se espera el \emph{Test Completion Report} aparte? & Sí, es el documento final. & \code{informe-\allowbreak{}de-\allowbreak{}cierre.\allowbreak{}md} es el \emph{Test Completion Report} de la norma; su versión final (1.0) incluye el retest. \\ \hline
 9 & \textbf{Exposición.} ¿Cuánto dura y qué se muestra? & De 20 a 30 minutos, según el equipo. Lo importante es organizar bien las partes y mostrar cómo estaba el aplicativo antes y después de las correcciones. Se puede usar un video. & Se usa el video de la demo: el "antes" ya está grabado y el "después" se agrega al mismo video cuando estén las correcciones (Marcos). \\ \hline
 10 & \textbf{Casos nuevos.} ¿Está bien haber agregado TC-07 a TC-09? & Sí. Al final se indica que se identificaron para complementar. Los 9 casos (TC-01 a TC-09) son los que se prueban; los demás (TC-10 a TC-17) solo se mencionan. & En el plan y en la exposición se explica que TC-07 a TC-09 se agregaron para complementar. TC-10 a TC-17 se mencionan como identificados y no ejecutados. \\ \hline
@@ -1596,28 +1721,31 @@ Respuestas recibidas el 16/11/2026. Lo que cambió en los documentos por cada re
 Registro de lo que se hace en el proyecto, del más reciente al más antiguo. Reemplaza los informes de estado formales (ver tailoring, sección 2.3 del plan).
 
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.430\hsize\raggedright\arraybackslash}X>{\hsize=0.430\hsize\raggedright\arraybackslash}X>{\hsize=2.017\hsize\raggedright\arraybackslash}X>{\hsize=1.123\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.599\hsize\raggedright\arraybackslash}X>{\hsize=0.559\hsize\raggedright\arraybackslash}X>{\hsize=1.477\hsize\raggedright\arraybackslash}X>{\hsize=1.365\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Fecha} & \textbf{Quién} & \textbf{Avance} & \textbf{Siguiente paso} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Fecha} & \textbf{Quién} & \textbf{Avance} & \textbf{Siguiente paso} \\ \hline
 \endhead
-17/11/2026 & Marcos Duque y Nicolás Cataño & Cierre del ciclo: informe de cierre v1.0 con el retest (los 9 casos pasan, 0 defectos abiertos, criterios de finalización cumplidos), láminas de retest y cierre en la presentación unida, GIF del antes y después de DEF-01 y DEF-02 recortados, plan v1.0 y PDF regenerado. Issues \#1 a \#5 cerrados con el resultado del retest. Marcos, como encargado de organizar la exposición, consolidó lo faltante con Nicolás. & Exposición del 17/11. \\ \hline
-16/11/2026 & Sebastián Díaz & Retest con las imágenes \code{77f71b2-\allowbreak{}correcciones} y la base en UTC: 19 pruebas, 19 pasan y 0 fallan (en la primera ronda, 16 de 19). Pasan las 3 que fallaban (DEF-01, DEF-02 y DEF-04) y TC-09 con la base en UTC (DEF-03). DEF-05: 0 líneas \code{ERROR:\allowbreak{}} al crear la base, y \code{db.\allowbreak{}sql} carga completo con \code{ON\_\allowbreak{}ERROR\_\allowbreak{}STOP=\allowbreak{}1}. En pantalla, \code{consulta} ve los 6 cursos y \code{lider.\allowbreak{}sindep} ve "Sin datos". Los 5 defectos pasan a "Cerrado (retest 16/11)" en \code{defectos.\allowbreak{}md}. Salida en \code{evidencias/\allowbreak{}pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian.\allowbreak{}txt} y \code{.\allowbreak{}xml}; capturas y log en \code{evidencias/\allowbreak{}}. Lámina 2 de la exposición actualizada con el retest. & Comentar el resultado en los issues \#1 a \#5 y cerrarlos; actualizar el informe de cierre. \\ \hline
+17/11/2026 & Marcos Duque y Nicolás Cataño & Cierre del ciclo: informe de cierre v1.0 con el retest (los 9 casos pasan, 0 defectos abiertos, criterios de finalización cumplidos), presentación unida, GIF del antes y después de DEF-01 y DEF-02 recortados, plan v1.0 y PDF regenerado. Issues \#1 a \#5 cerrados con el resultado del retest. Marcos, como encargado de organizar la exposición, consolidó lo faltante con Nicolás. & Exposición del 17/11. \\ \hline
+16/11/2026 & Sebastián Díaz & Retest con las imágenes \code{77f71b2-\allowbreak{}correcciones} y la base en UTC: 19 pruebas, 19 pasan y 0 fallan (en la primera ronda, 16 de 19). Pasan las 3 que fallaban (DEF-01, DEF-02 y DEF-04) y TC-09 con la base en UTC (DEF-03). DEF-05: 0 líneas \code{ERROR:} al crear la base, y \code{db.\allowbreak{}sql} carga completo con \code{ON\_\allowbreak{}ERROR\_\allowbreak{}STOP=\allowbreak{}1}. En pantalla, \code{consulta} ve los 6 cursos y \code{lider.\allowbreak{}sindep} ve "Sin datos". Los 5 defectos pasan a "Cerrado (retest 16/11)" en \code{defectos.\allowbreak{}md}. Salida en \code{evidencias/\allowbreak{}pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}16\_\allowbreak{}retest\_\allowbreak{}Sebastian.\allowbreak{}txt} y \code{.\allowbreak{}xml}; capturas y log en \code{evidencias/}. Lámina 2 de la exposición actualizada con el retest. & Comentar el resultado en los issues \#1 a \#5 y cerrarlos; actualizar el informe de cierre. \\ \hline
 16/11/2026 & Marcos Duque & Guía del retest en \code{docs/\allowbreak{}retest.\allowbreak{}md} (pasos para Sebastián y qué se actualiza después). Defectos DEF-01 a DEF-05 marcados como corregidos, pendientes de retest. "Después" del video grabado para DEF-01 y DEF-02. & Subir las imágenes al Drive; retest de Sebastián; informe de cierre. \\ \hline
 16/11/2026 & Marcos Duque & Imágenes del retest \code{77f71b2-\allowbreak{}correcciones} (commit \code{77f71b2} + parches \code{0001} a \code{0005}) con la base en UTC. Verificado en una base nueva: \code{db.\allowbreak{}sql} carga sin errores (DEF-05) y las 19 pruebas automáticas pasan, incluidas TC-02, TC-06 y TC-09. Archivo \code{sidem-\allowbreak{}demo-\allowbreak{}imagenes-\allowbreak{}77f71b2-\allowbreak{}correcciones.\allowbreak{}tar.\allowbreak{}gz} listo para el Drive. & Subir el archivo al Drive; retest de Sebastián; grabar el "después" del video. \\ \hline
 16/11/2026 & Marcos Duque & Parche \code{0003} (DEF-02) cambiado a contador de sesión \code{token\_\allowbreak{}version}, como propuso Sebastián en el issue \#2: el token copiado deja de servir aunque el logout pase en el mismo segundo del login. Prueba nueva que reproducía la falla de TC-06; pasan las 650 pruebas de SIDEM. & Base de la demo en UTC, reconstruir la imagen y grabar el "después" del video. \\ \hline
 16/11/2026 & Marcos Duque & Respuestas del docente registradas en \code{preguntas-\allowbreak{}para-\allowbreak{}el-\allowbreak{}profe.\allowbreak{}md} y aplicadas: plan v0.6, R10 fuera del alcance del equipo, el informe de cierre es el \emph{Test Completion Report} final. PDF regenerado. Parche \code{0002} (DEF-04) ajustado a lo acordado en los issues \#1 y \#4: alcance explícito con "Todos" y sin departamento no se ve ningún curso; pasan las 649 pruebas de SIDEM. \code{seed\_\allowbreak{}demo.\allowbreak{}py} le da "Todos" a \code{consulta@sidem.\allowbreak{}test}. & Revisar DEF-02 (\code{token\_\allowbreak{}version}), base en UTC, reconstruir la imagen y grabar el "después" del video. \\ \hline
-16/11/2026 & Sebastián Díaz & Diapositivas de la exposición sobre pruebas automáticas (\code{exposicion/\allowbreak{}Sebastian\_\allowbreak{}pruebas\_\allowbreak{}automaticas.\allowbreak{}pptx}): cómo corren las pruebas contra la API y resultado de la corrida (16 de 19 pasan; los 3 fallos son DEF-01, DEF-02 y DEF-04). TC-10 y TC-11 van en las notas. Revisión de los parches de \code{demo/\allowbreak{}correcciones/\allowbreak{}} para los issues \#1 a \#5. El retest no se hizo: la imagen con las correcciones todavía no está (\code{docker-\allowbreak{}compose.\allowbreak{}yml} sigue en \code{77f71b2}). & Retest cuando esté la imagen nueva y actualizar la lámina de resultados. \\ \hline
-12/11/2026 & Sebastián Díaz & Ejecución de TC-07 (PROC-01) y TC-04 (PROC-02) en la demo, cada uno con la base recién reiniciada. TC-07: lo guardado en Programación Básica, revisión 2, no aparece en Bases de Datos ni en la revisión 1, que sigue en 80 \%. TC-04: el criterio y la observación (con tildes y ñ) de Redes I se conservan al recargar y al cerrar sesión y volver a entrar. Los 8 pasos pasan; no hay defectos nuevos. Hojas llenas en \code{ejecucion-\allowbreak{}manual.\allowbreak{}md}; capturas en \code{evidencias/\allowbreak{}}. & Retest si Marcos sube imágenes nuevas (15/11 a 16/11). \\ \hline
+16/11/2026 & Sebastián Díaz & Diapositivas de la exposición sobre pruebas automáticas (\code{exposicion/\allowbreak{}Sebastian\_\allowbreak{}pruebas\_\allowbreak{}automaticas.\allowbreak{}pptx}): cómo corren las pruebas contra la API y resultado de la corrida (16 de 19 pasan; los 3 fallos son DEF-01, DEF-02 y DEF-04). TC-10 y TC-11 van en las notas. Revisión de los parches de \code{demo/\allowbreak{}correcciones/} para los issues \#1 a \#5. El retest no se hizo: la imagen con las correcciones todavía no está (\code{docker-\allowbreak{}compose.\allowbreak{}yml} sigue en \code{77f71b2}). & Retest cuando esté la imagen nueva y actualizar la lámina de resultados. \\ \hline
+12/11/2026 & Sebastián Díaz & Ejecución de TC-07 (PROC-01) y TC-04 (PROC-02) en la demo, cada uno con la base recién reiniciada. TC-07: lo guardado en Programación Básica, revisión 2, no aparece en Bases de Datos ni en la revisión 1, que sigue en 80 \%. TC-04: el criterio y la observación (con tildes y ñ) de Redes I se conservan al recargar y al cerrar sesión y volver a entrar. Los 8 pasos pasan; no hay defectos nuevos. Hojas llenas en \code{ejecucion-\allowbreak{}manual.\allowbreak{}md}; capturas en \code{evidencias/}. & Retest si Marcos sube imágenes nuevas (15/11 a 16/11). \\ \hline
 12/11/2026 & Marcos Duque & Ejecución manual de TC-01 (pasa 4 de 4: el líder de Sistemas Digitales solo ve su departamento, aunque se fuerce Producción en la URL, y no entra a Seguimiento) y TC-02 (falla: \code{consulta@sidem.\allowbreak{}test} no ve cursos, DEF-04; \code{lider.\allowbreak{}sindep@sidem.\allowbreak{}test} ve los 6 cursos, DEF-01). Índice de evidencias por caso en \code{evidencias/\allowbreak{}README.\allowbreak{}md}. & Decidir qué defectos se corrigen antes del retest (prioridad DEF-01). \\ \hline
 12/11/2026 & Nicolás Cataño & Diapositivas de la exposición sobre valores límite con el semáforo (\code{exposicion/\allowbreak{}Nicolas\_\allowbreak{}valores\_\allowbreak{}limite.\allowbreak{}pptx}): tabla de pesos, recta numérica con 47, 50, 77 y 80, y resultado de TC-03 y TC-08. Las notas del orador incluyen TC-12 y TC-13. & Unirlas a la presentación del equipo y ensayar el 16/11. \\ \hline
 12/11/2026 & Julián Ramírez & Informe de cierre en borrador v0.1 (\code{informe-\allowbreak{}de-\allowbreak{}cierre.\allowbreak{}md}, \code{SIDEM-\allowbreak{}IC-\allowbreak{}2026-\allowbreak{}01}) con lo registrado en \code{main}: 9 casos planeados, 8 con ejecución, 6 pasan y 2 fallan (TC-02 y TC-06); 5 defectos abiertos. Las partes manuales de TC-01, 02, 04 y 07 aparecen como pendientes. & Actualizar el informe cuando se integren las demás hojas manuales; preparar las diapositivas. \\ \hline
-12/11/2026 & Nicolás Cataño & Ejecución manual de TC-03 y TC-08 en la demo: los 6 cursos muestran el porcentaje y el color esperados, y los totales del panel coinciden en general, en Sistemas Digitales y en Producción. Todos los pasos pasan; no hay defectos nuevos. Evidencias en \code{evidencias/\allowbreak{}}. & Preparar la explicación de TC-12 y TC-13 y la exposición. \\ \hline
+12/11/2026 & Nicolás Cataño & Ejecución manual de TC-03 y TC-08 en la demo: los 6 cursos muestran el porcentaje y el color esperados, y los totales del panel coinciden en general, en Sistemas Digitales y en Producción. Todos los pasos pasan; no hay defectos nuevos. Evidencias en \code{evidencias/}. & Preparar la explicación de TC-12 y TC-13 y la exposición. \\ \hline
 12/11/2026 & Nicolás Cataño & Verificación a mano de DAT-01: los 6 cursos de la demo dan 80, 77, 50, 47, 100 y 0 \%, igual a lo esperado en \code{demo/\allowbreak{}seed\_\allowbreak{}demo.\allowbreak{}py}. Tabla en la sección "Verificación de DAT-01 (Nicolás)". & Ejecutar a mano TC-03 y TC-08. \\ \hline
 12/11/2026 & Sebastián Díaz & Corrida completa de las pruebas automáticas en un segundo computador, con la demo recién reiniciada (\code{docker compose down -\allowbreak{}v} y \code{up -\allowbreak{}d}): 19 pruebas, 16 pasan y 3 fallan, igual que el 08/11. Fallan \code{test\_\allowbreak{}consulta\_\allowbreak{}puede\_\allowbreak{}ver\_\allowbreak{}el\_\allowbreak{}seguimiento} (DEF-04), \code{test\_\allowbreak{}lider\_\allowbreak{}sin\_\allowbreak{}departamento\_\allowbreak{}no\_\allowbreak{}ve\_\allowbreak{}metricas} (DEF-01) y \code{test\_\allowbreak{}sesion\_\allowbreak{}cerrada\_\allowbreak{}no\_\allowbreak{}se\_\allowbreak{}reutiliza} (DEF-02). Duración: 6 min 8 s. Salida en \code{evidencias/\allowbreak{}pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}12\_\allowbreak{}Sebastian.\allowbreak{}txt} y \code{.\allowbreak{}xml}. & Ejecutar a mano TC-07 y TC-04. \\ \hline
-12/11/2026 & Julián Ramírez & Ejecución manual de TC-05 (Sistemas Digitales y Producción: el Excel coincide con la pantalla en cursos y SI/NO de la revisión 1) y TC-06 (cerrar sesión, "Atrás" y recargar terminan en el login). Revisión de la evidencia de TC-09 en \code{evidencias/\allowbreak{}pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}08.\allowbreak{}txt}: \code{test\_\allowbreak{}bloqueo\_\allowbreak{}y\_\allowbreak{}desbloqueo} aparece como PASSED. Hojas llenas en \code{ejecucion-\allowbreak{}manual.\allowbreak{}md}; capturas y Excel en \code{evidencias/\allowbreak{}}. & Informe de cierre (\code{informe-\allowbreak{}de-\allowbreak{}cierre.\allowbreak{}md}). \\ \hline
+12/11/2026 & Julián Ramírez & Ejecución manual de TC-05 (Sistemas Digitales y Producción: el Excel coincide con la pantalla en cursos y SI/NO de la revisión 1) y TC-06 (cerrar sesión, "Atrás" y recargar terminan en el login). Revisión de la evidencia de TC-09 en \code{evidencias/\allowbreak{}pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}08.\allowbreak{}txt}: \code{test\_\allowbreak{}bloqueo\_\allowbreak{}y\_\allowbreak{}desbloqueo} aparece como PASSED. Hojas llenas en \code{ejecucion-\allowbreak{}manual.\allowbreak{}md}; capturas y Excel en \code{evidencias/}. & Informe de cierre (\code{informe-\allowbreak{}de-\allowbreak{}cierre.\allowbreak{}md}). \\ \hline
 08/11/2026 & Equipo & Primera corrida completa de las pruebas automáticas (TC-01, 02, 03, 05, 06, 07 y 09): 19 pruebas, 16 pasan y 3 fallan. Los 3 fallos son defectos de SIDEM (DEF-01, DEF-02 y DEF-04). Salida en \code{evidencias/\allowbreak{}pytest/\allowbreak{}ejecucion\_\allowbreak{}2026-\allowbreak{}11-\allowbreak{}08.\allowbreak{}txt}. Se preparan las hojas de ejecución manual (\code{ejecucion-\allowbreak{}manual.\allowbreak{}md}). Plan en v0.3. & Ejecutar los casos manuales según el reparto y tomar las capturas. \\ \hline
-08/11/2026 & Equipo & Se monta la demo de SIDEM con Docker y datos ficticios (\code{demo/\allowbreak{}}). Al revisar el sistema se ajustan TC-01, TC-03 y DAT-01 en el plan (v0.2). Aparecen dos hallazgos (ver abajo). & Que cada integrante levante la demo en su equipo y revise sus casos. \\ \hline
+08/11/2026 & Equipo & Se monta la demo de SIDEM con Docker y datos ficticios (\code{demo/}). Al revisar el sistema se ajustan TC-01, TC-03 y DAT-01 en el plan (v0.2). Aparecen dos hallazgos (ver abajo). & Que cada integrante levante la demo en su equipo y revise sus casos. \\ \hline
 08/11/2026 & Equipo & Se crea el repositorio. Se consolidan Actividades 1 y 2, matriz de riesgos y Talleres 4 y 5. Primer borrador del plan (v0.1) con tailoring, trazabilidad y cronograma. & Revisar el plan con el docente (\code{preguntas-\allowbreak{}para-\allowbreak{}el-\allowbreak{}profe.\allowbreak{}md}). \\ \hline
 13/10/2026 & Equipo & Talleres 4 (estrategia) y 5 (casos y procedimientos). & - \\ \hline
 - & Equipo & Matriz de riesgos R01-R10 y RP1-RP3. & - \\ \hline
@@ -1626,25 +1754,28 @@ Registro de lo que se hace en el proyecto, del más reciente al más antiguo. Re
 \end{xltabular}}
 
 
-\section*{Verificación de DAT-01 (Nicolás)}\addcontentsline{toc}{section}{Verificación de DAT-01 (Nicolás)}
+\Needspace{118pt}\section*{Verificación de DAT-01 (Nicolás)}\addcontentsline{toc}{section}{Verificación de DAT-01 (Nicolás)}
 
-SIDEM no cuenta criterios: suma sus pesos. Pesos de la revisión 1 (total 30):
+\Needspace{78pt}SIDEM no cuenta criterios: suma sus pesos. Pesos de la revisión 1 (total 30):
 
 
-{\scriptsize
-\begin{xltabular}{\linewidth}{>{\hsize=1.803\hsize\raggedright\arraybackslash}X>{\hsize=0.845\hsize\raggedright\arraybackslash}X>{\hsize=0.845\hsize\raggedright\arraybackslash}X>{\hsize=0.845\hsize\raggedright\arraybackslash}X>{\hsize=0.845\hsize\raggedright\arraybackslash}X>{\hsize=0.845\hsize\raggedright\arraybackslash}X>{\hsize=0.845\hsize\raggedright\arraybackslash}X>{\hsize=1.127\hsize\raggedright\arraybackslash}X}
+%ALTO=33
+\par\noindent\begin{minipage}{\linewidth}\scriptsize
+\begin{tabularx}{\linewidth}{>{\hsize=1.612\hsize\raggedright\arraybackslash}X>{\hsize=0.850\hsize\raggedright\arraybackslash}X>{\hsize=0.850\hsize\raggedright\arraybackslash}X>{\hsize=0.850\hsize\raggedright\arraybackslash}X>{\hsize=0.850\hsize\raggedright\arraybackslash}X>{\hsize=0.850\hsize\raggedright\arraybackslash}X>{\hsize=0.850\hsize\raggedright\arraybackslash}X>{\hsize=1.285\hsize\raggedright\arraybackslash}X}
 \hline\rowcolor{cabecera}
 \textbf{Criterio} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{6} & \textbf{7} & \textbf{Total} \\ \hline
-\endhead
 Peso & 5 & 5 & 7 & 5 & 6 & 2 & 30 \\ \hline
-\end{xltabular}}
+\end{tabularx}\end{minipage}\par
 
 
 Porcentaje = (suma de pesos cumplidos ÷ 30) × 100, redondeado. Verde si es ≥ 80, amarillo si es ≥ 50 y < 80, rojo si es < 50.
 
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=1.235\hsize\raggedright\arraybackslash}X>{\hsize=0.926\hsize\raggedright\arraybackslash}X>{\hsize=0.809\hsize\raggedright\arraybackslash}X>{\hsize=0.926\hsize\raggedright\arraybackslash}X>{\hsize=1.103\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.884\hsize\raggedright\arraybackslash}X>{\hsize=0.772\hsize\raggedright\arraybackslash}X>{\hsize=1.029\hsize\raggedright\arraybackslash}X>{\hsize=0.887\hsize\raggedright\arraybackslash}X>{\hsize=1.428\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Curso} & \textbf{Criterios cumplidos} & \textbf{Suma de pesos} & \textbf{\% calculado} & \textbf{Color esperado} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Curso} & \textbf{Criterios cumplidos} & \textbf{Suma de pesos} & \textbf{\% calculado} & \textbf{Color esperado} \\ \hline
 \endhead
@@ -1660,21 +1791,24 @@ Logística & ninguno & 0 & 0 \% & Rojo \\ \hline
 Los 6 valores coinciden con el \% esperado de la lista \code{CURSOS} en \code{demo/\allowbreak{}seed\_\allowbreak{}demo.\allowbreak{}py}.
 
 
-\textbf{Por qué estos valores.} Se usa la técnica de valores límite. Los errores suelen estar en los bordes, por ejemplo si el código usa \code{>} en vez de \code{>=\allowbreak{}}. Por eso se prueba justo en cada límite (80 y 50) y justo por debajo (77 y 47). Si el sistema compara mal, Programación Básica saldría amarilla en vez de verde, o Redes I saldría roja en vez de amarilla. Calidad (100 \%) y Logística (0 \%) cubren los extremos.
+\textbf{Por qué estos valores.} Se usa la técnica de valores límite. Los errores suelen estar en los bordes, por ejemplo si el código usa \code{>} en vez de \code{>=}. Por eso se prueba justo en cada límite (80 y 50) y justo por debajo (77 y 47). Si el sistema compara mal, Programación Básica saldría amarilla en vez de verde, o Redes I saldría roja en vez de amarilla. Calidad (100 \%) y Logística (0 \%) cubren los extremos.
 
 
-\section*{Hallazgos}\addcontentsline{toc}{section}{Hallazgos}
+\Needspace{7\baselineskip}\section*{Hallazgos}\addcontentsline{toc}{section}{Hallazgos}
 
 Lo que se observó al montar la demo y al ejecutar las pruebas. Los que se confirman como defecto pasan a \code{defectos.\allowbreak{}md}.
 
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.427\hsize\raggedright\arraybackslash}X>{\hsize=1.590\hsize\raggedright\arraybackslash}X>{\hsize=1.072\hsize\raggedright\arraybackslash}X>{\hsize=0.615\hsize\raggedright\arraybackslash}X>{\hsize=1.296\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.440\hsize\raggedright\arraybackslash}X>{\hsize=1.329\hsize\raggedright\arraybackslash}X>{\hsize=1.161\hsize\raggedright\arraybackslash}X>{\hsize=1.021\hsize\raggedright\arraybackslash}X>{\hsize=1.049\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{ID} & \textbf{Qué se observó} & \textbf{Dónde} & \textbf{Relación con el plan} & \textbf{Estado} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{ID} & \textbf{Qué se observó} & \textbf{Dónde} & \textbf{Relación con el plan} & \textbf{Estado} \\ \hline
 \endhead
 HAL-01 & \code{sql/\allowbreak{}db.\allowbreak{}sql} no se puede ejecutar completo en una base nueva: la migración de \code{seguimientos\_\allowbreak{}estudiantes} usa la columna \code{estado\_\allowbreak{}seguimiento}, que en una instalación nueva no existe. & \code{sql/\allowbreak{}db.\allowbreak{}sql}, línea 593 aprox. & Fuera del alcance (módulo de estudiantes), pero afecta la instalación. & Registrado como DEF-05. Corregido y cerrado en el retest del 16/11. \\ \hline
-HAL-02 & Un líder de departamento \textbf{sin departamento asignado} ve las estadísticas de todos los cursos. Se esperaba que no viera ninguno. & \code{services/\allowbreak{}dashboard\_\allowbreak{}service.\allowbreak{}py}: \code{if dept\_\allowbreak{}lista:\allowbreak{}} toma la lista vacía como "sin filtro". & Riesgo R02, caso TC-02. & Confirmado con TC-02. Registrado como DEF-01. Corregido y cerrado en el retest del 16/11. \\ \hline
+HAL-02 & Un líder de departamento \textbf{sin departamento asignado} ve las estadísticas de todos los cursos. Se esperaba que no viera ninguno. & \code{services/\allowbreak{}dashboard\_\allowbreak{}service.\allowbreak{}py}: \code{if dept\_\allowbreak{}lista:} toma la lista vacía como "sin filtro". & Riesgo R02, caso TC-02. & Confirmado con TC-02. Registrado como DEF-01. Corregido y cerrado en el retest del 16/11. \\ \hline
 HAL-03 & Al cerrar sesión solo se borra la cookie del navegador. Si alguien copió la cookie antes, sigue funcionando hasta que vence. & \code{routes/\allowbreak{}auth.\allowbreak{}py}, \code{logout()}: no invalida el token en el servidor. & Riesgo R09, condición CP-09, complemento de TC-06. & Confirmado. Registrado como DEF-02. Corregido y cerrado en el retest del 16/11. \\ \hline
 HAL-04 & Un rol personalizado (el rol "consulta" de la demo) con permiso de ver el seguimiento no ve ningún curso. & \code{services/\allowbreak{}auth\_\allowbreak{}service.\allowbreak{}py}, \code{get\_\allowbreak{}departamentos\_\allowbreak{}permitidos()}: los roles que no son los de siempre reciben una lista vacía. & Riesgo R01, caso TC-02. & Registrado como DEF-04. Corregido y cerrado en el retest del 16/11. \\ \hline
 HAL-05 & El bloqueo de login no se activó en la primera corrida de TC-09. Las fechas de \code{log\_\allowbreak{}actividad} se guardan con \code{CURRENT\_\allowbreak{}TIMESTAMP AT TIME ZONE 'America/\allowbreak{}Bogota'}; si PostgreSQL está en UTC, quedan 5 horas atrás y la ventana de 300 s nunca las cuenta. & \code{sql/\allowbreak{}db.\allowbreak{}sql}, tabla \code{log\_\allowbreak{}actividad}, columna \code{fecha}. & Riesgo R08, caso TC-09. & Registrado como DEF-03. Corregido (la aplicación guarda la fecha en UTC) y cerrado en el retest del 16/11, hecho con la base en UTC. \\ \hline
@@ -1682,16 +1816,16 @@ HAL-05 & El bloqueo de login no se activó en la primera corrida de TC-09. Las f
 
 
 \chapter*{Anexo C. Antecedentes}\addcontentsline{toc}{chapter}{Anexo C. Antecedentes}
-Resumen de las entregas previas que dieron origen al plan. Los originales están en la carpeta \code{entregables-\allowbreak{}previos/\allowbreak{}} del repositorio.
+Resumen de las entregas previas que dieron origen al plan. Los originales están en la carpeta \code{entregables-\allowbreak{}previos/} del repositorio.
 
 \section*{C.1 Actividad 1. Alcance preliminar}\addcontentsline{toc}{section}{C.1 Actividad 1. Alcance preliminar}
 
 \begin{nota}
-\textbf{Antecedente:} Actividad 1 del curso (septiembre 2026). Se conserva como se entregó. Los ajustes posteriores están en \code{.\allowbreak{}.\allowbreak{}/\allowbreak{}plan-\allowbreak{}de-\allowbreak{}pruebas.\allowbreak{}md}. Hoja original escaneada, con la revisión cruzada: \code{entregables-\allowbreak{}previos/\allowbreak{}Actividad1\_\allowbreak{}SIDEM\_\allowbreak{}escaneada.\allowbreak{}pdf}.
+\textbf{Antecedente:} Actividad 1 del curso (septiembre 2026). Se conserva como se entregó. Los ajustes posteriores están en \code{..\allowbreak{}/\allowbreak{}plan-\allowbreak{}de-\allowbreak{}pruebas.\allowbreak{}md}. Hoja original escaneada, con la revisión cruzada: \code{entregables-\allowbreak{}previos/\allowbreak{}Actividad1\_\allowbreak{}SIDEM\_\allowbreak{}escaneada.\allowbreak{}pdf}.
 
 \end{nota}
 
-\subsection*{1. Identificacion del sistema}\addcontentsline{toc}{subsection}{1. Identificacion del sistema}
+\Needspace{7\baselineskip}\subsection*{1. Identificacion del sistema}\addcontentsline{toc}{subsection}{1. Identificacion del sistema}
 
 \textbf{Nombre del sistema:} SIDEM (Sistema de Seguimiento de Docentes en Moodle)
 
@@ -1699,7 +1833,7 @@ Resumen de las entregas previas que dieron origen al plan. Los originales están
 \textbf{Descripcion breve:} Aplicacion web (FastAPI + PostgreSQL, con lectura sobre la base de datos de Moodle) que permite a coordinadores academicos verificar el cumplimiento de criterios de acompanamiento docente (foros, Google Meet, grabaciones, tiempos de respuesta, tareas, agenda, grupos colaborativos) en cursos de Moodle, mostrando un tablero con semaforo (verde/amarillo/rojo) por curso y por periodo de revision.
 
 
-\subsection*{2. Metodologia de desarrollo}\addcontentsline{toc}{subsection}{2. Metodologia de desarrollo}
+\Needspace{7\baselineskip}\subsection*{2. Metodologia de desarrollo}\addcontentsline{toc}{subsection}{2. Metodologia de desarrollo}
 
 \textbf{Enfoque:} Agil (iterativo e incremental, tipo Kanban), no tradicional por fases.
 
@@ -1707,12 +1841,12 @@ Resumen de las entregas previas que dieron origen al plan. Los originales están
 \textbf{Justificacion:} El historial de control de versiones muestra entregas pequenas y frecuentes por funcionalidad (por ejemplo: nombre de marca configurable, paginacion del registro de mensajeria, exportacion por departamento, permisos por encargado), cada una probada y desplegada de forma independiente en vez de agruparse en fases secuenciales de analisis-diseno-construccion-pruebas. No existe una fase unica de "requisitos cerrados" ni entregas por hitos largos; el sistema crece por incrementos funcionales priorizados segun necesidad, lo cual corresponde a un ciclo agil de iteraciones cortas con retroalimentacion continua.
 
 
-\subsection*{3. Titulo y objetivo general}\addcontentsline{toc}{subsection}{3. Titulo y objetivo general}
+\Needspace{7\baselineskip}\subsection*{3. Titulo y objetivo general}\addcontentsline{toc}{subsection}{3. Titulo y objetivo general}
 
 \textbf{Titulo de la propuesta:} Plan de pruebas de software para el modulo de Seguimiento y Metricas del sistema SIDEM
 
 
-\textbf{Preguntas guia:}
+\Needspace{6\baselineskip}\textbf{Preguntas guia:}
 
 
 \begin{itemize}
@@ -1734,9 +1868,9 @@ Resumen de las entregas previas que dieron origen al plan. Los originales están
 \textbf{Objetivo general:} Elaborar y ejecutar un plan de pruebas que permita validar la correccion funcional, la seguridad de acceso por roles y la confiabilidad de las metricas del modulo de Seguimiento de SIDEM, mediante la participacion de companeros como revisores en una version habilitada para pruebas.
 
 
-\subsection*{4. Alcance preliminar}\addcontentsline{toc}{subsection}{4. Alcance preliminar}
+\Needspace{7\baselineskip}\subsection*{4. Alcance preliminar}\addcontentsline{toc}{subsection}{4. Alcance preliminar}
 
-\subsubsection*{4.1 Elementos incluidos (modulos y funcionalidades)}\addcontentsline{toc}{subsubsection}{4.1 Elementos incluidos (modulos y funcionalidades)}
+\Needspace{7\baselineskip}\subsubsection*{4.1 Elementos incluidos (modulos y funcionalidades)}\addcontentsline{toc}{subsubsection}{4.1 Elementos incluidos (modulos y funcionalidades)}
 
 \begin{itemize}
 \item Modulo de Seguimiento docente: visualizacion de cursos, criterios por revision (semanas 2, 6, 11 y 15), estados y observaciones.
@@ -1744,7 +1878,7 @@ Resumen de las entregas previas que dieron origen al plan. Los originales están
 \item Modulo de Gestion de usuarios: creacion de usuarios, asignacion de roles (admin, revisor, lider, lider\_departamento), autenticacion (login/logout).
 \end{itemize}
 
-\subsubsection*{4.2 Elementos excluidos y razon}\addcontentsline{toc}{subsubsection}{4.2 Elementos excluidos y razon}
+\Needspace{7\baselineskip}\subsubsection*{4.2 Elementos excluidos y razon}\addcontentsline{toc}{subsubsection}{4.2 Elementos excluidos y razon}
 
 \begin{itemize}
 \item \textbf{Seguimiento a estudiantes:} el sistema esta orientado exclusivamente al seguimiento de docentes, no existe modulo de seguimiento a estudiantes.
@@ -1762,10 +1896,13 @@ Por ahora, el alcance queda limitado a: \textbf{Seguimiento}, \textbf{Metricas/D
 
 \end{nota}
 
-\subsection*{2. Identificación del objeto de prueba}\addcontentsline{toc}{subsection}{2. Identificación del objeto de prueba}
+\Needspace{150pt}\subsection*{2. Identificación del objeto de prueba}\addcontentsline{toc}{subsection}{2. Identificación del objeto de prueba}
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.420\hsize\raggedright\arraybackslash}X>{\hsize=0.534\hsize\raggedright\arraybackslash}X>{\hsize=2.155\hsize\raggedright\arraybackslash}X>{\hsize=0.420\hsize\raggedright\arraybackslash}X>{\hsize=1.471\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.258\hsize\raggedright\arraybackslash}X>{\hsize=0.949\hsize\raggedright\arraybackslash}X>{\hsize=1.527\hsize\raggedright\arraybackslash}X>{\hsize=0.706\hsize\raggedright\arraybackslash}X>{\hsize=1.560\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{ID} & \textbf{Elemento} & \textbf{¿Qué hace? / Actor} & \textbf{¿Alcance?} & \textbf{Justificación} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{ID} & \textbf{Elemento} & \textbf{¿Qué hace? / Actor} & \textbf{¿Alcance?} & \textbf{Justificación} \\ \hline
 \endhead
@@ -1778,10 +1915,13 @@ F06 & Exportación de informes & Genera un informe en Excel con los resultados d
 \end{xltabular}}
 
 
-\subsection*{3. Condiciones de prueba}\addcontentsline{toc}{subsection}{3. Condiciones de prueba}
+\Needspace{150pt}\subsection*{3. Condiciones de prueba}\addcontentsline{toc}{subsection}{3. Condiciones de prueba}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.403\hsize\raggedright\arraybackslash}X>{\hsize=1.397\hsize\raggedright\arraybackslash}X>{\hsize=1.199\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.168\hsize\raggedright\arraybackslash}X>{\hsize=1.414\hsize\raggedright\arraybackslash}X>{\hsize=1.418\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{ID} & \textbf{Precondiciones / Datos de entrada} & \textbf{Resultado esperado} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{ID} & \textbf{Precondiciones / Datos de entrada} & \textbf{Resultado esperado} \\ \hline
 \endhead
@@ -1791,10 +1931,13 @@ F04 & Existen tres cursos evaluados en la misma revisión: uno con el 80 \% de l
 \end{xltabular}}
 
 
-\subsection*{4. Priorización}\addcontentsline{toc}{subsection}{4. Priorización}
+\Needspace{150pt}\subsection*{4. Priorización}\addcontentsline{toc}{subsection}{4. Priorización}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=0.434\hsize\raggedright\arraybackslash}X>{\hsize=0.536\hsize\raggedright\arraybackslash}X>{\hsize=2.030\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=0.454\hsize\raggedright\arraybackslash}X>{\hsize=0.887\hsize\raggedright\arraybackslash}X>{\hsize=1.660\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Prioridad} & \textbf{Elemento} & \textbf{Justificación} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Prioridad} & \textbf{Elemento} & \textbf{Justificación} \\ \hline
 \endhead
@@ -1804,12 +1947,12 @@ F04 & Existen tres cursos evaluados en la misma revisión: uno con el 80 \% de l
 \end{xltabular}}
 
 
-\subsection*{6. Ajustes y reflexión}\addcontentsline{toc}{subsection}{6. Ajustes y reflexión}
+\Needspace{7\baselineskip}\subsection*{6. Ajustes y reflexión}\addcontentsline{toc}{subsection}{6. Ajustes y reflexión}
 
 \textbf{Ajustes tras la coevaluación:} el equipo revisor no reportó oportunidades de mejora. En la autorrevisión se completó F06 (Exportación de informes) para cumplir el mínimo de 6 funcionalidades.
 
 
-\textbf{Reflexión:} diseñar casos antes de delimitar y priorizar invierte esfuerzo sin criterio: se prueban funciones fuera del alcance y las más críticas quedan con poca cobertura. La norma ISO/IEC/IEEE 29119-3 pide definir primero qué se probará y con qué prioridad.
+\textbf{Reflexión:} diseñar casos antes de delimitar y priorizar invierte esfuerzo sin criterio: se prueban funciones fuera del alcance y las más críticas quedan con poca cobertura. La norma ISO/IEC/IEEE \mbox{29119-3} pide definir primero qué se probará y con qué prioridad.
 
 
 Hoja completa: \code{entregables-\allowbreak{}previos/\allowbreak{}Actividad2\_\allowbreak{}SIDEM.\allowbreak{}pdf} (LaTeX). Hoja original escaneada con la coevaluación: \code{entregables-\allowbreak{}previos/\allowbreak{}Actividad2\_\allowbreak{}SIDEM\_\allowbreak{}escaneada.\allowbreak{}pdf}.
@@ -1818,7 +1961,7 @@ Hoja completa: \code{entregables-\allowbreak{}previos/\allowbreak{}Actividad2\_\
 \section*{C.3 Matriz de riesgos}\addcontentsline{toc}{section}{C.3 Matriz de riesgos}
 
 \begin{nota}
-\textbf{Antecedente:} Matriz de riesgos entregada en PDF (generada con \code{entregables-\allowbreak{}previos/\allowbreak{}matriz.\allowbreak{}py}). Los datos completos (R01-R10, RP1-RP3) están en la sección 4 de \code{.\allowbreak{}.\allowbreak{}/\allowbreak{}plan-\allowbreak{}de-\allowbreak{}pruebas.\allowbreak{}md}.
+\textbf{Antecedente:} Matriz de riesgos entregada en PDF (generada con \code{entregables-\allowbreak{}previos/\allowbreak{}matriz.\allowbreak{}py}). Los datos completos (R01-R10, RP1-RP3) están en la sección 4 de \code{..\allowbreak{}/\allowbreak{}plan-\allowbreak{}de-\allowbreak{}pruebas.\allowbreak{}md}.
 
 \end{nota}
 
@@ -1840,20 +1983,20 @@ Hoja completa: \code{entregables-\allowbreak{}previos/\allowbreak{}Actividad2\_\
 
 \end{nota}
 
-\subsection*{3.1 Selección y priorización de riesgos}\addcontentsline{toc}{subsection}{3.1 Selección y priorización de riesgos}
+\Needspace{177pt}\subsection*{3.1 Selección y priorización de riesgos}\addcontentsline{toc}{subsection}{3.1 Selección y priorización de riesgos}
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.439\hsize\raggedright\arraybackslash}X>{\hsize=2.308\hsize\raggedright\arraybackslash}X>{\hsize=0.835\hsize\raggedright\arraybackslash}X>{\hsize=0.751\hsize\raggedright\arraybackslash}X>{\hsize=0.668\hsize\raggedright\arraybackslash}X}
+%ALTO=132
+\par\noindent\begin{minipage}{\linewidth}\footnotesize
+\begin{tabularx}{\linewidth}{>{\hsize=0.280\hsize\raggedright\arraybackslash}X>{\hsize=2.561\hsize\raggedright\arraybackslash}X>{\hsize=0.798\hsize\raggedright\arraybackslash}X>{\hsize=0.728\hsize\raggedright\arraybackslash}X>{\hsize=0.633\hsize\raggedright\arraybackslash}X}
 \hline\rowcolor{cabecera}
 \textbf{ID} & \textbf{Módulo / Funcionalidad} & \textbf{Exposición} & \textbf{Prioridad} & \textbf{Nivel de prueba} \\ \hline
-\endhead
 R01 & F02 Gestión de usuarios y roles (acceso no permitido) & Alta (6) & P1 & Sistema \\ \hline
 R04 & F04 Semáforo de cumplimiento (color incorrecto) & Alta (6) & P1 & Unitario y sistema \\ \hline
 R09 & F01 Inicio de sesión (sesión activa tras cerrar sesión) & Baja (2) & P3 & Sistema \\ \hline
-\end{xltabular}}
+\end{tabularx}\end{minipage}\par
 
 
-\subsection*{3.2 Técnicas de diseño}\addcontentsline{toc}{subsection}{3.2 Técnicas de diseño}
+\Needspace{7\baselineskip}\subsection*{3.2 Técnicas de diseño}\addcontentsline{toc}{subsection}{3.2 Técnicas de diseño}
 
 \begin{itemize}
 \item \textbf{R01 - Tablas de decisión.} El acceso depende de varias condiciones combinadas: el rol, la acción (consultar o modificar) y el departamento del curso (propio, ajeno o sin departamento). La tabla cubre todas las combinaciones, incluido el usuario sin departamento, que no debe ver ningún curso.
@@ -1861,17 +2004,20 @@ R09 & F01 Inicio de sesión (sesión activa tras cerrar sesión) & Baja (2) & P3
 \item \textbf{R09 - Lista de chequeo.} Exposición baja: cerrar sesión y volver atrás, cambiar la contraseña y reutilizar la sesión, dejar expirar la sesión.
 \end{itemize}
 
-\subsection*{3.3 Criterios de finalización y cobertura}\addcontentsline{toc}{subsection}{3.3 Criterios de finalización y cobertura}
+\Needspace{7\baselineskip}\subsection*{3.3 Criterios de finalización y cobertura}\addcontentsline{toc}{subsection}{3.3 Criterios de finalización y cobertura}
 
 \begin{itemize}
 \item \textbf{Módulos críticos (F02, F03, F04):} 100 \% de los requerimientos cubiertos; 100 \% de las combinaciones de la tabla de decisión y de los valores límite; ningún defecto crítico o alto abierto; cada caso lo revisa un integrante distinto al que lo diseñó.
 \item \textbf{Módulos secundarios (F01, F05, F06):} al menos 80 \% de los requerimientos; 100 \% de los casos diseñados ejecutados; ningún defecto crítico abierto; máximo 2 defectos menores abiertos.
 \end{itemize}
 
-\subsection*{3.4 Estimación de esfuerzo}\addcontentsline{toc}{subsection}{3.4 Estimación de esfuerzo}
+\Needspace{150pt}\subsection*{3.4 Estimación de esfuerzo}\addcontentsline{toc}{subsection}{3.4 Estimación de esfuerzo}
 
-{\small
-\begin{xltabular}{\linewidth}{>{\hsize=1.095\hsize\raggedright\arraybackslash}X>{\hsize=0.905\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\small
+\begin{xltabular}{\linewidth}{>{\hsize=1.621\hsize\raggedright\arraybackslash}X>{\hsize=0.379\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{Actividad} & \textbf{Horas} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{Actividad} & \textbf{Horas} \\ \hline
 \endhead
@@ -1891,7 +2037,7 @@ Informe de cierre & 3 \\ \hline
 
 \end{nota}
 
-\subsection*{Caso piloto TC-01 (P1)}\addcontentsline{toc}{subsection}{Caso piloto TC-01 (P1)}
+\Needspace{7\baselineskip}\subsection*{Caso piloto TC-01 (P1)}\addcontentsline{toc}{subsection}{Caso piloto TC-01 (P1)}
 
 \begin{itemize}
 \item \textbf{Conjunto de características (7.2.4):} CC-01, Gestión de usuarios y roles (F02), control de acceso por rol y departamento.
@@ -1901,10 +2047,13 @@ Informe de cierre & 3 \\ \hline
 \item \textbf{Resultado esperado:} acceso denegado; al consultar con un administrador, los datos conservan sus valores originales.
 \end{itemize}
 
-\subsection*{Matriz de casos}\addcontentsline{toc}{subsection}{Matriz de casos}
+\Needspace{150pt}\subsection*{Matriz de casos}\addcontentsline{toc}{subsection}{Matriz de casos}
 
-{\footnotesize
-\begin{xltabular}{\linewidth}{>{\hsize=0.437\hsize\raggedright\arraybackslash}X>{\hsize=0.479\hsize\raggedright\arraybackslash}X>{\hsize=1.560\hsize\raggedright\arraybackslash}X>{\hsize=1.312\hsize\raggedright\arraybackslash}X>{\hsize=1.018\hsize\raggedright\arraybackslash}X>{\hsize=1.194\hsize\raggedright\arraybackslash}X}
+\par\Needspace{8\baselineskip}{\footnotesize
+\begin{xltabular}{\linewidth}{>{\hsize=0.464\hsize\raggedright\arraybackslash}X>{\hsize=0.864\hsize\raggedright\arraybackslash}X>{\hsize=1.134\hsize\raggedright\arraybackslash}X>{\hsize=1.382\hsize\raggedright\arraybackslash}X>{\hsize=1.071\hsize\raggedright\arraybackslash}X>{\hsize=1.086\hsize\raggedright\arraybackslash}X}
+\hline\rowcolor{cabecera}
+\textbf{ID} & \textbf{Prioridad} & \textbf{Condición} & \textbf{Precondiciones} & \textbf{Entradas} & \textbf{Resultado esperado} \\ \hline
+\endfirsthead
 \hline\rowcolor{cabecera}
 \textbf{ID} & \textbf{Prioridad} & \textbf{Condición} & \textbf{Precondiciones} & \textbf{Entradas} & \textbf{Resultado esperado} \\ \hline
 \endhead
@@ -1922,7 +2071,7 @@ Con 10 criterios no se puede obtener 49 \% ni 79 \%; por eso se usan 40/50/70/80
 
 \end{nota}
 
-\subsection*{Procedimientos}\addcontentsline{toc}{subsection}{Procedimientos}
+\Needspace{7\baselineskip}\subsection*{Procedimientos}\addcontentsline{toc}{subsection}{Procedimientos}
 
 \begin{itemize}
 \item \textbf{PROC-01 (P1):} TC-01 → TC-02 → TC-03. Preparación: iniciar SIDEM en AMB-01, cargar DAT-01, cerrar sesiones, limpiar caché. Cierre: restaurar la BD y cerrar sesiones.
@@ -1930,7 +2079,7 @@ Con 10 criterios no se puede obtener 49 \% ni 79 \%; por eso se usan 40/50/70/80
 \item \textbf{PROC-03 (P3):} TC-06.
 \end{itemize}
 
-\subsection*{Datos (7.5) y entorno (7.6)}\addcontentsline{toc}{subsection}{Datos (7.5) y entorno (7.6)}
+\Needspace{7\baselineskip}\subsection*{Datos (7.5) y entorno (7.6)}\addcontentsline{toc}{subsection}{Datos (7.5) y entorno (7.6)}
 
 \begin{itemize}
 \item \textbf{DAT-01:} 4 usuarios (administrador, revisor, líder de Sistemas Digitales, usuario sin departamento); 6 cursos (3 de Sistemas Digitales, 3 de Producción); 10 criterios en la revisión 1, con 4, 5, 7 y 8 cumplidos. Reinicio desde respaldo antes de cada ciclo.
