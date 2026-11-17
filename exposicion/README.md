@@ -25,7 +25,7 @@ La historia sigue el orden del trabajo: qué se planeó → cómo se probó → 
 
 ## Presentación unida
 
-[`Exposicion_SIDEM.pptx`](Exposicion_SIDEM.pptx) (20 láminas) es la presentación final: portada y agenda (1-2), plan y riesgos (3-5), valores límite (6-7), pruebas automáticas (8-9), defectos y correcciones (10-16), retest y cierre (17-19, Julián) y preguntas (20). Cada parte conserva su diseño y sus notas. Si alguien cambia su archivo individual, hay que volver a pegar esas láminas en la unida.
+[`Exposicion_SIDEM.pptx`](Exposicion_SIDEM.pptx) (20 láminas) es la presentación final: portada y agenda (1-2), plan y riesgos (3-5), valores límite (6-7), pruebas automáticas (8-9), defectos y correcciones (10-16), retest y cierre (17-19, Julián) y preguntas (20). Todas usan el mismo diseño, con la paleta de colores de SIDEM, y conservan las notas del orador de cada parte. También está en PDF: [`Exposicion_SIDEM.pdf`](Exposicion_SIDEM.pdf) (en el PDF los GIF se ven como imagen fija). Los archivos individuales de cada integrante quedan como material de trabajo.
 
 ## Material del video
 
