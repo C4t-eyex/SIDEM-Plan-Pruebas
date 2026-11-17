@@ -11,12 +11,12 @@ Trabajo final del curso **Pruebas de Software (2026-2)**. Aplica la norma **ISO/
 |---|---|
 | [`docs/plan-de-pruebas.md`](docs/plan-de-pruebas.md) | **Documento principal.** Plan completo en las 8 secciones pedidas. |
 | [`entrega/Plan_de_Pruebas_SIDEM.pdf`](entrega/Plan_de_Pruebas_SIDEM.pdf) | **El plan en PDF para el docente** (plan completo + anexo de defectos). Se regenera con `python entrega/generar_pdf.py`. |
-| [`docs/resumen-para-el-docente.md`](docs/resumen-para-el-docente.md) | **Para la reunión con el docente.** Qué se muestra, cómo vamos y qué falta. |
+| [`docs/resumen-para-el-docente.md`](docs/resumen-para-el-docente.md) | **Para el docente.** Qué se muestra, cómo se hizo y cómo cerró. |
 | [`docs/preguntas-para-el-profe.md`](docs/preguntas-para-el-profe.md) | Preguntas al docente y sus respuestas (16/11). |
 | [`docs/avances.md`](docs/avances.md) | Bitácora de avances y hallazgos. |
 | [`docs/defectos.md`](docs/defectos.md) | Defectos encontrados en la ejecución. |
-| [`docs/retest.md`](docs/retest.md) | **Guía del retest** de los defectos corregidos (Sebastián) y qué actualizar después (Julián). |
-| [`docs/informe-de-cierre.md`](docs/informe-de-cierre.md) | Informe de cierre (*Test Completion Report*), a cargo de Julián. |
+| [`docs/retest.md`](docs/retest.md) | **Guía del retest** de los defectos corregidos y su resultado (19 de 19). |
+| [`docs/informe-de-cierre.md`](docs/informe-de-cierre.md) | Informe de cierre (*Test Completion Report*), versión final 1.0. |
 | [`docs/ejecucion-manual.md`](docs/ejecucion-manual.md) | Hojas para ejecutar los casos manuales. |
 | [`docs/antecedentes/`](docs/antecedentes/) | Entregas previas (Actividades 1 y 2, matriz de riesgos, Talleres 4 y 5). |
 
@@ -45,9 +45,9 @@ exposicion/           Diapositivas de cada integrante y guía de la exposición 
 
 | Fase | Contenido | Estado |
 |---|---|---|
-| 1 | Organizar documentos y plan para revisión con el docente | Lista; respuestas del docente incorporadas (plan v0.6) |
+| 1 | Organizar documentos y plan para revisión con el docente | Lista; plan final v1.0 con las respuestas del docente |
 | 2 | Demo de SIDEM con Docker y datos ficticios ([`demo/README.md`](demo/README.md)) | Lista, con imágenes del retest |
 | 3 | Ejecución real (manual + automática), defectos y evidencias | Lista: 5 defectos corregidos y cerrados con el retest del 16/11 (19 de 19, [`docs/retest.md`](docs/retest.md)) |
-| 4 | Informe de cierre y exposición | En curso |
+| 4 | Informe de cierre y exposición | Lista: informe v1.0 (criterios de finalización cumplidos) y presentación unida en [`exposicion/`](exposicion/README.md) |
 
 > La versión de SIDEM bajo prueba es el commit `77f71b2`. El retest usa ese commit más los parches de [`demo/correcciones/`](demo/correcciones/). No se usan datos reales.

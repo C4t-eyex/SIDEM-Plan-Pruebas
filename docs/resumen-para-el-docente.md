@@ -3,9 +3,9 @@
 **Proyecto:** plan y ejecución de pruebas de SIDEM según ISO/IEC/IEEE 29119-3.
 **Equipo:** Marcos Duque Jaramillo, Sebastián Díaz Jiménez, Nicolás Cataño Durango y Julián Ramírez Molina.
 **Docente:** Roberto José Calderón Bermejo.
-**Fecha:** 08/11/2026. **Entrega y exposición:** martes 17/11/2026.
+**Fecha:** 08/11/2026, actualizado el 17/11/2026. **Entrega y exposición:** martes 17/11/2026.
 
-Este documento resume en qué va el trabajo y qué queremos revisar con usted. El detalle está en los documentos que se enlazan.
+Este documento resume el trabajo y cómo cerró. El detalle está en los documentos que se enlazan.
 
 ## 1. Qué es SIDEM y qué se prueba
 
@@ -27,10 +27,10 @@ Las pruebas se enfocan en lo que más riesgo tiene: quién puede ver y modificar
 
 | Fase | Contenido | Estado |
 |---|---|---|
-| 1 | Plan de pruebas y organización de documentos | Listo (v0.6, con las respuestas del docente) |
+| 1 | Plan de pruebas y organización de documentos | Listo (v1.0, con las respuestas del docente) |
 | 2 | Demo de SIDEM con Docker y datos ficticios | Lista, con imágenes para el retest |
 | 3 | Ejecución de las pruebas, defectos y evidencias | Lista: los 9 casos ejecutados, 5 defectos corregidos y cerrados con el retest |
-| 4 | Informe de cierre y exposición | En curso |
+| 4 | Informe de cierre y exposición | Lista: informe de cierre v1.0 y presentación unida |
 
 **Primera ronda (08 y 12/11/2026):** 19 pruebas automáticas sobre 7 casos; 16 pasan y 3 fallan por defectos de SIDEM, no por errores de la prueba. Los 9 casos se ejecutaron también a mano, con capturas en [`evidencias/`](../evidencias/README.md).
 
@@ -40,13 +40,11 @@ Las pruebas se enfocan en lo que más riesgo tiene: quién puede ver y modificar
 
 **Cambios al plan por lo que se encontró:** al revisar el sistema real, dos casos del Taller 5 no coincidían con su funcionamiento (TC-01 y TC-03) y se ajustaron. El historial está en la sección 1.4 del plan.
 
-## 4. Qué falta y quién lo hace
+## 4. Cierre
 
-| Integrante | Pendiente |
-|---|---|
-| Julián | Comentar los issues #1 a #5, actualizar el informe de cierre con el retest y armar sus diapositivas. |
-| Marcos | Láminas de defectos y casos con el antes y después, unir las 4 presentaciones y organizar el ensayo. |
-| Todos | Ensayo de la exposición del 17/11 ([`exposicion/README.md`](../exposicion/README.md)). |
+- **Informe de cierre v1.0** ([`informe-de-cierre.md`](informe-de-cierre.md)): los 9 casos ejecutados y pasando después del retest, 0 defectos abiertos y todos los criterios de finalización del plan cumplidos. Lo completaron Marcos, como encargado de organizar la exposición, y Nicolás.
+- **Issues #1 a #5** cerrados en GitHub con el resultado del retest.
+- **Presentación unida** para el 17/11 ([`exposicion/README.md`](../exposicion/README.md)), con el antes y después de cada defecto y las láminas de retest y cierre.
 
 ## 5. Lo que confirmó el docente (16/11)
 

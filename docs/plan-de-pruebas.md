@@ -1,14 +1,14 @@
 # Plan de Pruebas de Software - SIDEM
 
 > Basado en la norma ISO/IEC/IEEE 29119-3 (Documentación de pruebas), adaptada a un ciclo corto de 9 días (09/11/2026 al 17/11/2026).
-> **Estado:** BORRADOR v0.6 - respuestas del docente incorporadas; pendiente la revisión final.
+> **Estado:** versión 1.0, final - ciclo ejecutado y cerrado (ver `informe-de-cierre.md`).
 
 ---
 
 ## 1. Información específica del documento
 
 ### 1.1 Identificador único del documento
-`SIDEM-PP-2026-01` (Plan de Pruebas, versión 0.6)
+`SIDEM-PP-2026-01` (Plan de Pruebas, versión 1.0)
 
 ### 1.2 Organización emisora y autores
 - **Organización:** Equipo SIDEM - curso Pruebas de Software, 2026-2.
@@ -27,6 +27,7 @@ Roberto José Calderón Bermejo, docente del curso de Pruebas de Software.
 | 0.4 | 10/11/2026 | Equipo SIDEM | Casos identificados no ejecutados TC-10 a TC-17 (dos por integrante), según indicación del docente. |
 | 0.5 | 10/11/2026 | Equipo SIDEM | Cronograma ajustado a la exposición del 17/11/2026, según indicación del docente. |
 | 0.6 | 16/11/2026 | Equipo SIDEM | Respuestas del docente incorporadas (`preguntas-para-el-profe.md`): escala 1-3 válida, R10 fuera del alcance del equipo, entrega final en PDF. |
+| 1.0 | 17/11/2026 | Equipo SIDEM | Versión final: ciclo ejecutado, retest del 16/11 con los 5 defectos cerrados y criterios de finalización cumplidos (`informe-de-cierre.md`). |
 
 El control de versiones del documento se lleva en este repositorio (historial de commits de Git).
 
@@ -337,7 +338,7 @@ El trabajo se reparte **por riesgo y módulo**: cada integrante es dueño de sus
 | Nicolás Cataño Durango | Datos de prueba (DAT-01) | R04, R06 - TC-03, TC-08 | TC-12, TC-13 |
 | Julián Ramírez Molina | Informe de cierre | R07, R08, R09 - TC-05, TC-09, TC-06 | TC-14, TC-15 |
 
-> *Reparto propuesto; el equipo lo confirma en la iteración 1 (hasta el 11/11).*
+> *Reparto confirmado en la iteración 1. En la iteración 3, Marcos, como encargado de organizar la exposición, completó con Nicolás el informe de cierre (v1.0) y las láminas de cierre.*
 
 ---
 
