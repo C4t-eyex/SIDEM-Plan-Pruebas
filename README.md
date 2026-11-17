@@ -9,7 +9,7 @@ Trabajo final del curso **Pruebas de Software (2026-2)**. Aplica la norma **ISO/
 
 | Entregable | Qué es |
 |---|---|
-| [`entrega/Informe_final_SIDEM.pdf`](entrega/Informe_final_SIDEM.pdf) | **Informe final en LaTeX** (57 páginas): plan, ejecución, defectos con su antes y después, correcciones, retest, informe de cierre y anexos. Fuente: [`entrega/Informe_final_SIDEM.tex`](entrega/Informe_final_SIDEM.tex). Se regenera desde los Markdown con `python entrega/generar_informe.py` (requiere MiKTeX o TeX Live). |
+| [`entrega/Informe_final_SIDEM.pdf`](entrega/Informe_final_SIDEM.pdf) | **Informe final en LaTeX** (61 páginas): plan, ejecución, defectos con su antes y después, correcciones, retest, informe de cierre y anexos. Fuente: [`entrega/Informe_final_SIDEM.tex`](entrega/Informe_final_SIDEM.tex). Se regenera desde los Markdown con `python entrega/generar_informe.py` (requiere MiKTeX o TeX Live). |
 | [`exposicion/Exposicion_SIDEM.pptx`](exposicion/Exposicion_SIDEM.pptx) | **Presentación de la exposición** (20 láminas), también en [PDF](exposicion/Exposicion_SIDEM.pdf). Guía en [`exposicion/README.md`](exposicion/README.md). |
 
 ## Por dónde empezar
